@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <!-- Minimalist outer border reflecting high-precision alignment -->
+  <rect x="2" y="2" width="60" height="60" rx="6" stroke="#ffffff" stroke-width="4" fill="#0d0d0d" />
+  
+  <!-- Modern Geometric MRD Monogram -->
+  <!-- "M" Left Leg & Diagonal -->
+  <path d="M12 48 V16 L22 32 L32 16 V48" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- "R" Stem, Loop & Leg -->
+  <path d="M38 48 V16 H46 C50 16 52 18 52 22 C52 26 50 28 46 28 H38 M45 28 L52 48" stroke="#e6ff00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Bounding grid dot reflecting systems-analyst precision -->
+  <circle cx="32" cy="48" r="3" fill="#e6ff00" />
+</svg>

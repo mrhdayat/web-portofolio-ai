@@ -1,0 +1,1018 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-cream: #fbfaf6;
+  --color-card-grey: #F5F5F7;
+  --color-apple-dark: #1d1d1f;
+  --color-apple-muted: #86868b;
+  
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Syne", sans-serif;
+  --font-header: "Archivo Black", sans-serif;
+  --font-body: "Inter", sans-serif;
+  
+  --shadow-apple-soft: 0 30px 60px rgba(0, 0, 0, 0.03);
+  --shadow-apple-focus: 0 20px 40px rgba(0, 0, 0, 0.08);
+  
+  --color-accent: #0052CC;
+}
+
+/* ==========================================================================
+   MUHAMMAD RAHMAT HIDAYAT — AWWWARDS-LEVEL BENTO DESIGN SYSTEM (V4)
+   ========================================================================== */
+
+:root {
+  /* ── PREMIUM COLOR SYSTEM (colorize skill) ── */
+  --bg-color: #F8F7F4;            /* Warm cream — not cold white */
+  --card-bg: #ffffff;
+  --border-color: rgba(0,0,0,0.08);
+  --text-color: #0D0D0D;          /* Near-black, more premium than pure #000 */
+  --text-muted: #6B7280;
+  
+  /* Accent system */
+  --accent: #0052CC;              /* Sophisticated indigo-blue */
+  --accent-light: #EBF0FF;
+  --accent-hover: #003FA3;
+  --yellow: #F5C518;              /* IMDB-gold yellow, premium */
+  --orange: #E85B00;
+  
+  /* Clay gradients */
+  --clay-yellow: linear-gradient(135deg, #FFD43B, #F5C518);
+  --clay-blue: linear-gradient(135deg, #4C97FF, #0052CC);
+  --clay-orange: linear-gradient(135deg, #FF7849, #E85B00);
+  --clay-pink: linear-gradient(135deg, #F472B6, #EC4899);
+  
+  /* Geometry */
+  --clay-radius: 24px;
+  --clay-shadow-depth: 5px;
+  --ambient-speed: 10s;
+  
+  /* Typography */
+  --font-display: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-header: 'Archivo Black', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  
+  /* Easing canon (emilkowal) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-expo: cubic-bezier(0.4, 0, 1, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Duration canon (emilkowal: micro=180, ui=350, hero=600) */
+  --dur-micro: 180ms;
+  --dur-ui: 350ms;
+  --dur-hero: 600ms;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  /* Scroll progress bar native fallback */
+  scroll-timeline: --page-scroll block;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--bg-color);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Restrict cursor-none only to hover-capable fine pointer devices (desktops) */
+@media (hover: hover) and (pointer: fine) {
+  body, button, input, select, textarea, a, .cursor-none {
+    cursor: none !important;
+  }
+}
+
+button, input, select, textarea {
+  font-family: var(--font-body);
+}
+
+body {
+  padding-top: 85px;
+}
+
+/* ==========================================================================
+   0. SCROLL PROGRESS BAR (Awwwards signature)
+   ========================================================================== */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), #60A5FA, var(--accent));
+  background-size: 200% 100%;
+  animation: shimmerGrad 3s linear infinite;
+  z-index: 9998;
+  transform-origin: left;
+  pointer-events: none;
+  transition: width 0.1s linear;
+}
+
+@keyframes shimmerGrad {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+/* ==========================================================================
+   1. STERILE MICRO-GRID LABYRINTH BACKGROUND
+   ========================================================================== */
+.micro-grid-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+  pointer-events: none;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Monospace Micro-data Styles */
+.micro-spec-label {
+  font-family: monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   2. CUSTOM MAGNETIC CURSOR
+   ========================================================================== */
+.mrd-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  background-color: var(--text-color);
+  border: 1.5px solid rgba(255,255,255,0.7);
+  border-radius: 50%;
+  pointer-events: none !important;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* Only animate GPU compositor properties (emilkowal props- rule) */
+  will-change: transform, left, top;
+  transition: 
+    width var(--dur-micro) var(--ease-out-expo), 
+    height var(--dur-micro) var(--ease-out-expo), 
+    background-color var(--dur-micro) ease,
+    border-color var(--dur-micro) ease,
+    mix-blend-mode var(--dur-micro) ease;
+}
+
+.mrd-cursor .cursor-text {
+  font-family: var(--font-header);
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  white-space: nowrap;
+}
+
+.mrd-cursor.hovering {
+  width: 76px;
+  height: 76px;
+  background-color: var(--accent);
+  border-color: var(--accent);
+  mix-blend-mode: normal;
+  box-shadow: 
+    inset 3px 3px 0px rgba(255, 255, 255, 0.3),
+    inset -3px -3px 0px rgba(0, 0, 0, 0.15),
+    0 0 0 6px rgba(0, 82, 204, 0.12);
+}
+
+.mrd-cursor.hovering .cursor-text {
+  opacity: 1;
+}
+
+.mrd-cursor.click-pulse {
+  transform: translate(-50%, -50%) scale(0.85);
+  transition: transform 0.1s var(--ease-spring);
+}
+
+
+/* ==========================================================================
+   3. APPLE SQUIRCING & GLASSMORPHISM LAYERS
+   ========================================================================== */
+.squircle-card {
+  border-radius: var(--clay-radius, 24px);
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color);
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.03),
+    0 8px 24px rgba(0, 0, 0, 0.05),
+    inset 1px 1px 0px rgba(255, 255, 255, 0.7);
+  /* emilkowal: only transform + opacity */
+  transition: 
+    transform var(--dur-ui) var(--ease-out-expo),
+    box-shadow var(--dur-ui) var(--ease-out-expo),
+    opacity var(--dur-ui) ease,
+    filter var(--dur-ui) ease;
+}
+
+/* Hover lift — Awwwards signature */
+.squircle-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.04),
+    0 16px 40px rgba(0, 0, 0, 0.08),
+    inset 1px 1px 0px rgba(255, 255, 255, 0.7);
+}
+
+.glass-bento {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Ambient stickers from Hattie Stewart */
+@keyframes stickerFloat {
+  0% { transform: translateY(0px) rotate(var(--rot)); }
+  50% { transform: translateY(-10px) rotate(calc(var(--rot) + 2deg)); }
+  100% { transform: translateY(0px) rotate(var(--rot)); }
+}
+
+.sticker-decal {
+  position: fixed;
+  padding: 0.6rem 1.2rem;
+  font-family: var(--font-header);
+  font-size: 10px;
+  letter-spacing: 1px;
+  border: 1.5px solid #111111;
+  border-radius: 20px;
+  z-index: 50;
+  pointer-events: none;
+  animation: stickerFloat 4.2s ease-in-out infinite;
+  text-transform: uppercase;
+  box-shadow: 
+    inset 3px 3px 0px rgba(255, 255, 255, 0.4),
+    inset -3px -3px 0px rgba(0, 0, 0, 0.12),
+    3px 3px 0px #000000;
+}
+
+.sticker-ibm { top: 18%; left: 1.5%; --rot: -8deg; background: var(--clay-blue); color: #ffffff; }
+.sticker-bnsp { top: 42%; right: 1.5%; --rot: 10deg; background: var(--clay-pink); color: #ffffff; }
+.sticker-skom { bottom: 32%; left: 1.5%; --rot: -5deg; background: var(--clay-orange); color: #ffffff; }
+.sticker-slop { bottom: 18%; right: 1.5%; --rot: 6deg; background: var(--clay-yellow); color: #000000; }
+
+@media (max-width: 1024px) {
+  .sticker-decal {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   4. iOS CONTROL CENTER SLIDERS
+   ========================================================================== */
+.cc-slider-track {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background: #e5e5e7;
+  border-radius: 25px;
+  overflow: hidden;
+  cursor: none;
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+.cc-slider-fill {
+  height: 100%;
+  background: var(--clay-blue);
+  border-radius: 25px 0 0 25px;
+  transition: width 0.1s ease-out;
+}
+
+.cc-slider-label {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  color: #1d1d1f;
+  font-weight: 600;
+  font-size: 13px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cc-slider-value {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  color: #86868b;
+  font-weight: 700;
+  font-size: 13px;
+  pointer-events: none;
+  font-family: monospace;
+}
+
+/* Apple iOS Segmented Control styled Language Toggle */
+.lang-segmented-control {
+  display: flex;
+  background: #e5e5e7;
+  padding: 3px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  position: relative;
+}
+
+.lang-segmented-btn {
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 9px;
+  cursor: none;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.lang-segmented-btn.active {
+  background: #ffffff;
+  color: #1d1d1f;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   5. NAVIGATION BAR & CAPSULE TRANSITIONS
+   ========================================================================== */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 4%;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  z-index: 2000;
+  transition: 
+    background-color 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+    padding 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+    border-radius 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+    top 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+    width 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+    left 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+    right 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.nav-bar.scrolled {
+  top: 1.2rem;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px;
+  background-color: #ffffff; /* White card */
+  padding: 0.7rem 2.2rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--clay-radius);
+  box-shadow: 
+    inset var(--clay-shadow-depth) var(--clay-shadow-depth) 0px rgba(255, 255, 255, 0.45), 
+    inset calc(var(--clay-shadow-depth) * -1) calc(var(--clay-shadow-depth) * -1) 0px rgba(0, 0, 0, 0.12), 
+    0 30px 60px rgba(0, 0, 0, 0.03);
+}
+
+.nav-item {
+  position: relative;
+  transition: color var(--dur-micro) ease;
+  /* Typeset: tight kerning on nav labels */
+  letter-spacing: 0.08em;
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0%;
+  height: 1.5px;
+  background: var(--accent);
+  /* emilkowal: use transform not width for perf, but width needed here for semantic reveal */
+  transition: width 0.3s var(--ease-out-expo);
+}
+
+.nav-item:hover::after, .nav-item:focus-visible::after {
+  width: 100%;
+}
+
+/* ==========================================================================
+   6. DYNAMIC KINETIC MARQUEE
+   ========================================================================== */
+.marquee-container {
+  overflow: hidden;
+  background: linear-gradient(135deg, #003FA3, var(--accent));
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 0;
+  display: flex;
+  white-space: nowrap;
+  /* Design spell: pause marquee on hover */
+}
+
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 2.5rem;
+  /* emilkowal: only transform — GPU compositor */
+  animation: marqueeScroll 32s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   7. FULLSCREEN MOBILE OVERLAY MENU
+   ========================================================================== */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--bg-color);
+  z-index: 3000;
+  padding: 2rem 6%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.mobile-menu-overlay.active {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 4rem;
+}
+
+.close-mobile-menu {
+  background: none;
+  border: none;
+  font-size: 3.5rem;
+  color: var(--text-color);
+  font-family: var(--font-header);
+  cursor: none;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.close-mobile-menu:hover {
+  transform: scale(1.1) rotate(90deg);
+  color: #ff44aa;
+}
+
+.mobile-menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.mobile-menu-item {
+  font-family: var(--font-header);
+  font-size: 2.2rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-color);
+  letter-spacing: -2px;
+  line-height: 1;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.mobile-menu-item:hover {
+  transform: translateX(8px) scale(1.02);
+  color: #0066ff;
+}
+
+.mobile-contact-btn {
+  background: var(--clay-yellow);
+  color: #000000;
+  padding: 1rem 2rem;
+  border: 1.5px solid #111111;
+  border-radius: 20px;
+  box-shadow: 
+    inset 4px 4px 0px rgba(255, 255, 255, 0.4),
+    inset -4px -4px 0px rgba(0, 0, 0, 0.12),
+    5px 5px 0px #000000;
+  font-family: var(--font-header);
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  text-align: center;
+  width: 100%;
+  margin-top: 2rem;
+  transition: transform 0.15s, box-shadow 0.15s, background-color 0.2s;
+}
+
+.mobile-contact-btn:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px #000000;
+  background: var(--clay-pink);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   8. DYNAMIC IMAGE LIGHTBOX
+   ========================================================================== */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.close-lightbox {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: none;
+  border: none;
+  font-size: 3.5rem;
+  color: #ffffff;
+  cursor: none;
+  line-height: 1;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.close-lightbox:hover {
+  transform: scale(1.1) rotate(90deg);
+  color: #ff44aa;
+}
+
+.lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition: background-color 0.2s, transform 0.2s;
+  z-index: 100;
+}
+
+.lightbox-arrow:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.lightbox-prev {
+  left: 2rem;
+}
+
+.lightbox-next {
+  right: 2rem;
+}
+
+.lightbox-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: none;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.lightbox-dot.active {
+  background: #0066ff;
+  transform: scale(1.2);
+}
+
+/* ==========================================================================
+   9. SYSTEMS CONTROL DECK PANEL
+   ========================================================================== */
+.control-deck-trigger {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1500;
+  padding: 0.8rem 1.6rem;
+  font-family: var(--font-header);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  border: 1.5px solid #111111;
+  border-radius: 20px;
+  background: var(--text-color);
+  color: #ffffff;
+  cursor: none;
+  box-shadow: 
+    inset 3px 3px 0px rgba(255, 255, 255, 0.2),
+    inset -3px -3px 0px rgba(0, 0, 0, 0.15),
+    4px 4px 0px #0066ff;
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.15s;
+}
+
+.control-deck-trigger:hover {
+  transform: translate(-3px, -3px) scale(1.02);
+  box-shadow: 6px 6px 0px #0066ff;
+}
+
+.control-deck-panel {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 320px;
+  background: var(--card-bg);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 28px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+  z-index: 2500;
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: bottom right;
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.control-deck-panel.active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   16. LIGHTBOX FILMSTRIP SCROLLBAR
+   ========================================================================== */
+.lightbox {
+  height: 100dvh;
+}
+
+.lightbox .overflow-x-auto::-webkit-scrollbar {
+  height: 4px;
+}
+.lightbox .overflow-x-auto::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+}
+.lightbox .overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #0066ff;
+  border-radius: 4px;
+}
+
+/* Prose concept styling inside lightbox */
+.prose-concept b {
+  color: #60a5fa;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   17. HERO TEXT CLIP-PATH REVEAL (Awwwards + emilkowal)
+   ========================================================================== */
+
+/* Wrapper hides overflow so clip reveal is clean */
+.text-reveal-wrap {
+  overflow: hidden;
+  display: block;
+  line-height: 1.05;
+}
+
+/* Each line starts clipped below and slides up */
+.text-reveal-line {
+  display: block;
+  transform: translateY(110%);
+  opacity: 0;
+  transition:
+    transform var(--dur-hero) var(--ease-out-expo),
+    opacity 0.3s ease;
+}
+
+.text-reveal-line.revealed {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Stagger delays for multi-line hero (design-spells: delight in sequence) */
+.text-reveal-line:nth-child(1) { transition-delay: 0ms; }
+.text-reveal-line:nth-child(2) { transition-delay: 80ms; }
+.text-reveal-line:nth-child(3) { transition-delay: 160ms; }
+
+/* ==========================================================================
+   18. LIQUID-FILL CTA BUTTON (design-spells Easter Egg)
+   ========================================================================== */
+.liquid-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform var(--dur-micro) var(--ease-spring),
+    box-shadow var(--dur-micro) ease,
+    color var(--dur-micro) ease;
+}
+
+.liquid-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-hover);
+  transform: translateY(100%);
+  transition: transform var(--dur-ui) var(--ease-out-expo);
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.liquid-btn:hover::before {
+  transform: translateY(0);
+}
+
+.liquid-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 52, 163, 0.35);
+}
+
+.liquid-btn:active {
+  transform: translateY(0);
+  transition-duration: 80ms;
+}
+
+/* ==========================================================================
+   19. MAGNETIC BUTTON PULSE RING (visual-emotion-engineer)
+   ========================================================================== */
+@keyframes ringPulse {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.magnetic-ring {
+  position: absolute;
+  inset: -8px;
+  border: 1.5px solid var(--accent);
+  border-radius: inherit;
+  animation: ringPulse 1.8s var(--ease-out-expo) infinite;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   20. BENTO CARD SHIMMER ON HOVER (design-spells)
+   ========================================================================== */
+@keyframes shimmerSweep {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%) skewX(-15deg); }
+}
+
+.bento-item-stagger::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  transform: translateX(-100%) skewX(-15deg);
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.bento-item-stagger:hover::after {
+  opacity: 1;
+  animation: shimmerSweep 0.7s var(--ease-out-expo);
+}
+
+/* ==========================================================================
+   21. HERO SECTION FADE-IN (animation-principles: enter from context)
+   ========================================================================== */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-block {
+  animation: heroFadeUp var(--dur-hero) var(--ease-out-expo) both;
+  animation-delay: 200ms;
+}
+
+/* Stats counter number animation */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.stat-counter {
+  animation: countUp var(--dur-ui) var(--ease-spring) both;
+}
+
+/* ==========================================================================
+   22. SECTION ENTRANCE ANIMATIONS (scroll-driven, awwwards)
+   ========================================================================== */
+@keyframes sectionReveal {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-animate {
+  animation: sectionReveal var(--dur-hero) var(--ease-out-expo) both;
+  animation-play-state: paused;
+}
+
+.section-animate.in-view {
+  animation-play-state: running;
+}
+
+/* ==========================================================================
+   23. KONAMI EASTER EGG — GOLDEN RAIN (design-spells)
+   ========================================================================== */
+@keyframes goldenDrop {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+.easter-coin {
+  position: fixed;
+  font-size: 24px;
+  pointer-events: none;
+  z-index: 99990;
+  animation: goldenDrop 2.5s ease-in forwards;
+  user-select: none;
+}
+
+.easter-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99989;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   24. CONTENT-VISIBILITY OPTIMIZATION (optimize skill)
+   ========================================================================== */
+#engine-section,
+#calculator-section,
+#about-section,
+#contact-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
+
+/* ==========================================================================
+   25. REDUCED MOTION (emilkowal + animation-principles — MANDATORY)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marquee-track {
+    animation: none !important;
+  }
+
+  .hero-block {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .text-reveal-line {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .scroll-progress-bar {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   26. BUTTON PRIMARY UPGRADE (colorize + liquid fill)
+   ========================================================================== */
+.primary-btn {
+  background: var(--accent);
+  transition:
+    background var(--dur-micro) ease,
+    transform var(--dur-micro) var(--ease-spring),
+    box-shadow var(--dur-micro) ease;
+}
+
+.primary-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 52, 163, 0.3);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+}
+
+/* Filter buttons with ripple (micro-interaction-pack) */
+.filter-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-btn::after {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+  transition: transform 0.5s var(--ease-out-expo), opacity 0.5s ease;
+}
+
+.filter-btn:active::after {
+  transform: scale(40);
+  opacity: 0;
+  transition: 0s;
+}
+
+/* ==========================================================================
+   27. LIGHTBOX FILMSTRIP SCROLLBAR (upgraded)
+   ========================================================================== */
+.lightbox {
+  height: 100dvh;
+}
+
+.lightbox .overflow-x-auto::-webkit-scrollbar {
+  height: 3px;
+}
+.lightbox .overflow-x-auto::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+}
+.lightbox .overflow-x-auto::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   28. CONTROL DECK TRIGGER UPGRADE
+   ========================================================================== */
+.control-deck-trigger {
+  box-shadow: 4px 4px 0px var(--accent);
+  transition: transform 0.15s var(--ease-spring), box-shadow 0.15s ease;
+}
+
+.control-deck-trigger:hover {
+  box-shadow: 6px 6px 0px var(--accent);
+}
