@@ -97,6 +97,15 @@ body {
   padding-top: 85px;
 }
 
+@media (max-width: 768px) {
+  body {
+    padding-top: 80px;
+  }
+  .nav-bar {
+    padding: 1rem 5% !important;
+  }
+}
+
 /* ==========================================================================
    0. SCROLL PROGRESS BAR (Awwwards signature)
    ========================================================================== */
@@ -898,9 +907,9 @@ body {
 /* ==========================================================================
    24. CONTENT-VISIBILITY OPTIMIZATION (optimize skill)
    ========================================================================== */
-#engine-section,
-#calculator-section,
-#about-section,
+#engine,
+#calculator,
+#bio,
 #contact-section {
   content-visibility: auto;
   contain-intrinsic-size: 0 600px;

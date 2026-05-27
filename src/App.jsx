@@ -1383,7 +1383,7 @@ export default function App() {
         <div className="flex items-center gap-4 relative z-50 pointer-events-auto">
           <a 
             href="#contact-section" 
-            className="contact-btn cursor-none font-mono font-black text-xs uppercase tracking-wider px-5 py-3 bg-[#FFCC00] text-black border border-black rounded-full shadow-[2px_2px_0px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_#000] transition-all"
+            className="contact-btn hidden md:inline-block cursor-none font-mono font-black text-xs uppercase tracking-wider px-5 py-3 bg-[#FFCC00] text-black border border-black rounded-full shadow-[2px_2px_0px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_#000] transition-all"
             onMouseEnter={() => handleCursorHover(true, 'HIRE RAHMAT')}
             onMouseLeave={() => handleCursorHover(false)}
             onClick={playSpatialClick}
@@ -1392,7 +1392,7 @@ export default function App() {
           </a>
 
           {/* Premium Apple-Style i18n Switcher Container */}
-          <div className="relative z-[2100] flex bg-gray-200/60 p-1 rounded-full font-mono text-[10px] font-bold border border-gray-300/40 pointer-events-auto">
+          <div className="hidden md:flex relative z-[2100] bg-gray-200/60 p-1 rounded-full font-mono text-[10px] font-bold border border-gray-300/40 pointer-events-auto">
             <button 
               className={`px-3 py-1 cursor-none rounded-full transition-all duration-300 pointer-events-auto ${locale === 'id' ? 'bg-white text-black shadow-sm font-black' : 'text-gray-500 hover:text-black'}`}
               onMouseEnter={() => handleCursorHover(true, 'BAHASA')}
@@ -1439,13 +1439,13 @@ export default function App() {
 
             <div className="max-w-5xl w-full mx-auto z-10 flex flex-col md:flex-row gap-6 items-stretch">
               
-              <div className="w-full md:w-3/5 glass-bento squircle-card p-8 md:p-10 flex flex-col justify-between">
+              <div className="w-full md:w-3/5 glass-bento squircle-card p-5 md:p-10 flex flex-col justify-between">
                 <div>
                   <span className="micro-spec-label font-bold text-blue-600 block mb-4">
                     {t.heroSub}
                   </span>
                   {/* Wrapped 2-line title rule */}
-                  <h1 ref={heroTitleRef} className="font-header text-5xl md:text-6xl leading-[0.9] tracking-tighter uppercase mb-6 text-gray-900">
+                  <h1 ref={heroTitleRef} className="font-header text-3xl md:text-6xl leading-[0.9] tracking-tighter uppercase mb-6 text-gray-900">
                     <span className="text-reveal-wrap">
                       <span className="text-reveal-line">MUHAMMAD</span>
                     </span>
@@ -1465,7 +1465,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="w-full md:w-2/5 glass-bento squircle-card p-8 md:p-10 flex flex-col justify-between">
+              <div className="w-full md:w-2/5 glass-bento squircle-card p-5 md:p-10 flex flex-col justify-between">
                 <div>
                   <div className="flex gap-4 mb-5 font-mono text-[10px] font-bold text-gray-500 uppercase select-none">
                     <span>◼ {t.heroCoord}</span>
@@ -1523,11 +1523,11 @@ export default function App() {
         )}
 
         {currentRoute === 'campaigns' && (
-          <section id="campaigns-section" className="section-animate py-24 px-[6%] bg-white/40 border-y border-gray-300">
+          <section id="campaigns" className="section-animate py-12 md:py-24 px-[6%] bg-white/40 border-y border-gray-300">
             <div className="section-header-block max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
               <div className="header-text-panel">
                 <span className="micro-spec-label font-bold text-blue-600 block mb-2">{t.featuredWork}</span>
-                <h2 className="font-header text-4xl md:text-6xl tracking-tight uppercase leading-[0.9] text-gray-900">{t.editorialDeck}</h2>
+                <h2 className="font-header text-2xl md:text-6xl tracking-tight uppercase leading-[0.9] text-gray-900">{t.editorialDeck}</h2>
               </div>
               <p className="max-w-md font-body text-gray-600 text-sm leading-[1.6] text-left md:text-right font-medium">
                 {t.featuredDesc}
@@ -1600,13 +1600,13 @@ export default function App() {
                       alt={title} 
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-350">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-5 md:p-8 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-350">
                       <span className="self-start text-[10px] font-extrabold tracking-widest text-black bg-yellow-400 py-1 px-3 border border-black rounded-lg mb-2 font-display">
                         {campaign.category === 'ai-photoshoot' ? 'AI PHOTOSHOOT' : (campaign.category === 'skincare' ? 'SKINCARE' : 'FASHION & EDITORIAL')}
                       </span>
                       <h3 className="font-display font-extrabold text-white text-xl mb-1">{title}</h3>
                       <p className="text-gray-300 text-xs font-body font-medium">{desc}</p>
-                      <div className="absolute top-6 right-6 py-2 px-4 rounded-xl bg-orange-600 text-white font-header text-[9px] tracking-widest shadow-[2px_2px_0px_#000]">
+                      <div className="absolute top-4 right-4 md:top-6 md:right-6 py-1.5 px-3 md:py-2 md:px-4 rounded-xl bg-orange-600 text-white font-header text-[9px] tracking-widest shadow-[2px_2px_0px_#000]">
                         {campaign.imagesCount} {t.imagesCount}
                       </div>
                     </div>
@@ -1618,12 +1618,12 @@ export default function App() {
         )}
 
         {currentRoute === 'engine' && (
-          <section id="engine-section" className="section-animate py-24 px-[6%] bg-white/40">
+          <section id="engine" className="section-animate py-12 md:py-24 px-[6%] bg-white/40">
             <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               
               <div>
                 <span className="micro-spec-label font-bold text-blue-600 block mb-2">{t.propsTitle}</span>
-                <h2 className="font-header text-4xl md:text-5xl tracking-tighter uppercase mb-6 leading-none text-gray-900">{t.propsHeading}</h2>
+                <h2 className="font-header text-2xl md:text-5xl tracking-tighter uppercase mb-6 leading-none text-gray-900">{t.propsHeading}</h2>
                 <p className="font-body text-gray-600 text-sm leading-[1.6] mb-8 font-medium">
                   {t.propsSub}
                 </p>
@@ -1654,7 +1654,7 @@ export default function App() {
 
               {/* iOS Smart Stack Bento Component */}
               <div 
-                className="squircle-card bg-gray-50 p-8 md:p-12 border border-black/5 shadow-2xl relative flex flex-col justify-between min-h-[400px] cursor-none select-none"
+                className="squircle-card bg-gray-50 p-5 md:p-12 border border-black/5 shadow-2xl relative flex flex-col justify-between min-h-[400px] cursor-none select-none"
                 onMouseEnter={() => handleCursorHover(true, 'SWIPE STACK')}
                 onMouseLeave={() => handleCursorHover(false)}
                 onClick={handleStackSwipe}
@@ -1695,12 +1695,12 @@ export default function App() {
         )}
 
         {currentRoute === 'calculator' && (
-          <section id="calculator-section" className="section-animate py-24 px-[6%] bg-white/40 border-t border-gray-300">
+          <section id="calculator" className="section-animate py-12 md:py-24 px-[6%] bg-white/40 border-t border-gray-300">
             <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               
               <div className="w-full">
                 <span className="micro-spec-label font-bold text-blue-600 block mb-2">{t.heroSys}</span>
-                <h2 className="font-header text-4xl md:text-5xl uppercase tracking-tighter mb-4 text-gray-900">{t.pricingTitle}</h2>
+                <h2 className="font-header text-2xl md:text-5xl uppercase tracking-tighter mb-4 text-gray-900">{t.pricingTitle}</h2>
                 <p className="font-body text-gray-600 text-sm leading-[1.6] mb-12 font-medium">
                   {t.pricingSub}
                 </p>
@@ -1743,7 +1743,7 @@ export default function App() {
               {/* Price Output display panel */}
               <div 
                 id="calc-price-output"
-                className="squircle-card bg-white p-8 md:p-12 border border-black/5 shadow-2xl relative flex flex-col justify-between min-h-[440px]"
+                className="squircle-card bg-white p-5 md:p-12 border border-black/5 shadow-2xl relative flex flex-col justify-between min-h-[440px]"
               >
                 <div className="absolute top-6 right-6 font-mono text-[10px] text-gray-400 font-extrabold tracking-widest">
                   LIVE BUDGET ESTIMATION
@@ -1753,7 +1753,7 @@ export default function App() {
                   <span className="font-mono text-[10px] font-black text-gray-400 tracking-wider block uppercase mb-1">TOTAL CAMPAIGN FEE</span>
                   <div className="flex items-baseline gap-2 mb-4">
                     <span className="font-mono text-xl font-bold text-gray-400">{t.priceTag}</span>
-                    <span id="price-value" className="font-header text-5xl md:text-6xl text-blue-600 tracking-tighter">
+                    <span id="price-value" className="font-header text-3xl md:text-6xl text-blue-600 tracking-tighter">
                       {calculatedPrice.toLocaleString('id-ID')}
                     </span>
                   </div>
@@ -1782,18 +1782,18 @@ export default function App() {
           </section>
         )}
         {currentRoute === 'bio' && (
-          <section id="about-section" className="section-animate py-24 px-[6%] bg-white/40 border-t border-gray-300">
+          <section id="bio" className="section-animate py-12 md:py-24 px-[6%] bg-white/40 border-t border-gray-300">
             <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
               
               <div className="flex flex-col justify-center">
                 <span className="micro-spec-label font-bold text-blue-600 block mb-2">{t.aboutSub}</span>
-                <h2 className="font-header text-4xl md:text-5xl uppercase tracking-tighter leading-none mb-6 text-gray-900">{t.aboutTitle}</h2>
+                <h2 className="font-header text-2xl md:text-5xl uppercase tracking-tighter leading-none mb-6 text-gray-900">{t.aboutTitle}</h2>
                 <p className="font-body text-gray-600 text-sm leading-[1.6] mb-8 font-medium">
                   {t.aboutBio}
                 </p>
 
                 {/* Monospace career highlights */}
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <h5 className="font-header text-xs tracking-wider text-gray-900 mb-3 uppercase">{t.skillsSys}</h5>
                     <ul className="space-y-1.5 font-body text-xs text-gray-500 font-semibold">
@@ -1871,10 +1871,10 @@ export default function App() {
         {/* ==========================================================================
            10. CONTACT SECTION
            ========================================================================== */}
-        <section id="contact-section" className="py-24 px-[6%] bg-white/40 border-t border-gray-300">
-          <div className="max-w-4xl mx-auto squircle-card bg-gray-900 text-white p-8 md:p-16 border border-white/5 shadow-2xl text-center">
+        <section id="contact-section" className="py-12 md:py-24 px-[6%] bg-white/40 border-t border-gray-300">
+          <div className="max-w-4xl mx-auto squircle-card bg-gray-900 text-white p-5 md:p-16 border border-white/5 shadow-2xl text-center">
             <span className="micro-spec-label font-bold text-yellow-400 block mb-3">GET IN TOUCH</span>
-            <h2 className="font-header text-3xl md:text-5xl uppercase tracking-tighter mb-4 leading-none">{t.contactHeading}</h2>
+            <h2 className="font-header text-2xl md:text-5xl uppercase tracking-tighter mb-4 leading-none">{t.contactHeading}</h2>
             <p className="max-w-lg mx-auto font-body text-gray-400 text-xs leading-[1.6] mb-12 font-medium">
               {t.contactSub}
             </p>
@@ -1909,72 +1909,7 @@ export default function App() {
 
       </main>
 
-      {/* ==========================================================================
-         11. DYNAMIC SYSTEM CONTROL DECK
-         ========================================================================== */}
-      <div 
-        className="control-deck-trigger cursor-none fixed bottom-8 right-8 z-[2000] py-3 px-6 bg-gray-900 text-white font-header text-[10px] tracking-widest border border-white/10 rounded-2xl shadow-[4px_4px_0px_#0066ff] select-none"
-        onMouseEnter={() => handleCursorHover(true, 'OPEN PANEL')}
-        onMouseLeave={() => handleCursorHover(false)}
-        onClick={(e) => { setControlDeckActive(true); playSpatialClick(e); }}
-      >
-        🛠️ SYSTEMS CONTROL
-      </div>
 
-      <div className={`control-deck-panel fixed bottom-8 right-8 w-80 squircle-card bg-white border border-black/10 shadow-2xl p-6 z-[3000] transition-all duration-300 origin-bottom-right scale-0 opacity-0 ${controlDeckActive ? 'scale-100 opacity-100' : ''}`}>
-        <div className="flex justify-between items-center border-b border-gray-200 pb-3 mb-4">
-          <h4 className="font-header text-xs tracking-wider text-gray-900 uppercase">CONTROL PANEL</h4>
-          <button 
-            className="cursor-none text-xl font-bold text-gray-400 hover:text-black"
-            onClick={(e) => { setControlDeckActive(false); playSpatialClick(e); }}
-          >
-            &times;
-          </button>
-        </div>
-        
-        <div className="space-y-4 font-body text-xs font-semibold text-gray-600">
-          <div>
-            <label className="block mb-1.5">WebGL Speed Multiplier: <strong className="text-blue-600 font-mono text-sm">{speedMultiplier.toFixed(1)}x</strong></label>
-            <input 
-              type="range" 
-              min="0" 
-              max="3" 
-              step="0.5" 
-              value={speedMultiplier} 
-              className="w-full cursor-none"
-              onChange={(e) => setSpeedMultiplier(parseFloat(e.target.value))}
-            />
-          </div>
-          <div>
-            <label className="block mb-1.5">Clay Radius Binding: <strong className="text-blue-600 font-mono text-sm">{radiusValue}px</strong></label>
-            <input 
-              type="range" 
-              min="8" 
-              max="48" 
-              value={radiusValue} 
-              className="w-full cursor-none"
-              onChange={(e) => {
-                setRadiusValue(e.target.value);
-                document.documentElement.style.setProperty('--clay-radius', `${e.target.value}px`);
-              }}
-            />
-          </div>
-          <div>
-            <label className="block mb-1.5">Shadow Volumetric Depth: <strong className="text-blue-600 font-mono text-sm">{depthValue}px</strong></label>
-            <input 
-              type="range" 
-              min="2" 
-              max="14" 
-              value={depthValue} 
-              className="w-full cursor-none"
-              onChange={(e) => {
-                setDepthValue(e.target.value);
-                document.documentElement.style.setProperty('--clay-shadow-depth', `${e.target.value}px`);
-              }}
-            />
-          </div>
-        </div>
-      </div>
 
       {/* ==========================================================================
          12. FULLSCREEN MOBILE OVERLAY MENU
@@ -1992,38 +1927,58 @@ export default function App() {
             &times;
           </button>
         </div>
-        <nav className="mobile-menu-links flex flex-col gap-6 items-start mt-12">
+        <nav className="mobile-menu-links flex flex-col gap-6 items-start mt-12 w-full">
           <a 
-            href="#campaigns-section" 
+            href="#campaigns" 
             className="mobile-menu-item font-header text-3xl tracking-tighter text-gray-900 uppercase"
             onClick={() => setMobileMenuOpen(false)}
           >
             CAMPAIGNS
           </a>
           <a 
-            href="#engine-section" 
+            href="#engine" 
             className="mobile-menu-item font-header text-3xl tracking-tighter text-gray-900 uppercase"
             onClick={() => setMobileMenuOpen(false)}
           >
             ADS ENGINE
           </a>
           <a 
-            href="#calculator-section" 
+            href="#calculator" 
             className="mobile-menu-item font-header text-3xl tracking-tighter text-gray-900 uppercase"
             onClick={() => setMobileMenuOpen(false)}
           >
             BUDGET SIMULATOR
           </a>
           <a 
-            href="#about-section" 
+            href="#bio" 
             className="mobile-menu-item font-header text-3xl tracking-tighter text-gray-900 uppercase"
             onClick={() => setMobileMenuOpen(false)}
           >
             BIO & STACK
           </a>
+
+          {/* Mobile Language Switcher */}
+          <div className="flex items-center justify-between w-full mt-6 pt-6 border-t border-gray-200/50">
+            <span className="font-mono text-[10px] font-bold text-gray-500 uppercase">LANGUAGE / BAHASA</span>
+            <div className="flex bg-gray-200/60 p-1 rounded-full font-mono text-[10px] font-bold border border-gray-300/40">
+              <button 
+                className={`px-4 py-1.5 rounded-full transition-all duration-300 ${locale === 'id' ? 'bg-white text-black shadow-sm font-black' : 'text-gray-500'}`}
+                onClick={(e) => { setLocale('id'); playSpatialClick(e); }}
+              >
+                ID
+              </button>
+              <button 
+                className={`px-4 py-1.5 rounded-full transition-all duration-300 ${locale === 'en' ? 'bg-white text-black shadow-sm font-black' : 'text-gray-500'}`}
+                onClick={(e) => { setLocale('en'); playSpatialClick(e); }}
+              >
+                EN
+              </button>
+            </div>
+          </div>
+
           <a 
             href="#contact-section" 
-            className="mobile-contact-btn w-full py-4 text-center bg-yellow-400 font-header text-sm text-black tracking-widest rounded-2xl shadow-[3px_3px_0px_#000000]"
+            className="mobile-contact-btn w-full mt-4 py-4 text-center bg-yellow-400 font-header text-sm text-black tracking-widest rounded-2xl shadow-[3px_3px_0px_#000000] border-2 border-black"
             onClick={() => setMobileMenuOpen(false)}
           >
             WORK WITH ME
@@ -2126,7 +2081,7 @@ export default function App() {
                   dangerouslySetInnerHTML={{ __html: lightboxConcept || '<i>No concept notes available.</i>' }}
                 />
                 {/* Thought process cards */}
-                <div className="mt-10 grid grid-cols-2 gap-4">
+                <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
                     {icon:'🎯', title:'Deterministic Pose', desc:'Every joint angle is mathematically seeded from reference libraries.'},
                     {icon:'💡', title:'Analog Light Math', desc:'CMOS & 35mm film distribution — no AI default lighting.'},
