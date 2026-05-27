@@ -77,7 +77,20 @@ const translations = {
     skillsCreative: "Creative Technology",
     contactHeading: "MULAI PROYEK KAMPANYE ANDA SEKARANG.",
     contactSub: "Jangan biarkan brand Anda tenggelam dalam lautan visual AI generik yang murahan. Hubungi saya untuk konsultasi workflow deterministik.",
-    footerLocated: "LOCATED IN SATUI, SOUTH KALIMANTAN, INDONESIA"
+    footerLocated: "LOCATED IN SATUI, SOUTH KALIMANTAN, INDONESIA",
+    soundClassic: "Klasik Cupertino",
+    soundMech: "Klik Mekanikal",
+    soundMute: "Senyap (Mute)",
+    walkthroughSub: "DEMONSTRASI ALGORITMA",
+    walkthroughTitle: "CARA KERJA AI PHOTOSHOOT",
+    walkthroughStep1: "1. KALIBRASI SENDI SKELETAL",
+    walkthroughStep2: "2. DISTRIBUSI LUMEN CAHAYA",
+    walkthroughStep3: "3. PENGUNCIAN IDENTITAS SEED",
+    walkthroughStep4: "4. KOMPOSIT LAYER TERISOLASI",
+    walkthroughStep1Desc: "Sistem memetakan koordinat sendi tubuh (skeletal landmarks) 2D/3D untuk mengunci anatomi model. Menghilangkan bug jari aneh atau distorsi pose anomali khas generator AI generik.",
+    walkthroughStep2Desc: "Menghitung derajat pancaran cahaya studio fisik dan jatuhnya bayangan di atas tekstur pori-pori kulit model berdasarkan sensor kamera Hasselblad H6D analog.",
+    walkthroughStep3Desc: "Mengunci struktur wajah model melalui 23 titik embedding vektor wajah. Menjamin sorot mata, tulang pipi, dan dagu 100% konsisten di seluruh 66 frame kampanye.",
+    walkthroughStep4Desc: "Memisahkan rendering kemasan produk skincare atau serat kain baju terpisah dari tubuh model menggunakan Photoshop layer masking, menjaga integritas logo brand.",
   },
   en: {
     heroSub: "CREATIVE PORTFOLIO 2026",
@@ -149,7 +162,20 @@ const translations = {
     skillsCreative: "Creative Technology",
     contactHeading: "LAUNCH YOUR BRAND CAMPAIGN NOW.",
     contactSub: "Prevent your commercial marketing from drowning in stock plastic AI slop. Hire me to deploy natural, deterministic workflows.",
-    footerLocated: "LOCATED IN SATUI, SOUTH KALIMANTAN, INDONESIA"
+    footerLocated: "LOCATED IN SATUI, SOUTH KALIMANTAN, INDONESIA",
+    soundClassic: "Classic Cupertino",
+    soundMech: "Mechanical Click",
+    soundMute: "Mute",
+    walkthroughSub: "ALGORITHMIC BLUEPRINT",
+    walkthroughTitle: "HOW DETAILED AI PHOTOSHOOT WORKS",
+    walkthroughStep1: "1. SKELETAL JOINT CALIBRATION",
+    walkthroughStep2: "2. STUDIO LUMEN DISTRIBUTION",
+    walkthroughStep3: "3. IDENTITY EMBEDDING WEIGHTS",
+    walkthroughStep4: "4. LAYER ISOLATION COMPOSITING",
+    walkthroughStep1Desc: "Pins specific 2D/3D coordinate matrices corresponding to human joint coordinates. Eliminates anomalous hand morphs or anatomical artifacts commonly seen in basic generative engines.",
+    walkthroughStep2Desc: "Traces precise physical light rays and casting falloffs against the 3D human pore texture model based on professional overcast strip-light references.",
+    walkthroughStep3Desc: "Injects face-embedding weights across 23 landmarks, preserving structural cheekbones, nose vectors, and gaze limits identically in all 66 frames.",
+    walkthroughStep4Desc: "Separates cosmetic labels, fabric patterns, human body, and background props into discrete layers before merging them sterilizingly in post.",
   }
 };
 
@@ -375,6 +401,68 @@ export default function App() {
   const [touchEnd, setTouchEnd] = useState(0);
   const [ripples, setRipples] = useState([]);
 
+  // --- NEW APPLE ECOSYSTEM & INTERACTIVE STATES ---
+  const [soundScheme, setSoundScheme] = useState('classic'); // 'classic', 'mechanical', 'mute'
+  const [islandActive, setIslandActive] = useState(false);
+  const [islandText, setIslandText] = useState('');
+  const [activeWatchVital, setActiveWatchVital] = useState('systems'); // 'systems', 'photoshoot', 'slop'
+  const [steppedWalkthroughIndex, setSteppedWalkthroughIndex] = useState(0);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  
+  // --- NEW INTERACTIVE & SYSTEM CUSTOMIZATION STATES ---
+  const [isControlCenterOpen, setIsControlCenterOpen] = useState(false);
+  const [volume, setVolume] = useState(70);
+  const [hapticIntensity, setHapticIntensity] = useState(80);
+  const [screenBrightness, setScreenBrightness] = useState(100);
+  const [rippleOrigin, setRippleOrigin] = useState({ x: 0, y: 0 });
+  const [isRippleActive, setIsRippleActive] = useState(false);
+  const [rippleRadius, setRippleRadius] = useState(0);
+
+  const toggleDarkModeWithRipple = (e) => {
+    const x = e ? e.clientX : window.innerWidth / 2;
+    const y = e ? e.clientY : window.innerHeight / 2;
+    
+    setRippleOrigin({ x, y });
+    setIsRippleActive(true);
+    
+    const targetRadius = Math.hypot(window.innerWidth, window.innerHeight);
+    const obj = { radius: 0 };
+    
+    gsap.to(obj, {
+      radius: targetRadius,
+      duration: 0.85,
+      ease: 'power3.out',
+      onUpdate: () => {
+        setRippleRadius(obj.radius);
+      },
+      onComplete: () => {
+        setIsDarkMode(prev => !prev);
+        setIsRippleActive(false);
+        setRippleRadius(0);
+        triggerDynamicIsland(!isDarkMode ? (locale === 'id' ? "🌙 Mode Gelap Aktif" : "🌙 Dark Mode Active") : (locale === 'id' ? "☀️ Mode Terang Aktif" : "☀️ Light Mode Active"));
+      }
+    });
+  };
+  
+  // Bento card drag-and-drop offsets (using spring physics targets)
+  const [bento1Offset, setBento1Offset] = useState({ x: 0, y: 0 });
+  const [bento2Offset, setBento2Offset] = useState({ x: 0, y: 0 });
+  const [draggingBento, setDraggingBento] = useState(null); // null, 1, or 2
+  const dragStartRef = useRef({ x: 0, y: 0 });
+  const bentoOffsetRef = useRef({ x: 0, y: 0 });
+
+  // Function to trigger the Dynamic Island notification capsule
+  const triggerDynamicIsland = (text) => {
+    setIslandText(text);
+    setIslandActive(true);
+  };
+  useEffect(() => {
+    if (islandActive) {
+      const timer = setTimeout(() => setIslandActive(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [islandActive]);
+
   // Refs for tracking DOM elements
   const webglContainer = useRef(null);
   const cursorRef = useRef(null);
@@ -390,6 +478,8 @@ export default function App() {
   // --------------------------------------------------------------------------
   const playSpatialClick = (e) => {
     try {
+      if (soundScheme === 'mute') return;
+
       // Lazily initialize audio context on user click (browser block restriction)
       if (!audioCtxRef.current) {
         audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
@@ -404,16 +494,27 @@ export default function App() {
       const gain = ctx.createGain();
       const panner = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
 
-      osc.type = 'triangle';
-      // High legibility mechanical click frequency envelope
-      osc.frequency.setValueAtTime(1400, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.08);
-
-      gain.gain.setValueAtTime(0.06, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+      let dur = 0.08;
+      if (soundScheme === 'mechanical') {
+        osc.type = 'triangle';
+        // High legibility mechanical click frequency envelope
+        osc.frequency.setValueAtTime(1400, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.06, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+        dur = 0.08;
+      } else {
+        // Cupertino Soft Chime (Sine wave, warm tone, longer decay)
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.05, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+        dur = 0.15;
+      }
 
       // Panning balance calculations mapping pixel client X to stereo channels (-1.0 to 1.0)
-      if (panner) {
+      if (panner && e && typeof e.clientX === 'number') {
         const panValue = (e.clientX / window.innerWidth) * 2 - 1;
         panner.pan.setValueAtTime(Math.max(-1, Math.min(1, panValue)), ctx.currentTime);
         osc.connect(gain);
@@ -425,11 +526,106 @@ export default function App() {
       }
 
       osc.start();
-      osc.stop(ctx.currentTime + 0.08);
+      osc.stop(ctx.currentTime + dur);
     } catch (err) {
       // Fail silently to prevent interrupting UI
     }
   };
+
+  // --- BENTO DRAG & TOUCH SPRING PHYSICS WIDGET ENGINE (iOS SIMULATOR) ---
+  const handleDragStart = (e, bentoId) => {
+    const isTouch = e.type.startsWith('touch');
+    
+    // On mobile, only start dragging if it's a long press or if touch has started.
+    // We prevent default behavior only if we are actively dragging to avoid breaking vertical scroll.
+    const pageX = isTouch ? e.touches[0].clientX : e.clientX;
+    const pageY = isTouch ? e.touches[0].clientY : e.clientY;
+    
+    setDraggingBento(bentoId);
+    dragStartRef.current = { x: pageX, y: pageY };
+    bentoOffsetRef.current = bentoId === 1 ? bento1Offset : bento2Offset;
+    
+    if (isTouch) {
+      // Small audio feedback on mobile touch start
+      playSpatialClick(e.touches[0]);
+    } else {
+      playSpatialClick(e);
+    }
+  };
+
+  const handleDragMove = (e) => {
+    if (draggingBento === null) return;
+    
+    const isTouch = e.type.startsWith('touch');
+    const pageX = isTouch ? e.touches[0].clientX : e.clientX;
+    const pageY = isTouch ? e.touches[0].clientY : e.clientY;
+    
+    const dx = pageX - dragStartRef.current.x;
+    const dy = pageY - dragStartRef.current.y;
+    
+    const newOffset = {
+      x: bentoOffsetRef.current.x + dx,
+      y: bentoOffsetRef.current.y + dy
+    };
+    
+    if (draggingBento === 1) {
+      setBento1Offset(newOffset);
+    } else {
+      setBento2Offset(newOffset);
+    }
+  };
+
+  const handleDragEnd = () => {
+    if (draggingBento === null) return;
+    
+    const bentoId = draggingBento;
+    setDraggingBento(null);
+    
+    triggerDynamicIsland(locale === 'id' ? "📱 Widget iOS Dirapikan" : "📱 iOS Widget Sorted");
+    
+    // High-performance GSAP spring physics return animation
+    if (bentoId === 1) {
+      const curX = bento1Offset.x;
+      const curY = bento1Offset.y;
+      gsap.to({ x: curX, y: curY }, {
+        x: 0,
+        y: 0,
+        duration: 0.75,
+        ease: "elastic.out(1, 0.5)",
+        onUpdate: function() {
+          setBento1Offset({ x: this.targets()[0].x, y: this.targets()[0].y });
+        }
+      });
+    } else {
+      const curX = bento2Offset.x;
+      const curY = bento2Offset.y;
+      gsap.to({ x: curX, y: curY }, {
+        x: 0,
+        y: 0,
+        duration: 0.75,
+        ease: "elastic.out(1, 0.5)",
+        onUpdate: function() {
+          setBento2Offset({ x: this.targets()[0].x, y: this.targets()[0].y });
+        }
+      });
+    }
+  };
+
+  // Add touch/mouse listeners dynamically to window during active drag to guarantee drag releases outside elements
+  useEffect(() => {
+    if (draggingBento !== null) {
+      window.addEventListener('mousemove', handleDragMove);
+      window.addEventListener('touchmove', handleDragMove, { passive: false });
+      window.addEventListener('mouseup', handleDragEnd);
+      window.addEventListener('touchend', handleDragEnd);
+    }
+    return () => {
+      window.removeEventListener('mousemove', handleDragMove);
+      window.removeEventListener('touchmove', handleDragMove);
+      window.removeEventListener('mouseup', handleDragEnd);
+      window.removeEventListener('touchend', handleDragEnd);
+    };
+  }, [draggingBento, bento1Offset, bento2Offset]);
 
   // --------------------------------------------------------------------------
   // 2. MAGNETIC CURSOR & TACTILE HOVER ENGINE
@@ -776,6 +972,26 @@ export default function App() {
     torusMesh.position.set(-6, 4, -5);
     scene.add(torusMesh);
 
+    // 8. INTERACTIVE GLASSMORPHIC PARTICLE WEB (Lightweight Points Mesh)
+    const particlesCount = 120;
+    const particlesGeometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particlesCount * 3);
+    for (let i = 0; i < particlesCount * 3; i += 3) {
+      positions[i] = (Math.random() - 0.5) * 45;
+      positions[i + 1] = (Math.random() - 0.5) * 35;
+      positions[i + 2] = (Math.random() - 0.5) * 20 - 5;
+    }
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.15,
+      color: 0x0066ff,
+      transparent: true,
+      opacity: 0.6,
+      sizeAttenuation: true
+    });
+    const particlesPoints = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particlesPoints);
+
     const sphereGeometry = new THREE.SphereGeometry(2.2, 32, 32);
     const sphereMesh = new THREE.Mesh(sphereGeometry, material);
     sphereMesh.position.set(7, -3, -4);
@@ -831,6 +1047,10 @@ export default function App() {
       // Slow orbital rotations multiplied by Control Panel speed bindings
       const currentSpeed = speedMultiplier;
       torusMesh.rotation.x = elapsedTime * 0.15 * currentSpeed;
+      
+      // Rotate points slowly
+      particlesPoints.rotation.y = elapsedTime * 0.04 * currentSpeed;
+      particlesPoints.rotation.x = elapsedTime * 0.02 * currentSpeed;
       torusMesh.rotation.y = elapsedTime * 0.2 * currentSpeed;
 
       sphereMesh.position.y = -3 + Math.sin(elapsedTime * 0.8) * 0.5 * currentSpeed;
@@ -1269,8 +1489,18 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden w-full max-w-full bg-bgCream">
+    <div className={`relative min-h-screen overflow-x-hidden w-full max-w-full bg-bgCream ${isDarkMode ? 'dark-mode' : ''}`}>
       
+      {/* ==========================================================================
+         APPLE ECOSYSTEM: DYNAMIC ISLAND NOTIFICATION PILL
+         ========================================================================== */}
+      <div className={`dynamic-island-container fixed left-1/2 -translate-x-1/2 z-[9999] pointer-events-none ${islandActive ? 'active' : ''}`}>
+        <div className="dynamic-island bg-black text-white px-6 py-3 rounded-full flex items-center justify-center gap-3 shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/10 font-mono text-[9px] font-black tracking-widest uppercase whitespace-nowrap">
+          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+          <span>{islandText}</span>
+        </div>
+      </div>
+
       {/* SCROLL PROGRESS BAR (Awwwards signature) */}
       <div
         className="scroll-progress-bar"
@@ -1437,9 +1667,19 @@ export default function App() {
               MUHAMMAD RAHMAT HIDAYAT
             </div>
 
-            <div className="max-w-5xl w-full mx-auto z-10 flex flex-col md:flex-row gap-6 items-stretch">
+            <div className="max-w-5xl w-full mx-auto z-10 flex flex-col md:flex-row gap-6 items-stretch select-none">
               
-              <div className="w-full md:w-3/5 glass-bento squircle-card p-5 md:p-10 flex flex-col justify-between">
+              <div 
+                className="w-full md:w-3/5 glass-bento squircle-card p-5 md:p-10 flex flex-col justify-between cursor-grab active:cursor-grabbing transition-shadow duration-300"
+                style={{
+                  transform: `translate(${bento1Offset.x}px, ${bento1Offset.y}px)`,
+                  zIndex: draggingBento === 1 ? 50 : 10,
+                  touchAction: 'none',
+                  boxShadow: draggingBento === 1 ? '0 30px 60px rgba(0,0,0,0.15)' : 'none'
+                }}
+                onMouseDown={(e) => handleDragStart(e, 1)}
+                onTouchStart={(e) => handleDragStart(e, 1)}
+              >
                 <div>
                   <span className="micro-spec-label font-bold text-blue-600 block mb-4">
                     {t.heroSub}
@@ -1465,7 +1705,17 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="w-full md:w-2/5 glass-bento squircle-card p-5 md:p-10 flex flex-col justify-between">
+              <div 
+                className="w-full md:w-2/5 glass-bento squircle-card p-5 md:p-10 flex flex-col justify-between cursor-grab active:cursor-grabbing transition-shadow duration-300"
+                style={{
+                  transform: `translate(${bento2Offset.x}px, ${bento2Offset.y}px)`,
+                  zIndex: draggingBento === 2 ? 50 : 10,
+                  touchAction: 'none',
+                  boxShadow: draggingBento === 2 ? '0 30px 60px rgba(0,0,0,0.15)' : 'none'
+                }}
+                onMouseDown={(e) => handleDragStart(e, 2)}
+                onTouchStart={(e) => handleDragStart(e, 2)}
+              >
                 <div>
                   <div className="flex gap-4 mb-5 font-mono text-[10px] font-bold text-gray-500 uppercase select-none">
                     <span>◼ {t.heroCoord}</span>
@@ -1691,6 +1941,205 @@ export default function App() {
               </div>
 
             </div>
+
+            {/* ==========================================================================
+               7. STEP-BY-STEP MATHEMATICAL AI PHOTOSHOOT SYNTHESIS WALKTHROUGH
+               ========================================================================== */}
+            <div className="max-w-6xl mx-auto border-t border-gray-300 dark:border-white/10 pt-12 mt-12 select-none">
+              <span className="micro-spec-label font-bold text-blue-600 block mb-2">{t.walkthroughSub}</span>
+              <h3 className="font-header text-xl md:text-3xl uppercase tracking-tighter text-gray-900 dark:text-white mb-6">
+                {t.walkthroughTitle}
+              </h3>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+                {/* Left: Step navigation list */}
+                <div className="flex flex-col gap-2.5 justify-center">
+                  {[0, 1, 2, 3].map((idx) => {
+                    const stepNum = idx + 1;
+                    const titleKey = `walkthroughStep${stepNum}`;
+                    const descKey = `walkthroughStep${stepNum}Desc`;
+                    const isActive = steppedWalkthroughIndex === idx;
+                    
+                    return (
+                      <button 
+                        key={idx}
+                        onClick={() => {
+                          setSteppedWalkthroughIndex(idx);
+                          playSpatialClick({ clientX: window.innerWidth / 2 });
+                          triggerDynamicIsland(locale === 'id' ? `🔬 Langkah Walkthrough: ${idx + 1}` : `🔬 Walkthrough Step: ${idx + 1}`);
+                        }}
+                        onMouseEnter={() => handleCursorHover(true, `STEP ${idx + 1}`)}
+                        onMouseLeave={() => handleCursorHover(false)}
+                        className={`cursor-none text-left p-4.5 rounded-2.5xl border transition-all duration-300 flex flex-col justify-between ${
+                          isActive 
+                            ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/10' 
+                            : 'bg-white dark:bg-[#1c1b18] border-black/10 dark:border-white/5 hover:border-blue-500/50 text-gray-800 dark:text-gray-250'
+                        }`}
+                      >
+                        <h4 className="font-header text-xs tracking-wider uppercase mb-1 font-black">
+                          {t[titleKey]}
+                        </h4>
+                        <p className={`font-body text-[10px] leading-relaxed font-semibold ${isActive ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'}`}>
+                          {t[descKey]}
+                        </p>
+                      </button>
+                    );
+                  })}
+                </div>
+                
+                {/* Right: Dynamic visual blueprint screen (2 columns wide) */}
+                <div className="lg:col-span-2 squircle-card bg-gray-950 p-6 flex flex-col justify-between h-[380px] relative border border-white/10 shadow-2xl overflow-hidden">
+                  <div className="absolute top-5 right-5 font-mono text-[8px] text-gray-500 font-extrabold tracking-widest flex items-center gap-1.5 z-10">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                    LIVE ALGORITHMIC BLUEPRINT
+                  </div>
+                  
+                  {/* Glowing frame corners */}
+                  <div className="absolute top-4 left-4 w-3 h-3 border-t border-l border-gray-700 pointer-events-none" />
+                  <div className="absolute top-4 right-4 w-3 h-3 border-t border-r border-gray-700 pointer-events-none" />
+                  <div className="absolute bottom-4 left-4 w-3 h-3 border-b border-l border-gray-700 pointer-events-none" />
+                  <div className="absolute bottom-4 right-4 w-3 h-3 border-b border-r border-gray-700 pointer-events-none" />
+                  
+                  {/* Dynamic Visual Content */}
+                  <div className="flex-1 flex items-center justify-center relative select-none">
+                    {/* Grid overlay */}
+                    <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-[0.04] pointer-events-none">
+                      <div className="border-r border-b border-white" />
+                      <div className="border-r border-b border-white" />
+                      <div className="border-b border-white" />
+                      <div className="border-r border-b border-white" />
+                      <div className="border-r border-b border-white" />
+                      <div className="border-b border-white" />
+                      <div className="border-r border-white" />
+                      <div className="border-r border-white" />
+                      <div className="border-transparent" />
+                    </div>
+                    
+                    {/* SVG Blueprint */}
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 250">
+                      {steppedWalkthroughIndex === 0 && (
+                        <g className="animate-[fadeIn_0.35s_ease-out]">
+                          {/* Joint coordinates & nodes */}
+                          <line x1="200" y1="50" x2="200" y2="100" stroke="#00E8FC" strokeWidth="1" strokeDasharray="3 3" />
+                          <line x1="200" y1="65" x2="160" y2="85" stroke="#00E8FC" strokeWidth="1" />
+                          <line x1="200" y1="65" x2="240" y2="85" stroke="#00E8FC" strokeWidth="1" />
+                          <line x1="160" y1="85" x2="150" y2="120" stroke="#00E8FC" strokeWidth="1" />
+                          <line x1="240" y1="85" x2="250" y2="120" stroke="#00E8FC" strokeWidth="1" />
+                          <line x1="200" y1="100" x2="180" y2="160" stroke="#00E8FC" strokeWidth="1" />
+                          <line x1="200" y1="100" x2="220" y2="160" stroke="#00E8FC" strokeWidth="1" />
+                          
+                          <circle cx="200" cy="50" r="4.5" fill="#00E8FC" className="animate-pulse" />
+                          <circle cx="200" cy="50" r="2.5" fill="#00E8FC" />
+                          <text x="210" y="53" fill="#00E8FC" className="font-mono text-[7px] font-bold">NODE_0 (HEAD) [LOCKED_OK]</text>
+                          
+                          <circle cx="160" cy="85" r="2.5" fill="#00E8FC" />
+                          <text x="105" y="82" fill="#00E8FC" className="font-mono text-[7px]">L_SH: 160,85</text>
+                          
+                          <circle cx="240" cy="85" r="2.5" fill="#00E8FC" />
+                          <text x="246" y="82" fill="#00E8FC" className="font-mono text-[7px]">R_SH: 240,85</text>
+                          
+                          <circle cx="150" cy="120" r="3.5" fill="#FF1E56" />
+                          <text x="90" y="123" fill="#FF1E56" className="font-mono text-[7px] font-bold">NODE_3 (L_ELBOW)</text>
+                          
+                          <circle cx="250" cy="120" r="3.5" fill="#FF1E56" />
+                          <text x="256" y="123" fill="#FF1E56" className="font-mono text-[7px] font-bold">NODE_4 (R_ELBOW)</text>
+                          
+                          <text x="15" y="235" fill="#00E8FC" className="font-mono text-[8px] font-bold uppercase tracking-wider">
+                            SYSTEM: 2D/3D LANDMARKS CALIBRATED [DETERMINISTIC_POSE_OK]
+                          </text>
+                        </g>
+                      )}
+                      {steppedWalkthroughIndex === 1 && (
+                        <g className="animate-[fadeIn_0.35s_ease-out]">
+                          {/* Studio lighting */}
+                          <path d="M 50,30 L 150,90 L 90,140 Z" fill="rgba(255, 170, 0, 0.08)" stroke="rgba(255, 170, 0, 0.2)" strokeWidth="1" />
+                          <line x1="50" y1="30" x2="200" y2="100" stroke="#FFAA00" strokeWidth="1" strokeDasharray="4 4" />
+                          <line x1="90" y1="140" x2="200" y2="100" stroke="#FFAA00" strokeWidth="0.8" strokeDasharray="3 3" />
+                          
+                          <circle cx="50" cy="30" r="5" fill="#FFAA00" />
+                          <circle cx="50" cy="30" r="10" stroke="#FFAA00" strokeWidth="1" fill="transparent" className="animate-ping" />
+                          <text x="65" y="33" fill="#FFAA00" className="font-mono text-[7px] font-bold">LIGHT_EMITTER: OVERCAST STRIP (1.4 lm)</text>
+                          
+                          <circle cx="200" cy="100" r="4" fill="#FFAA00" />
+                          <line x1="200" y1="100" x2="310" y2="60" stroke="#FFAA00" strokeWidth="0.8" />
+                          <text x="210" y="103" fill="#FFAA00" className="font-mono text-[7px]">REFL: dermis micro-pore mapping</text>
+                          
+                          <text x="15" y="235" fill="#FFAA00" className="font-mono text-[8px] font-bold uppercase tracking-wider">
+                            LUMEN ALGORITHM: PHYSICAL STUDIO LIGHTING TRACED [CMOS_NO_SLOP]
+                          </text>
+                        </g>
+                      )}
+                      {steppedWalkthroughIndex === 2 && (
+                        <g className="animate-[fadeIn_0.35s_ease-out]">
+                          {/* Face landmarks target */}
+                          <circle cx="200" cy="90" r="26" stroke="#00FF87" strokeWidth="0.8" fill="transparent" strokeDasharray="4 4" />
+                          <circle cx="200" cy="90" r="12" stroke="#00FF87" strokeWidth="1.2" fill="transparent" />
+                          
+                          <line x1="200" y1="90" x2="165" y2="90" stroke="#00FF87" strokeWidth="0.8" />
+                          <line x1="200" y1="90" x2="200" y2="65" stroke="#00FF87" strokeWidth="0.8" />
+                          
+                          <circle cx="190" cy="85" r="2" fill="#00FF87" />
+                          <circle cx="210" cy="85" r="2" fill="#00FF87" />
+                          
+                          {[
+                            {x:200, y:65}, {x:188, y:68}, {x:212, y:68},
+                            {x:178, y:80}, {x:222, y:80}, {x:190, y:85},
+                            {x:210, y:85}, {x:200, y:83}, {x:200, y:92},
+                            {x:192, y:98}, {x:208, y:98}, {x:200, y:102},
+                            {x:175, y:90}, {x:225, y:90}, {x:185, y:106},
+                            {x:215, y:106}, {x:200, y:114}
+                          ].map((pt, pIdx) => (
+                            <circle key={pIdx} cx={pt.x} cy={pt.y} r="1.5" fill="#00FF87" />
+                          ))}
+                          
+                          <text x="235" y="70" fill="#00FF87" className="font-mono text-[7px] font-bold">FACE_LANDMARK: 23 WEIGHTS [LOCKED]</text>
+                          <text x="235" y="80" fill="#00FF87" className="font-mono text-[7px]">GAZE_LIMIT: 24° LIMITS</text>
+                          
+                          <text x="15" y="235" fill="#00FF87" className="font-mono text-[8px] font-bold uppercase tracking-wider">
+                            IDENTITY EMBEDDING: CHEEKBONE & NOSE VELEMENTS SECURED [100% CONSISTENT]
+                          </text>
+                        </g>
+                      )}
+                      {steppedWalkthroughIndex === 3 && (
+                        <g className="animate-[fadeIn_0.35s_ease-out]">
+                          {/* Compositing layers */}
+                          <polygon points="120,70 280,70 310,110 150,110" fill="rgba(255, 30, 86, 0.08)" stroke="#FF1E56" strokeWidth="0.8" />
+                          <text x="135" y="86" fill="#FF1E56" className="font-mono text-[7px] font-bold">LAYER_01: STUDIO BACKGROUND & SET PROPS</text>
+                          
+                          <polygon points="120,110 280,110 310,150 150,150" fill="rgba(0, 232, 252, 0.08)" stroke="#00E8FC" strokeWidth="0.8" />
+                          <text x="135" y="126" fill="#00E8FC" className="font-mono text-[7px] font-bold">LAYER_02: HUMAN DERMIS INTEGRITY MESH</text>
+                          
+                          <polygon points="120,150 280,150 310,190 150,190" fill="rgba(0, 255, 135, 0.08)" stroke="#00FF87" strokeWidth="0.8" />
+                          <text x="135" y="166" fill="#00FF87" className="font-mono text-[7px] font-bold">LAYER_03: SKINCARE LABELS & FABRIC TEXTURES</text>
+                          
+                          <text x="15" y="235" fill="#FF1E56" className="font-mono text-[8px] font-bold uppercase tracking-wider">
+                            COMPOSITING PIPELINE: MASK LAYERS SPLIT AND RENDERED [NO_SLOP_TEXTURES]
+                          </text>
+                        </g>
+                      )}
+                    </svg>
+                    
+                    {/* Simulated Viewfinder camera borders */}
+                    <div className="absolute inset-3 border border-white/10 rounded-lg pointer-events-none flex flex-col justify-between p-3">
+                      <div className="flex justify-between font-mono text-[7px] text-gray-500 font-bold leading-none">
+                        <span>SYS ●</span>
+                        <span>[RAW] 120 FPS</span>
+                      </div>
+                      <div className="flex justify-between font-mono text-[7px] text-gray-500 font-bold items-end leading-none">
+                        <span>F/4.0 1/125s</span>
+                        <span>ISO 100</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="border-t border-white/10 pt-3 flex justify-between items-center text-gray-500 font-mono text-[9px] select-none">
+                    <span>SECTOR_0{steppedWalkthroughIndex + 1}_ACTIVE_BLUEPRINT</span>
+                    <span className="text-blue-500 font-black">HUMANIZED SYSTEMS</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </section>
         )}
 
@@ -1791,6 +2240,110 @@ export default function App() {
                 <p className="font-body text-gray-600 text-sm leading-[1.6] mb-8 font-medium">
                   {t.aboutBio}
                 </p>
+
+                {/* 5. Concentric SVG Rings (Apple Watch Health Style Vitals) */}
+                <div className="flex flex-col sm:flex-row items-center gap-6 my-8 bg-gray-100/50 dark:bg-[#1a1917]/50 p-5 rounded-3xl border border-black/5 dark:border-white/5 shadow-sm">
+                  <div className="relative w-32 h-32 flex-shrink-0 select-none">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 200 200">
+                      {/* Ring 1: Systems (Outer) */}
+                      <circle cx="100" cy="100" r="80" stroke="rgba(255, 30, 86, 0.12)" strokeWidth="18" fill="transparent" />
+                      <circle 
+                        cx="100" cy="100" r="80" 
+                        stroke="#FF1E56" strokeWidth="18" fill="transparent" 
+                        strokeDasharray={2 * Math.PI * 80}
+                        strokeDashoffset={2 * Math.PI * 80 * (1 - 0.92)}
+                        strokeLinecap="round"
+                        className="cursor-none transition-all duration-300 hover:opacity-85"
+                        onClick={() => {
+                          setActiveWatchVital('systems');
+                          playSpatialClick({ clientX: window.innerWidth / 2 });
+                          triggerDynamicIsland(locale === 'id' ? "❤️ Vital: Sertifikasi BNSP 92%" : "❤️ Vital: BNSP Systems Analyst 92%");
+                        }}
+                      />
+                      
+                      {/* Ring 2: AI Tech (Middle) */}
+                      <circle cx="100" cy="100" r="60" stroke="rgba(0, 255, 135, 0.12)" strokeWidth="18" fill="transparent" />
+                      <circle 
+                        cx="100" cy="100" r="60" 
+                        stroke="#00FF87" strokeWidth="18" fill="transparent" 
+                        strokeDasharray={2 * Math.PI * 60}
+                        strokeDashoffset={2 * Math.PI * 60 * (1 - 0.85)}
+                        strokeLinecap="round"
+                        className="cursor-none transition-all duration-300 hover:opacity-85"
+                        onClick={() => {
+                          setActiveWatchVital('photoshoot');
+                          playSpatialClick({ clientX: window.innerWidth / 2 });
+                          triggerDynamicIsland(locale === 'id' ? "💚 Vital: IBM AI Granite 85%" : "💚 Vital: IBM Granite AI 85%");
+                        }}
+                      />
+                      
+                      {/* Ring 3: Slop Limit (Inner) */}
+                      <circle cx="100" cy="100" r="40" stroke="rgba(0, 232, 252, 0.12)" strokeWidth="18" fill="transparent" />
+                      <circle 
+                        cx="100" cy="100" r="40" 
+                        stroke="#00E8FC" strokeWidth="18" fill="transparent" 
+                        strokeDasharray={2 * Math.PI * 40}
+                        strokeDashoffset={2 * Math.PI * 40 * (1 - 0.95)}
+                        strokeLinecap="round"
+                        className="cursor-none transition-all duration-300 hover:opacity-85"
+                        onClick={() => {
+                          setActiveWatchVital('slop');
+                          playSpatialClick({ clientX: window.innerWidth / 2 });
+                          triggerDynamicIsland(locale === 'id' ? "💙 Vital: Bebas Slop AI 95%" : "💙 Vital: Zero AI Slop 95%");
+                        }}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none font-mono text-[9px] font-black text-gray-500 dark:text-gray-400">
+                      {activeWatchVital === 'systems' ? '❤️ SYS' : activeWatchVital === 'photoshoot' ? '💚 AI' : '💙 SLOP'}
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 flex flex-col justify-center text-left">
+                    <span className="font-mono text-[8px] font-black text-gray-400 dark:text-gray-500 tracking-wider block uppercase mb-1">APPLE WATCH BIO VITALS</span>
+                    {activeWatchVital === 'systems' && (
+                      <div className="animate-[fadeIn_0.3s_ease-out]">
+                        <h4 className="font-display font-extrabold text-sm text-gray-900 dark:text-white flex items-center gap-1.5 leading-none">
+                          <span className="w-2 h-2 rounded-full bg-[#FF1E56]" />
+                          BNSP Systems Analyst <span className="text-[#FF1E56] font-mono font-bold text-xs">92%</span>
+                        </h4>
+                        <p className="font-body text-[10px] text-gray-500 dark:text-gray-400 mt-1 leading-relaxed font-semibold">
+                          {locale === 'id' 
+                            ? "Akurasi pemodelan database Dapodik Satui dan relasional komparatif." 
+                            : "Relational database schema modeling and normalization certification."}
+                        </p>
+                      </div>
+                    )}
+                    {activeWatchVital === 'photoshoot' && (
+                      <div className="animate-[fadeIn_0.3s_ease-out]">
+                        <h4 className="font-display font-extrabold text-sm text-gray-900 dark:text-white flex items-center gap-1.5 leading-none">
+                          <span className="w-2 h-2 rounded-full bg-[#00FF87]" />
+                          IBM Granite AI Suite <span className="text-[#00FF87] font-mono font-bold text-xs">85%</span>
+                        </h4>
+                        <p className="font-body text-[10px] text-gray-500 dark:text-gray-400 mt-1 leading-relaxed font-semibold">
+                          {locale === 'id' 
+                            ? "Konsistensi pembagian token prompt dan penguncian latent seeds." 
+                            : "Deterministic latent seed distribution and prompt token lock parameters."}
+                        </p>
+                      </div>
+                    )}
+                    {activeWatchVital === 'slop' && (
+                      <div className="animate-[fadeIn_0.3s_ease-out]">
+                        <h4 className="font-display font-extrabold text-sm text-gray-900 dark:text-white flex items-center gap-1.5 leading-none">
+                          <span className="w-2 h-2 rounded-full bg-[#00E8FC]" />
+                          Zero AI Slop Metric <span className="text-[#00E8FC] font-mono font-bold text-xs">95%</span>
+                        </h4>
+                        <p className="font-body text-[10px] text-gray-500 dark:text-gray-400 mt-1 leading-relaxed font-semibold">
+                          {locale === 'id' 
+                            ? "Keberhasilan eliminasi smoothing airbrush wajah plastik anomali." 
+                            : "Elimination of digital plastic smoothing skin and anatomically anomalous limbs."}
+                        </p>
+                      </div>
+                    )}
+                    <span className="font-mono text-[8px] text-gray-400 dark:text-gray-500 uppercase mt-2.5 block leading-none font-medium select-none">
+                      {locale === 'id' ? "*KLIK LINGKARAN UNTUK DETAIL VITAL BARU" : "*TAP CIRCLES TO CHOOSE VITAL DETAIL"}
+                    </span>
+                  </div>
+                </div>
 
                 {/* Monospace career highlights */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -2098,6 +2651,279 @@ export default function App() {
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* ==========================================================================
+         APPLE ECOSYSTEM: macOS INTERACTIVE DOCK NAVIGATION (magnification zoom math)
+         ========================================================================== */}
+      {(() => {
+        const dockRef = useRef(null);
+        const [scales, setScales] = useState([1, 1, 1, 1, 1, 1]);
+        
+        const handleMouseMove = (e) => {
+          if (!dockRef.current) return;
+          const icons = dockRef.current.children;
+          const mouseX = e.clientX;
+          
+          const newScales = [];
+          for (let i = 0; i < icons.length; i++) {
+            const rect = icons[i].getBoundingClientRect();
+            const iconCenterX = rect.left + rect.width / 2;
+            const distance = Math.abs(mouseX - iconCenterX);
+            
+            const maxDistance = 150;
+            let scale = 1;
+            if (distance < maxDistance) {
+              scale = 1 + 0.7 * (1 - distance / maxDistance);
+            }
+            newScales.push(scale);
+          }
+          setScales(newScales);
+        };
+        
+        const handleMouseLeave = () => {
+          setScales([1, 1, 1, 1, 1, 1]);
+        };
+        
+        const dockItems = [
+          { label: 'Home', icon: '🏠', route: 'home' },
+          { label: 'Campaigns', icon: '🖼️', route: 'campaigns' },
+          { label: 'Engine', icon: '⚙️', route: 'engine' },
+          { label: 'Budget', icon: '📊', route: 'calculator' },
+          { label: 'Bio', icon: '👤', route: 'bio' },
+          { label: 'Control Center', icon: '🎛️', action: () => setIsControlCenterOpen(prev => !prev) }
+        ];
+        
+        return (
+          <div 
+            ref={dockRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[4000] hidden md:flex items-end gap-3 px-5 py-2.5 bg-white/20 dark:bg-black/20 backdrop-blur-2xl border border-white/20 dark:border-white/10 rounded-[28px] shadow-[0_20px_50px_rgba(0,0,0,0.25)] select-none pointer-events-auto h-[60px]"
+          >
+            {dockItems.map((item, idx) => (
+              <a 
+                key={idx}
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  playSpatialClick(e);
+                  if (item.action) {
+                    item.action();
+                  } else if (item.route) {
+                    setCurrentRoute(item.route);
+                    triggerDynamicIsland(locale === 'id' ? `📍 Navigasi ke ${item.label}` : `📍 Navigated to ${item.label}`);
+                  }
+                }}
+                onMouseEnter={() => handleCursorHover(true, item.label.toUpperCase())}
+                onMouseLeave={() => handleCursorHover(false)}
+                className="cursor-none flex flex-col items-center justify-end transition-all duration-100 ease-out origin-bottom"
+                style={{
+                  width: `${36 * scales[idx]}px`,
+                  height: `${36 * scales[idx]}px`,
+                  fontSize: `${18 * scales[idx]}px`,
+                }}
+              >
+                <span className="mb-0.5 leading-none">{item.icon}</span>
+              </a>
+            ))}
+          </div>
+        );
+      })()}
+
+      {/* ==========================================================================
+         APPLE ECOSYSTEM: FLOATING CONTROL CENTER TOGGLE BUTTON
+         ========================================================================== */}
+      <button 
+        onClick={(e) => {
+          setIsControlCenterOpen(prev => !prev);
+          playSpatialClick(e);
+        }}
+        onMouseEnter={() => handleCursorHover(true, 'CONTROL PANEL')}
+        onMouseLeave={() => handleCursorHover(false)}
+        className="fixed bottom-24 right-6 z-[3999] md:bottom-28 w-11 h-11 rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-lg flex items-center justify-center cursor-none hover:scale-105 active:scale-95 transition-all text-sm pointer-events-auto"
+        aria-label="Toggle Control Center"
+      >
+        🎛️
+      </button>
+
+      {/* ==========================================================================
+         APPLE ECOSYSTEM: LIQUID CLIP PATH DARK MODE RIPPLE OVERLAY
+         ========================================================================== */}
+      {isRippleActive && (
+        <div 
+          className="fixed inset-0 pointer-events-none z-[8000] bg-[#0d0c0a] dark-mode-ripple"
+          style={{
+            clipPath: `circle(${rippleRadius}px at ${rippleOrigin.x}px ${rippleOrigin.y}px)`,
+          }}
+        />
+      )}
+
+      {/* ==========================================================================
+         APPLE ECOSYSTEM: VOLUMETRIC iOS CONTROL CENTER PANEL OVERLAY
+         ========================================================================== */}
+      {isControlCenterOpen && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[4500] flex items-center justify-center p-4 select-none animate-[fadeIn_0.25s_ease-out] pointer-events-auto" onClick={() => setIsControlCenterOpen(false)}>
+          <div 
+            className="w-full max-w-[320px] bg-white/90 dark:bg-[#1a1917]/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 p-5 rounded-[30px] shadow-2xl flex flex-col gap-5 relative animate-[scaleUp_0.35s_cubic-bezier(0.19,1,0.22,1)]"
+            onClick={(e) => e.stopPropagation()}
+            style={{boxShadow: '0 30px 60px rgba(0,0,0,0.15)'}}
+          >
+            <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5">
+              <div>
+                <span className="font-mono text-[8px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest block mb-0.5">iOS SYSTEM CONTROLS</span>
+                <h4 className="font-header text-xs tracking-wider text-gray-900 dark:text-white uppercase font-black">CONTROL CENTER</h4>
+              </div>
+              <button 
+                onClick={(e) => {
+                  setIsControlCenterOpen(false);
+                  playSpatialClick(e);
+                }}
+                className="cursor-none w-6 h-6 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-400 flex items-center justify-center font-bold text-xs"
+              >
+                &times;
+              </button>
+            </div>
+
+            {/* Slider / Toggle Blocks */}
+            <div className="flex flex-col gap-3.5">
+              {/* Dark Mode box */}
+              <div 
+                onClick={toggleDarkModeWithRipple}
+                className="p-3.5 rounded-2.5xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex items-center justify-between cursor-none hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-lg leading-none">{isDarkMode ? '🌙' : '☀️'}</span>
+                  <div className="text-left">
+                    <span className="font-mono text-[7px] font-bold text-gray-400 dark:text-gray-500 block leading-none">SYSTEM THEME</span>
+                    <span className="font-display font-extrabold text-xs text-gray-950 dark:text-white">
+                      {isDarkMode ? (locale === 'id' ? 'Mode Gelap' : 'Dark Mode') : (locale === 'id' ? 'Mode Terang' : 'Light Mode')}
+                    </span>
+                  </div>
+                </div>
+                <div className={`w-9 h-5 rounded-full p-0.5 transition-colors ${isDarkMode ? 'bg-blue-600' : 'bg-gray-300'}`}>
+                  <div className={`w-4 h-4 rounded-full bg-white shadow-md transform transition-transform ${isDarkMode ? 'translate-x-4' : 'translate-x-0'}`} />
+                </div>
+              </div>
+
+              {/* Sound Schemes Box */}
+              <div className="p-3.5 rounded-2.5xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex flex-col gap-2">
+                <span className="font-mono text-[7px] font-bold text-gray-400 dark:text-gray-500 uppercase block tracking-wider text-left">// AUDITORY HAPTICS SOUNDS</span>
+                <div className="grid grid-cols-3 gap-1 bg-gray-200/50 dark:bg-black/20 p-0.5 rounded-xl border border-black/5 dark:border-white/5">
+                  {[
+                    { key: 'classic', label: locale === 'id' ? 'Klasik' : 'Classic' },
+                    { key: 'mechanical', label: locale === 'id' ? 'Klik' : 'Click' },
+                    { key: 'mute', label: locale === 'id' ? 'Senyap' : 'Mute' }
+                  ].map((sch) => (
+                    <button 
+                      key={sch.key}
+                      onClick={(e) => {
+                        setSoundScheme(sch.key);
+                        if (sch.key !== 'mute') {
+                          setTimeout(() => {
+                            try {
+                              if (!audioCtxRef.current) {
+                                audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+                              }
+                              const ctx = audioCtxRef.current;
+                              if (ctx.state === 'suspended') ctx.resume();
+                              const osc = ctx.createOscillator();
+                              const gain = ctx.createGain();
+                              osc.type = sch.key === 'mechanical' ? 'triangle' : 'sine';
+                              osc.frequency.setValueAtTime(sch.key === 'mechanical' ? 1400 : 880, ctx.currentTime);
+                              gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                              gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+                              osc.connect(gain);
+                              gain.connect(ctx.destination);
+                              osc.start();
+                              osc.stop(ctx.currentTime + 0.1);
+                            } catch (_) {}
+                          }, 50);
+                        }
+                        triggerDynamicIsland(locale === 'id' ? `🔊 Skema Suara: ${sch.label}` : `🔊 Sound Scheme: ${sch.label}`);
+                      }}
+                      className={`cursor-none py-1 rounded-lg text-[8px] font-mono font-bold transition-all ${
+                        soundScheme === sch.key 
+                          ? 'bg-white dark:bg-[#1a1917] text-blue-600 dark:text-white shadow-sm' 
+                          : 'text-gray-500 hover:text-black dark:hover:text-white'
+                      }`}
+                    >
+                      {sch.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Sliders Grid */}
+              <div className="grid grid-cols-2 gap-3">
+                {/* Clay Brightness Slider */}
+                <div className="p-3.5 rounded-2.5xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex flex-col justify-between items-stretch h-24">
+                  <div className="flex justify-between items-center mb-1 leading-none">
+                    <span className="font-mono text-[7px] font-bold text-gray-400 dark:text-gray-500">BRIGHT</span>
+                    <span className="font-mono text-[8px] font-bold text-gray-700 dark:text-gray-300">{screenBrightness}%</span>
+                  </div>
+                  <div className="relative flex-1 bg-gray-200 dark:bg-black/30 rounded-xl overflow-hidden border border-black/5 dark:border-white/5">
+                    <div 
+                      className="absolute bottom-0 left-0 right-0 bg-yellow-400/80 transition-all duration-75"
+                      style={{ height: `${screenBrightness}%` }}
+                    />
+                    <input 
+                      type="range" 
+                      min="30" 
+                      max="100" 
+                      value={screenBrightness} 
+                      onChange={(e) => {
+                        setScreenBrightness(Number(e.target.value));
+                        const wrapperEl = document.getElementById('header-nav')?.parentElement;
+                        if (wrapperEl) {
+                          wrapperEl.style.filter = `brightness(${0.4 + (Number(e.target.value) / 100) * 0.6})`;
+                        }
+                      }}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-none"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-xs">☀️</div>
+                  </div>
+                </div>
+
+                {/* Clay Volume Slider */}
+                <div className="p-3.5 rounded-2.5xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex flex-col justify-between items-stretch h-24">
+                  <div className="flex justify-between items-center mb-1 leading-none">
+                    <span className="font-mono text-[7px] font-bold text-gray-400 dark:text-gray-500">VOLUME</span>
+                    <span className="font-mono text-[8px] font-bold text-gray-700 dark:text-gray-300">{volume}%</span>
+                  </div>
+                  <div className="relative flex-1 bg-gray-200 dark:bg-black/30 rounded-xl overflow-hidden border border-black/5 dark:border-white/5">
+                    <div 
+                      className="absolute bottom-0 left-0 right-0 bg-blue-500/80 transition-all duration-75"
+                      style={{ height: `${volume}%` }}
+                    />
+                    <input 
+                      type="range" 
+                      min="0" 
+                      max="100" 
+                      value={volume} 
+                      onChange={(e) => setVolume(Number(e.target.value))}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-none"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-xs">🔊</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Test Notification Button */}
+            <button 
+              onClick={(e) => {
+                playSpatialClick(e);
+                triggerDynamicIsland(locale === 'id' ? "⚡ Sistem Terkalibrasi" : "⚡ Calibration Completed");
+              }}
+              onMouseEnter={() => handleCursorHover(true, 'TEST ISLAND')}
+              onMouseLeave={() => handleCursorHover(false)}
+              className="cursor-none w-full py-2.5 text-center bg-gray-900 hover:bg-black text-white font-mono text-[9px] tracking-wider uppercase rounded-xl border border-white/5 shadow-md active:scale-95 transition-all mt-1"
+            >
+              🚀 Trigger Dynamic Island
+            </button>
+          </div>
         </div>
       )}
 

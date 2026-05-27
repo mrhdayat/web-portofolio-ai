@@ -1081,3 +1081,117 @@ body {
 .mobile-menu-item {
   will-change: transform, opacity;
 }
+
+/* ==========================================================================
+   32. NEW APPLE SYSTEM EXTENSIONS SUPPORT (isDarkMode & dark-mode-ripple)
+   ========================================================================== */
+.dark-mode {
+  --bg-color: #0b0a08 !important;
+  --text-color: #f7f6f2 !important;
+  --card-bg: rgba(22, 21, 18, 0.85) !important;
+}
+
+.dark-mode body {
+  background-color: #0b0a08 !important;
+  color: #f7f6f2 !important;
+}
+
+.dark-mode .nav-bar {
+  background-color: rgba(11, 10, 8, 0.8) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark-mode .nav-brand span.logo-text {
+  color: #ffffff !important;
+}
+
+.dark-mode .nav-item {
+  color: #a3a29b !important;
+}
+
+.dark-mode .nav-item:hover, .dark-mode .nav-item.text-blue-600 {
+  color: #ffffff !important;
+}
+
+.dark-mode .squircle-card, .dark-mode .glass-bento {
+  background: rgba(24, 23, 20, 0.85) !important;
+  color: #f7f6f2 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark-mode h1, 
+.dark-mode h2, 
+.dark-mode h3, 
+.dark-mode h4, 
+.dark-mode h5, 
+.dark-mode h6, 
+.dark-mode strong {
+  color: #ffffff !important;
+}
+
+.dark-mode p, 
+.dark-mode .text-gray-600, 
+.dark-mode .text-gray-500 {
+  color: #a8a7a1 !important;
+}
+
+.dark-mode .bg-gray-50, 
+.dark-mode .bg-gray-100 {
+  background-color: #161513 !important;
+}
+
+.dark-mode .bg-white\/40 {
+  background-color: rgba(11, 10, 8, 0.4) !important;
+}
+
+.dark-mode .border-gray-300 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-mode .border-black\/5 {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark-mode .text-gray-900 {
+  color: #ffffff !important;
+}
+
+.dark-mode .bg-gray-100\/50 {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.dark-mode-ripple {
+  will-change: clip-path;
+  transition: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   33. DYNAMIC ISLAND PILL CUSTOM ANIMATION STYLING
+   ========================================================================== */
+.dynamic-island-container {
+  top: 16px;
+  transform: translate(-50%, -100px);
+  transition: transform 0.65s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s ease;
+  opacity: 0;
+}
+
+.dynamic-island-container.active {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .dynamic-island-container {
+    top: 8px;
+  }
+}
