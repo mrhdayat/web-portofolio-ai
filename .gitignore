@@ -44,3 +44,7 @@ Desktop.ini
 # Python virtual environment
 venv/
 
+# Diagnostic scripts
+detect_overflows.py
+
+

@@ -1879,10 +1879,10 @@ export default function App() {
               {t.contactSub}
             </p>
 
-            <div className="flex flex-col md:flex-row gap-6 justify-center">
+            <div className="flex flex-col md:flex-row gap-6 justify-center w-full max-w-lg mx-auto">
               <a 
                 href="mailto:muhammad.rahmathidayat77@gmail.com" 
-                className="cursor-none py-4 px-6 bg-white hover:bg-yellow-400 text-black rounded-2xl font-header text-xs tracking-widest shadow-[3px_3px_0px_#0066ff] transition-all"
+                className="cursor-none py-4 px-3 sm:px-6 bg-white hover:bg-yellow-400 text-black rounded-2xl font-mono text-[9px] sm:text-xs tracking-normal sm:tracking-widest shadow-[3px_3px_0px_#0066ff] transition-all w-full overflow-hidden text-ellipsis whitespace-nowrap block border border-black/10"
                 onMouseEnter={() => handleCursorHover(true, 'EMAIL ME')}
                 onMouseLeave={() => handleCursorHover(false)}
                 onClick={playSpatialClick}
@@ -1891,7 +1891,7 @@ export default function App() {
               </a>
               <a 
                 href="tel:+628990641233" 
-                className="cursor-none py-4 px-6 bg-white hover:bg-yellow-400 text-black rounded-2xl font-header text-xs tracking-widest shadow-[3px_3px_0px_#ff5500] transition-all"
+                className="cursor-none py-4 px-3 sm:px-6 bg-white hover:bg-yellow-400 text-black rounded-2xl font-mono text-[10px] sm:text-xs tracking-normal sm:tracking-widest shadow-[3px_3px_0px_#ff5500] transition-all w-full overflow-hidden text-ellipsis whitespace-nowrap block border border-black/10"
                 onMouseEnter={() => handleCursorHover(true, 'CALL / WA')}
                 onMouseLeave={() => handleCursorHover(false)}
                 onClick={playSpatialClick}
@@ -1901,7 +1901,7 @@ export default function App() {
             </div>
           </div>
 
-          <footer className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center mt-24 border-t border-gray-200 pt-8 font-mono text-[10px] font-bold text-gray-400">
+          <footer className="max-w-6xl mx-auto flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center mt-24 border-t border-gray-200 pt-8 font-mono text-[10px] font-bold text-gray-400 text-center md:text-left">
             <p>© 2026 MUHAMMAD RAHMAT HIDAYAT. ALL RIGHTS RESERVED.</p>
             <p>{t.footerLocated}</p>
           </footer>
