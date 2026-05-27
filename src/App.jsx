@@ -370,6 +370,11 @@ export default function App() {
   const [commercialRights, setCommercialRights] = useState(true);
   const [calculatedPrice, setCalculatedPrice] = useState(490000);
 
+  // Touch Swipe & Particle Ripple states
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [ripples, setRipples] = useState([]);
+
   // Refs for tracking DOM elements
   const webglContainer = useRef(null);
   const cursorRef = useRef(null);
@@ -552,6 +557,117 @@ export default function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // --------------------------------------------------------------------------
+  // PREMIUM MOTION DESIGN SYSTEM EFFECTS (animation-principles + design-spells)
+  // --------------------------------------------------------------------------
+
+  // 1. Click Ripple particle ripple effect
+  useEffect(() => {
+    const onWindowClick = (e) => {
+      const id = Date.now() + Math.random();
+      const newRipple = {
+        id,
+        x: e.clientX,
+        y: e.clientY
+      };
+      setRipples((prev) => [...prev, newRipple]);
+      setTimeout(() => {
+        setRipples((prev) => prev.filter((r) => r.id !== id));
+      }, 600);
+    };
+
+    window.addEventListener('click', onWindowClick);
+    return () => window.removeEventListener('click', onWindowClick);
+  }, []);
+
+  // 2. Reusable Magnetic button pull effect
+  useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    if (isMobile) return;
+
+    const magneticButtons = document.querySelectorAll('.contact-btn, .primary-btn, .secondary-btn, .filter-btn');
+    const cleanups = [];
+
+    magneticButtons.forEach((btn) => {
+      const onBtnMouseMove = (e) => {
+        const rect = btn.getBoundingClientRect();
+        const btnX = rect.left + rect.width / 2;
+        const btnY = rect.top + rect.height / 2;
+        
+        const dx = e.clientX - btnX;
+        const dy = e.clientY - btnY;
+        
+        const pullX = dx * 0.35;
+        const pullY = dy * 0.35;
+        
+        gsap.to(btn, {
+          x: Math.max(-20, Math.min(20, pullX)),
+          y: Math.max(-12, Math.min(12, pullY)),
+          scale: 1.02,
+          duration: 0.3,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+      };
+      
+      const onBtnMouseLeave = () => {
+        gsap.to(btn, {
+          x: 0,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          ease: 'elastic.out(1.2, 0.4)',
+          overwrite: 'auto'
+        });
+      };
+      
+      btn.addEventListener('mousemove', onBtnMouseMove);
+      btn.addEventListener('mouseleave', onBtnMouseLeave);
+
+      cleanups.push(() => {
+        btn.removeEventListener('mousemove', onBtnMouseMove);
+        btn.removeEventListener('mouseleave', onBtnMouseLeave);
+      });
+    });
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
+  }, [currentRoute, bentoFilter]);
+
+  // 3. Staggered Bento Filter sequence entrance
+  useEffect(() => {
+    gsap.fromTo('.bento-item-stagger',
+      { opacity: 0, y: 24, scale: 0.97 },
+      { 
+        opacity: 1, 
+        y: 0, 
+        scale: 1, 
+        stagger: 0.04, 
+        duration: 0.6, 
+        ease: 'power3.out',
+        overwrite: 'auto'
+      }
+    );
+  }, [bentoFilter, currentRoute]);
+
+  // 4. Staggered Mobile Menu links slide-in
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      gsap.fromTo('.mobile-menu-item',
+        { x: -30, opacity: 0 },
+        { 
+          x: 0, 
+          opacity: 1, 
+          stagger: 0.08, 
+          duration: 0.5, 
+          ease: 'power3.out',
+          delay: 0.2
+        }
+      );
+    }
+  }, [mobileMenuOpen]);
 
   // --------------------------------------------------------------------------
   // DECALS PROXIMITY MOUSE REPULSION ENGINE (ELASTIC SPRING PHYSICAL AVOIDANCE)
@@ -811,13 +927,27 @@ export default function App() {
   ];
 
   const handleStackSwipe = () => {
-    // Spatial sound click
     playSpatialClick({ clientX: window.innerWidth / 2 });
-    gsap.fromTo('.stack-content-panel',
-      { rotateX: -90, opacity: 0, transformPerspective: 1000 },
-      { rotateX: 0, opacity: 1, duration: 0.5, ease: 'back.out(1.1)' }
+    
+    const tl = gsap.timeline();
+    
+    tl.to('.stack-content-panel', {
+      x: 140,
+      rotateY: 25,
+      rotateZ: 6,
+      opacity: 0,
+      scale: 0.95,
+      transformPerspective: 1000,
+      duration: 0.25,
+      ease: 'power2.in',
+      onComplete: () => {
+        setActiveStackIndex((prev) => (prev + 1) % stackItems.length);
+      }
+    })
+    .fromTo('.stack-content-panel',
+      { x: -140, rotateY: -25, rotateZ: -6, opacity: 0, scale: 0.9, transformPerspective: 1000 },
+      { x: 0, rotateY: 0, rotateZ: 0, opacity: 1, scale: 1, duration: 0.5, ease: 'elastic.out(1.1, 0.45)' }
     );
-    setActiveStackIndex((prev) => (prev + 1) % stackItems.length);
   };
 
   // --------------------------------------------------------------------------
@@ -1117,6 +1247,27 @@ export default function App() {
     setActiveImageIndex((prev) => (prev + direction + count) % count);
   };
 
+  // Touch Swipe handlers for mobile lightbox
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const diff = touchStart - touchEnd;
+    if (diff > 50) {
+      handleLightboxNav(1);
+    } else if (diff < -50) {
+      handleLightboxNav(-1);
+    }
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
+
   return (
     <div className="relative min-h-screen overflow-x-hidden w-full max-w-full bg-bgCream">
       
@@ -1145,6 +1296,20 @@ export default function App() {
           ))}
         </div>
       )}
+
+      {/* 2. PREMIUM TACTILE CLICK RIPPLES (design-spells) */}
+      <div className="pointer-events-none fixed inset-0 z-[99998] overflow-hidden">
+        {ripples.map((ripple) => (
+          <div
+            key={ripple.id}
+            className="particle-ripple-ring"
+            style={{
+              left: `${ripple.x}px`,
+              top: `${ripple.y}px`,
+            }}
+          />
+        ))}
+      </div>
 
 
 
@@ -1435,7 +1600,7 @@ export default function App() {
                       alt={title} 
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-350">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-350">
                       <span className="self-start text-[10px] font-extrabold tracking-widest text-black bg-yellow-400 py-1 px-3 border border-black rounded-lg mb-2 font-display">
                         {campaign.category === 'ai-photoshoot' ? 'AI PHOTOSHOOT' : (campaign.category === 'skincare' ? 'SKINCARE' : 'FASHION & EDITORIAL')}
                       </span>
@@ -1899,8 +2064,12 @@ export default function App() {
           {/* ── Gallery tab ── */}
           {lightboxTab === 'gallery' && (
             <div className="lightbox-frame-panel flex-1 flex flex-col min-h-0">
-              {/* Main image + arrows */}
-              <div className="relative flex-1 flex items-center justify-center min-h-0 px-16 py-4">
+              <div 
+                className="relative flex-1 flex items-center justify-center min-h-0 px-16 py-4"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
                 <button 
                   className="lightbox-arrow absolute left-4 w-11 h-11 rounded-full border border-white/20 bg-white/10 hover:bg-white/30 text-white font-header text-lg flex items-center justify-center cursor-none transition-colors z-10"
                   onClick={() => handleLightboxNav(-1)}
