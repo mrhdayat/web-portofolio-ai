@@ -1492,12 +1492,60 @@ export default function App() {
     <div className={`relative min-h-screen overflow-x-hidden w-full max-w-full bg-bgCream ${isDarkMode ? 'dark-mode' : ''}`}>
       
       {/* ==========================================================================
-         APPLE ECOSYSTEM: DYNAMIC ISLAND NOTIFICATION PILL
+         APPLE ECOSYSTEM: HIGH-FIDELITY DYNAMIC ISLAND NOTIFICATION NOTCH
          ========================================================================== */}
-      <div className={`dynamic-island-container fixed left-1/2 -translate-x-1/2 z-[9999] pointer-events-none ${islandActive ? 'active' : ''}`}>
-        <div className="dynamic-island bg-black text-white px-6 py-3 rounded-full flex items-center justify-center gap-3 shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-white/10 font-mono text-[9px] font-black tracking-widest uppercase whitespace-nowrap">
-          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-          <span>{islandText}</span>
+      <div className="dynamic-island-container">
+        <div 
+          onClick={() => {
+            if (!islandActive) {
+              triggerDynamicIsland(locale === 'id' ? "📸 Kamera Siap" : "📸 Camera Ready");
+            }
+          }}
+          onMouseEnter={() => handleCursorHover(true, 'NOTCH')}
+          onMouseLeave={() => handleCursorHover(false)}
+          className={`dynamic-island bg-[#050505] text-white flex items-center justify-between shadow-[0_15px_35px_rgba(0,0,0,0.5)] border border-white/10 select-none pointer-events-auto cursor-none transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
+            islandActive 
+              ? 'w-[290px] h-[48px] rounded-2xl px-4' 
+              : 'w-[110px] h-[30px] rounded-full px-3.5 hover:w-[125px] hover:h-[32px] hover:border-white/20 active:scale-95'
+          }`}
+          style={{
+            boxShadow: islandActive ? '0 25px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1)' : '0 10px 25px rgba(0,0,0,0.3)'
+          }}
+        >
+          {/* Left: Camera Lens or Glowing Notification Icon */}
+          <div className="flex items-center">
+            {islandActive ? (
+              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-xs animate-[scaleUp_0.35s_cubic-bezier(0.19,1,0.22,1)] shadow-[0_0_10px_rgba(168,85,247,0.5)]">
+                👑
+              </div>
+            ) : (
+              // Hardware Camera Lens (Highly Detailed)
+              <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-indigo-950 via-slate-900 to-neutral-900 border border-neutral-850 shadow-inner flex items-center justify-center opacity-85">
+                <div className="w-0.5 h-0.5 rounded-full bg-cyan-400/50"></div>
+              </div>
+            )}
+          </div>
+
+          {/* Center: Live-Updating Notification Content */}
+          <div className="flex-1 flex justify-center overflow-hidden">
+            {islandActive ? (
+              <span className="font-mono text-[9px] font-black tracking-widest text-white/95 uppercase truncate px-2.5 animate-[fadeIn_0.2s_ease-out]">
+                {islandText}
+              </span>
+            ) : (
+              // Speaker grille overlay (subtle Apple hardware simulation)
+              <div className="w-8 h-1 rounded-full bg-neutral-950 opacity-40 shadow-inner"></div>
+            )}
+          </div>
+
+          {/* Right: Pulsing Haptic Status Light */}
+          <div className="flex items-center justify-end">
+            {islandActive ? (
+              <div className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_6px_#ef4444] animate-pulse"></div>
+            ) : (
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/80 shadow-[0_0_4px_#10b981] animate-pulse"></div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -2657,80 +2705,15 @@ export default function App() {
       {/* ==========================================================================
          APPLE ECOSYSTEM: macOS INTERACTIVE DOCK NAVIGATION (magnification zoom math)
          ========================================================================== */}
-      {(() => {
-        const dockRef = useRef(null);
-        const [scales, setScales] = useState([1, 1, 1, 1, 1, 1]);
-        
-        const handleMouseMove = (e) => {
-          if (!dockRef.current) return;
-          const icons = dockRef.current.children;
-          const mouseX = e.clientX;
-          
-          const newScales = [];
-          for (let i = 0; i < icons.length; i++) {
-            const rect = icons[i].getBoundingClientRect();
-            const iconCenterX = rect.left + rect.width / 2;
-            const distance = Math.abs(mouseX - iconCenterX);
-            
-            const maxDistance = 150;
-            let scale = 1;
-            if (distance < maxDistance) {
-              scale = 1 + 0.7 * (1 - distance / maxDistance);
-            }
-            newScales.push(scale);
-          }
-          setScales(newScales);
-        };
-        
-        const handleMouseLeave = () => {
-          setScales([1, 1, 1, 1, 1, 1]);
-        };
-        
-        const dockItems = [
-          { label: 'Home', icon: '🏠', route: 'home' },
-          { label: 'Campaigns', icon: '🖼️', route: 'campaigns' },
-          { label: 'Engine', icon: '⚙️', route: 'engine' },
-          { label: 'Budget', icon: '📊', route: 'calculator' },
-          { label: 'Bio', icon: '👤', route: 'bio' },
-          { label: 'Control Center', icon: '🎛️', action: () => setIsControlCenterOpen(prev => !prev) }
-        ];
-        
-        return (
-          <div 
-            ref={dockRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[4000] hidden md:flex items-end gap-3 px-5 py-2.5 bg-white/20 dark:bg-black/20 backdrop-blur-2xl border border-white/20 dark:border-white/10 rounded-[28px] shadow-[0_20px_50px_rgba(0,0,0,0.25)] select-none pointer-events-auto h-[60px]"
-          >
-            {dockItems.map((item, idx) => (
-              <a 
-                key={idx}
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  playSpatialClick(e);
-                  if (item.action) {
-                    item.action();
-                  } else if (item.route) {
-                    setCurrentRoute(item.route);
-                    triggerDynamicIsland(locale === 'id' ? `📍 Navigasi ke ${item.label}` : `📍 Navigated to ${item.label}`);
-                  }
-                }}
-                onMouseEnter={() => handleCursorHover(true, item.label.toUpperCase())}
-                onMouseLeave={() => handleCursorHover(false)}
-                className="cursor-none flex flex-col items-center justify-end transition-all duration-100 ease-out origin-bottom"
-                style={{
-                  width: `${36 * scales[idx]}px`,
-                  height: `${36 * scales[idx]}px`,
-                  fontSize: `${18 * scales[idx]}px`,
-                }}
-              >
-                <span className="mb-0.5 leading-none">{item.icon}</span>
-              </a>
-            ))}
-          </div>
-        );
-      })()}
+      <Dock 
+        currentRoute={currentRoute}
+        setCurrentRoute={setCurrentRoute}
+        setIsControlCenterOpen={setIsControlCenterOpen}
+        playSpatialClick={playSpatialClick}
+        triggerDynamicIsland={triggerDynamicIsland}
+        locale={locale}
+        handleCursorHover={handleCursorHover}
+      />
 
       {/* ==========================================================================
          APPLE ECOSYSTEM: FLOATING CONTROL CENTER TOGGLE BUTTON
@@ -2764,11 +2747,11 @@ export default function App() {
          APPLE ECOSYSTEM: VOLUMETRIC iOS CONTROL CENTER PANEL OVERLAY
          ========================================================================== */}
       {isControlCenterOpen && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[4500] flex items-center justify-center p-4 select-none animate-[fadeIn_0.25s_ease-out] pointer-events-auto" onClick={() => setIsControlCenterOpen(false)}>
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[4500] flex items-end md:items-start md:justify-end select-none animate-[fadeIn_0.25s_ease-out] pointer-events-auto" onClick={() => setIsControlCenterOpen(false)}>
           <div 
-            className="w-full max-w-[320px] bg-white/90 dark:bg-[#1a1917]/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 p-5 rounded-[30px] shadow-2xl flex flex-col gap-5 relative animate-[scaleUp_0.35s_cubic-bezier(0.19,1,0.22,1)]"
+            className="w-full md:w-[320px] bg-white/90 dark:bg-[#161513]/95 backdrop-blur-3xl border-t md:border border-black/10 dark:border-white/10 p-6 rounded-t-[32px] md:rounded-[28px] md:mt-16 md:mr-6 shadow-2xl flex flex-col gap-6 relative animate-[scaleUp_0.35s_cubic-bezier(0.19,1,0.22,1)]"
             onClick={(e) => e.stopPropagation()}
-            style={{boxShadow: '0 30px 60px rgba(0,0,0,0.15)'}}
+            style={{boxShadow: '0 30px 60px rgba(0,0,0,0.25)'}}
           >
             <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5">
               <div>
@@ -2780,14 +2763,14 @@ export default function App() {
                   setIsControlCenterOpen(false);
                   playSpatialClick(e);
                 }}
-                className="cursor-none w-6 h-6 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-400 flex items-center justify-center font-bold text-xs"
+                className="cursor-none w-7 h-7 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-400 flex items-center justify-center font-bold text-sm"
               >
                 &times;
               </button>
             </div>
 
             {/* Slider / Toggle Blocks */}
-            <div className="flex flex-col gap-3.5">
+            <div className="flex flex-col gap-4">
               {/* Dark Mode box */}
               <div 
                 onClick={toggleDarkModeWithRipple}
@@ -2855,15 +2838,15 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Sliders Grid */}
-              <div className="grid grid-cols-2 gap-3">
+              {/* Volumetric vertical sliders */}
+              <div className="grid grid-cols-2 gap-4">
                 {/* Clay Brightness Slider */}
-                <div className="p-3.5 rounded-2.5xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex flex-col justify-between items-stretch h-24">
-                  <div className="flex justify-between items-center mb-1 leading-none">
+                <div className="p-4 rounded-3xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex flex-col justify-between items-stretch h-36">
+                  <div className="flex justify-between items-center leading-none">
                     <span className="font-mono text-[7px] font-bold text-gray-400 dark:text-gray-500">BRIGHT</span>
                     <span className="font-mono text-[8px] font-bold text-gray-700 dark:text-gray-300">{screenBrightness}%</span>
                   </div>
-                  <div className="relative flex-1 bg-gray-200 dark:bg-black/30 rounded-xl overflow-hidden border border-black/5 dark:border-white/5">
+                  <div className="relative flex-1 bg-gray-200 dark:bg-black/30 rounded-2xl overflow-hidden border border-black/5 dark:border-white/5 mt-2">
                     <div 
                       className="absolute bottom-0 left-0 right-0 bg-yellow-400/80 transition-all duration-75"
                       style={{ height: `${screenBrightness}%` }}
@@ -2882,17 +2865,20 @@ export default function App() {
                       }}
                       className="absolute inset-0 w-full h-full opacity-0 cursor-none"
                     />
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-xs">☀️</div>
+                    <div className="absolute inset-0 flex flex-col justify-between p-3 pointer-events-none text-xs text-gray-600 dark:text-gray-400">
+                      <span></span>
+                      <span className="text-center font-bold text-sm">☀️</span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Clay Volume Slider */}
-                <div className="p-3.5 rounded-2.5xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex flex-col justify-between items-stretch h-24">
-                  <div className="flex justify-between items-center mb-1 leading-none">
+                <div className="p-4 rounded-3xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex flex-col justify-between items-stretch h-36">
+                  <div className="flex justify-between items-center leading-none">
                     <span className="font-mono text-[7px] font-bold text-gray-400 dark:text-gray-500">VOLUME</span>
                     <span className="font-mono text-[8px] font-bold text-gray-700 dark:text-gray-300">{volume}%</span>
                   </div>
-                  <div className="relative flex-1 bg-gray-200 dark:bg-black/30 rounded-xl overflow-hidden border border-black/5 dark:border-white/5">
+                  <div className="relative flex-1 bg-gray-200 dark:bg-black/30 rounded-2xl overflow-hidden border border-black/5 dark:border-white/5 mt-2">
                     <div 
                       className="absolute bottom-0 left-0 right-0 bg-blue-500/80 transition-all duration-75"
                       style={{ height: `${volume}%` }}
@@ -2905,7 +2891,10 @@ export default function App() {
                       onChange={(e) => setVolume(Number(e.target.value))}
                       className="absolute inset-0 w-full h-full opacity-0 cursor-none"
                     />
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-xs">🔊</div>
+                    <div className="absolute inset-0 flex flex-col justify-between p-3 pointer-events-none text-xs text-gray-600 dark:text-gray-400">
+                      <span></span>
+                      <span className="text-center font-bold text-sm">🔊</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2919,7 +2908,7 @@ export default function App() {
               }}
               onMouseEnter={() => handleCursorHover(true, 'TEST ISLAND')}
               onMouseLeave={() => handleCursorHover(false)}
-              className="cursor-none w-full py-2.5 text-center bg-gray-900 hover:bg-black text-white font-mono text-[9px] tracking-wider uppercase rounded-xl border border-white/5 shadow-md active:scale-95 transition-all mt-1"
+              className="cursor-none w-full py-3 text-center bg-gray-900 hover:bg-black text-white font-mono text-[9px] tracking-wider uppercase rounded-xl border border-white/5 shadow-md active:scale-95 transition-all mt-1"
             >
               🚀 Trigger Dynamic Island
             </button>
@@ -2939,3 +2928,189 @@ export default function App() {
     </div>
   );
 }
+
+// ==========================================================================
+// macOS INTERACTIVE DOCK NAVIGATION (Rules-of-Hooks Compliant Component)
+// ==========================================================================
+const Dock = ({ 
+  currentRoute,
+  setCurrentRoute, 
+  setIsControlCenterOpen, 
+  playSpatialClick, 
+  triggerDynamicIsland, 
+  locale, 
+  handleCursorHover 
+}) => {
+  const dockRef = useRef(null);
+  const [scales, setScales] = useState([1, 1, 1, 1, 1, 1]);
+  const [bouncingIndex, setBouncingIndex] = useState(null);
+  
+  const handleMouseMove = (e) => {
+    // Only calculate magnification on desktop/hoverable screens
+    if (window.innerWidth < 768) return;
+    if (!dockRef.current) return;
+    const icons = dockRef.current.querySelectorAll('.dock-icon-wrapper');
+    const mouseX = e.clientX;
+    
+    const newScales = [];
+    for (let i = 0; i < icons.length; i++) {
+      const rect = icons[i].getBoundingClientRect();
+      const iconCenterX = rect.left + rect.width / 2;
+      const distance = Math.abs(mouseX - iconCenterX);
+      
+      const maxDistance = 140;
+      let scale = 1;
+      if (distance < maxDistance) {
+        scale = 1 + 0.55 * (1 - distance / maxDistance);
+      }
+      newScales.push(scale);
+    }
+    setScales(newScales);
+  };
+  
+  const handleMouseLeave = () => {
+    setScales([1, 1, 1, 1, 1, 1]);
+  };
+  
+  const handleIconClick = (idx, item, e) => {
+    e.preventDefault();
+    playSpatialClick(e);
+    
+    setBouncingIndex(idx);
+    setTimeout(() => {
+      setBouncingIndex(null);
+    }, 850);
+
+    setTimeout(() => {
+      if (item.action) {
+        item.action();
+      } else if (item.route) {
+        setCurrentRoute(item.route);
+        triggerDynamicIsland(locale === 'id' ? `📍 Navigasi ke ${item.label}` : `📍 Navigated to ${item.label}`);
+      }
+    }, 200);
+  };
+
+  // Premium Custom macOS App Icons (built from pure SVGs and glowing gradients)
+  const dockItems = [
+    { 
+      label: 'Home', 
+      route: 'home',
+      icon: (scale) => (
+        <div className="w-full h-full rounded-xl md:rounded-2xl bg-gradient-to-br from-amber-400 via-orange-500 to-rose-500 flex items-center justify-center shadow-md shadow-orange-500/10 border border-orange-400/20 group-hover:shadow-orange-500/30 transition-all duration-300">
+          <svg className="w-[50%] h-[50%] text-white filter drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.35)]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+        </div>
+      )
+    },
+    { 
+      label: 'Campaigns', 
+      route: 'campaigns',
+      icon: (scale) => (
+        <div className="w-full h-full rounded-xl md:rounded-2xl bg-gradient-to-br from-cyan-400 via-sky-500 to-blue-600 flex items-center justify-center shadow-md shadow-sky-500/10 border border-sky-400/20 group-hover:shadow-sky-500/30 transition-all duration-300">
+          <svg className="w-[50%] h-[50%] text-white filter drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.35)]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+      )
+    },
+    { 
+      label: 'Engine', 
+      route: 'engine',
+      icon: (scale) => (
+        <div className="w-full h-full rounded-xl md:rounded-2xl bg-gradient-to-br from-[#1d1d1f] via-[#2c2c2e] to-[#0c0c0e] flex items-center justify-center shadow-md border border-neutral-700/30 group-hover:shadow-neutral-500/20 transition-all duration-300">
+          <svg className="w-[52%] h-[52%] text-purple-400 animate-[spin_10s_linear_infinite] filter drop-shadow-[0_0_6px_rgba(168,85,247,0.7)]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+      )
+    },
+    { 
+      label: 'Budget', 
+      route: 'calculator',
+      icon: (scale) => (
+        <div className="w-full h-full rounded-xl md:rounded-2xl bg-gradient-to-br from-pink-500 via-fuchsia-600 to-indigo-600 flex items-center justify-center shadow-md shadow-pink-500/10 border border-pink-400/20 group-hover:shadow-pink-500/30 transition-all duration-300">
+          <svg className="w-[50%] h-[50%] text-white filter drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.35)]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-4m-3 2h.01M9 17h.01M9 14h.01M12 11h.01M12 14h.01M12 17h.01M15 11h.01M15 14h.01M15 17h.01M9 11h.01M9 14h.01M9 17h.01M5 19V5a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2z" />
+          </svg>
+        </div>
+      )
+    },
+    { 
+      label: 'Bio', 
+      route: 'bio',
+      icon: (scale) => (
+        <div className="w-full h-full rounded-xl md:rounded-2xl bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-600 flex items-center justify-center shadow-md shadow-emerald-500/10 border border-emerald-400/20 group-hover:shadow-emerald-500/30 transition-all duration-300">
+          <svg className="w-[50%] h-[50%] text-white filter drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.35)]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+      )
+    },
+    { 
+      label: 'Controls', 
+      action: () => setIsControlCenterOpen(prev => !prev),
+      icon: (scale) => (
+        <div className="w-full h-full rounded-xl md:rounded-2xl bg-gradient-to-br from-slate-400 via-slate-500 to-zinc-600 flex items-center justify-center shadow-md border border-slate-400/20 group-hover:shadow-slate-400/30 transition-all duration-300">
+          <svg className="w-[50%] h-[50%] text-white filter drop-shadow-[0_1.5px_2px_rgba(0,0,0,0.35)]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+          </svg>
+        </div>
+      )
+    }
+  ];
+  
+  return (
+    <div 
+      ref={dockRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="fixed bottom-3 left-1/2 -translate-x-1/2 z-[4000] flex items-end gap-2.5 md:gap-3 px-4 md:px-5 py-2 md:py-2.5 bg-white/20 dark:bg-black/25 backdrop-blur-2xl border border-white/20 dark:border-white/10 rounded-[22px] md:rounded-[28px] shadow-[0_20px_50px_rgba(0,0,0,0.25)] select-none pointer-events-auto w-[92%] md:w-auto h-[54px] md:h-[64px]"
+      style={{
+        boxShadow: '0 20px 45px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.15)'
+      }}
+    >
+      {dockItems.map((item, idx) => {
+        const isActive = item.route && currentRoute === item.route;
+        
+        return (
+          <div key={idx} className="dock-icon-wrapper relative group flex-1 md:flex-none flex flex-col items-center">
+            {/* Tooltip (Desktop Only) */}
+            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 bg-gray-900/90 dark:bg-white/95 text-white dark:text-black font-mono text-[9px] font-black tracking-widest uppercase px-2.5 py-1 rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200 shadow-md border border-white/10 dark:border-black/5 whitespace-nowrap z-[4001] dock-tooltip">
+              {item.label}
+            </div>
+            
+            <a 
+              href="#"
+              onClick={(e) => handleIconClick(idx, item, e)}
+              onMouseEnter={() => handleCursorHover(true, item.label.toUpperCase())}
+              onMouseLeave={() => handleCursorHover(false)}
+              className={`cursor-none flex items-center justify-center transition-all duration-100 ease-out origin-bottom rounded-xl md:rounded-2xl w-9 h-9 md:w-11 md:h-11 ${
+                bouncingIndex === idx ? 'animate-dockBounce' : ''
+              } ${isActive ? 'scale-[1.05]' : 'hover:scale-[1.03]'}`}
+              style={{
+                width: window.innerWidth >= 768 ? `${44 * scales[idx]}px` : undefined,
+                height: window.innerWidth >= 768 ? `${44 * scales[idx]}px` : undefined,
+                transformOrigin: 'bottom'
+              }}
+            >
+              {item.icon(scales[idx])}
+            </a>
+
+            {/* Active app indicator dot (macOS high-fidelity detail!) */}
+            <div 
+              className={`w-1 h-1 rounded-full bg-neutral-800 dark:bg-white transition-all duration-300 mt-[3px] opacity-75 ${
+                isActive ? 'scale-100' : 'scale-0'
+              }`}
+              style={{
+                boxShadow: isActive ? '0 0 4px currentColor' : 'none'
+              }}
+            />
+          </div>
+        );
+      })}
+    </div>
+  );
+};

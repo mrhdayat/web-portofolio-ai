@@ -221,7 +221,7 @@ body {
    ========================================================================== */
 .squircle-card {
   border-radius: var(--clay-radius, 24px);
-  background: var(--card-bg, #ffffff);
+  background: var(--card-bg, transparent);
   border: 1px solid var(--border-color);
   box-shadow: 
     0 2px 4px rgba(0, 0, 0, 0.03),
@@ -1178,20 +1178,59 @@ body {
 /* ==========================================================================
    33. DYNAMIC ISLAND PILL CUSTOM ANIMATION STYLING
    ========================================================================== */
+/* ==========================================================================
+   33. DYNAMIC ISLAND PILL CUSTOM ANIMATION STYLING & DOCK BOUNCE
+   ========================================================================== */
 .dynamic-island-container {
-  top: 16px;
-  transform: translate(-50%, -100px);
-  transition: transform 0.65s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s ease;
-  opacity: 0;
-}
-
-.dynamic-island-container.active {
-  transform: translate(-50%, 0);
-  opacity: 1;
+  position: fixed;
+  left: 50%;
+  top: 18px;
+  transform: translateX(-50%);
+  z-index: 9999;
+  pointer-events: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (max-width: 768px) {
   .dynamic-island-container {
     top: 8px;
   }
+}
+
+@keyframes dockBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-16px);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-dockBounce {
+  animation: dockBounce 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* Tooltip & Dock Polish */
+.dock-tooltip {
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Glassmorphism overlays */
+.cc-drawer-active {
+  animation: slideDrawer 0.45s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+@keyframes slideDrawer {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
 }
