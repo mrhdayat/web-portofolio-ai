@@ -14,6 +14,7 @@ const translations = {
     heroCoord: "[KOORD] IPK 3.65",
     heroSys: "[SYS] DETERMINISTIK",
     heroBio: "Saya tidak menghasilkan visual generator instan berpiksel murah. Sebagai lulusan Ilmu Komputer dan Systems Analyst bersertifikasi BNSP, saya merekayasa Humanized Ads Engine — sebuah arsitektur prompt deterministik yang mengunci konsistensi karakter, menyingkirkan tekstur plastik (AI slop), dan merancang photoshoot fashion serta skincare kelas dunia dengan presisi hitungan matematika.",
+    connect: "SOSIAL MEDIA:",
     deckBtn: "DECK PORTFOLIO",
     simBtn: "SIMULASI BUDGET",
     featuredWork: "KARYA PILIHAN",
@@ -113,6 +114,7 @@ const translations = {
     heroCoord: "[COORD] 3.65 GPA",
     heroSys: "[SYS] DETERMINISTIC",
     heroBio: "I do not generate cheap, low-resolution pixel slop. As a Computer Science graduate and BNSP certified Systems Analyst, I engineer the Humanized Ads Engine — a deterministic prompt architecture that locks model consistency, expels plastic skin layers, and coordinates fashion and skincare photoshoot campaigns with strict mathematical precision.",
+    connect: "SOCIAL MEDIA:",
     deckBtn: "PORTFOLIO DECK",
     simBtn: "BUDGET SIMULATOR",
     featuredWork: "FEATURED WORK",
@@ -1931,6 +1933,72 @@ export default function App() {
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                       Zero AI Slop
                     </span>
+                  </div>
+
+                  {/* Premium Social Media Links bar */}
+                  <div className="flex flex-wrap items-center gap-3.5 mt-6 pt-5 border-t border-gray-200">
+                    <span className="text-[10px] font-mono font-bold tracking-wider text-gray-400 uppercase select-none">{t.connect}</span>
+                    <div className="flex items-center gap-3">
+                      {/* Instagram */}
+                      <a 
+                        href="https://www.instagram.com/mrhdayat/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="social-icon-btn cursor-none w-8 h-8 rounded-full bg-gray-100 hover:bg-pink-50 hover:text-pink-600 border border-gray-200 hover:border-pink-200 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-sm text-gray-600"
+                        onMouseEnter={() => handleCursorHover(true, 'INSTAGRAM')}
+                        onMouseLeave={() => handleCursorHover(false)}
+                        onClick={playSpatialClick}
+                      >
+                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                      </a>
+
+                      {/* LinkedIn */}
+                      <a 
+                        href="https://www.linkedin.com/in/muhammad-rahmat-hidayat" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="social-icon-btn cursor-none w-8 h-8 rounded-full bg-gray-100 hover:bg-blue-50 hover:text-blue-700 border border-gray-200 hover:border-blue-200 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-sm text-gray-600"
+                        onMouseEnter={() => handleCursorHover(true, 'LINKEDIN')}
+                        onMouseLeave={() => handleCursorHover(false)}
+                        onClick={playSpatialClick}
+                      >
+                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                      </a>
+
+                      {/* Upwork */}
+                      <a 
+                        href="https://www.upwork.com/freelancers/~0199c43617cdb35ea6?mp_source=share" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="social-icon-btn cursor-none w-8 h-8 rounded-full bg-gray-100 hover:bg-emerald-50 hover:text-[#14a800] border border-gray-200 hover:border-emerald-200 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-sm text-gray-600"
+                        onMouseEnter={() => handleCursorHover(true, 'UPWORK')}
+                        onMouseLeave={() => handleCursorHover(false)}
+                        onClick={playSpatialClick}
+                      >
+                        <svg className="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24">
+                          <path d="M18.561 3.281c-2.789 0-4.95 2.008-5.672 4.75-.417-2.156-1.503-4.328-3.394-5.836l-1.445 1.742c1.722 1.258 2.636 3.12 2.922 4.969-.972.766-2.222 1.281-3.664 1.281-2.473 0-4.316-1.859-4.316-4.32s1.843-4.32 4.316-4.32c1.786 0 3.328 1.055 3.973 2.637l1.984-.711C12.18 1.004 9.941 0 7.309 0 3.254 0 0 3.254 0 7.309s3.254 7.309 7.309 7.309c1.609 0 3.125-.434 4.391-1.223.516 2.051 1.703 4.148 3.516 5.566l1.242-1.637c-1.531-1.125-2.5-2.781-2.883-4.496.906-1.531 2.215-3.309 3.664-3.309 2.039 0 3.328 1.547 3.328 3.547v6.621h2.441v-6.621c0-3.309-2.078-5.789-5.117-5.789z"/>
+                        </svg>
+                      </a>
+
+                      {/* Fiverr */}
+                      <a 
+                        href="https://www.fiverr.com/s/Eg8x0k0" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="social-icon-btn cursor-none w-8 h-8 rounded-full bg-gray-100 hover:bg-green-50 hover:text-[#1dbf73] border border-gray-200 hover:border-green-200 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 shadow-sm text-gray-600"
+                        onMouseEnter={() => handleCursorHover(true, 'FIVERR')}
+                        onMouseLeave={() => handleCursorHover(false)}
+                        onClick={playSpatialClick}
+                      >
+                        <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                          <path d="M17.07 0c-2.756 0-4.57 1.688-5.185 3.385l-.23.63H9.428V1.312H6.843v2.703H4.408v2.585h2.435V17.07c0 2.756 1.688 4.57 3.385 5.185l.63.23c.52.128 1.09.18 1.654.18.57 0 1.137-.052 1.654-.18l.63-.23c1.696-.615 3.385-2.43 3.385-5.185v-7.854h2.585V6.602h-2.585V4.018c0-1.077.585-1.435 1.435-1.435h1.15V0h-2.18zm-4.312 17.07c0 1.077-.585 1.435-1.435 1.435h-1.15v2.585h2.18c2.756 0 4.57-1.688 5.185-3.385l.23-.63h2.227v-2.585H17.72V6.602h-2.585v7.883c0 1.077-.585 1.435-1.435 1.435h-1.15v2.585c.563 0 1.134-.052 1.654-.18l.554-.2z" />
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                 </div>
 
