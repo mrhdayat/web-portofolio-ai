@@ -725,8 +725,7 @@ export default function App() {
       cursorY += dy * lerpFactor;
 
       if (cursor) {
-        cursor.style.left = `${cursorX}px`;
-        cursor.style.top = `${cursorY}px`;
+        cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
       }
       requestAnimationFrame(updateCursor);
     };
@@ -1097,6 +1096,18 @@ export default function App() {
     };
     window.addEventListener('mousemove', onSceneMouseMove);
 
+    // Pause WebGL rendering during active scrolling to make page scroll buttery smooth (performance-engineer)
+    let isScrolling = false;
+    let scrollTimeout;
+    const handleSceneScroll = () => {
+      isScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 120);
+    };
+    window.addEventListener('scroll', handleSceneScroll, { passive: true });
+
     // Intersection observer freezing performance clock optimizations
     let isVisible = true;
     const observer = new IntersectionObserver((entries) => {
@@ -1113,8 +1124,8 @@ export default function App() {
     const renderLoop = () => {
       frameId = requestAnimationFrame(renderLoop);
 
-      // CPU clock sleep optimization when invisible or page hidden
-      if (!isVisible || document.visibilityState === 'hidden') return;
+      // CPU clock sleep optimization when invisible, page hidden, or scrolling
+      if (!isVisible || document.visibilityState === 'hidden' || isScrolling) return;
 
       const elapsedTime = clock.getElapsedTime();
 
@@ -1155,6 +1166,8 @@ export default function App() {
       cancelAnimationFrame(frameId);
       window.removeEventListener('mousemove', onSceneMouseMove);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleSceneScroll);
+      clearTimeout(scrollTimeout);
       observer.disconnect();
 
       // Garbage collection freeing graphic textures
@@ -1180,11 +1193,12 @@ export default function App() {
       infinite: false
     });
 
+    let lenisFrameId;
     function raf(time) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      lenisFrameId = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+    lenisFrameId = requestAnimationFrame(raf);
 
     // Staggered GSAP splits entrance animations on loading
     const tl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 0.8 } });
@@ -1206,6 +1220,7 @@ export default function App() {
 
     return () => {
       lenis.destroy();
+      cancelAnimationFrame(lenisFrameId);
     };
   }, []);
 

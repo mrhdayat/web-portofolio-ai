@@ -572,9 +572,9 @@ body {
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 0;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
