@@ -527,11 +527,208 @@ export default function App() {
   const dragStartRef = useRef({ x: 0, y: 0 });
   const bentoOffsetRef = useRef({ x: 0, y: 0 });
 
+  // Creative ID Card playability states
+  const [cardFlipped, setCardFlipped] = useState(false);
+  const [nfcScanning, setNfcScanning] = useState(false);
+  const [nfcScanned, setNfcScanned] = useState(false);
+  const [biometricScanning, setBiometricScanning] = useState(false);
+  const [biometricVerified, setBiometricVerified] = useState(false);
+  const [barcodeScanning, setBarcodeScanning] = useState(false);
+  const [barcodeScanned, setBarcodeScanned] = useState(false);
+  const [overclockedSkills, setOverclockedSkills] = useState({
+    prompt: false,
+    systems: false,
+    art: false,
+    perf: false
+  });
+  const [statClicks, setStatClicks] = useState({ ipk: 0, certs: 0, since: 0 });
+  const [terminalColor, setTerminalColor] = useState('emerald'); // 'emerald', 'blue', 'amber'
+  const [liveTemp, setLiveTemp] = useState(36.8);
+  const [terminalLineIndex, setTerminalLineIndex] = useState(0);
+  const [cardCoords, setCardCoords] = useState({ x: 0, y: 0, active: false });
+
+  // Telemetry ticker loop
+  useEffect(() => {
+    const tempInterval = setInterval(() => {
+      setLiveTemp(prev => {
+        const delta = (Math.random() - 0.5) * 0.4;
+        return parseFloat(Math.min(37.6, Math.max(36.4, prev + delta)).toFixed(1));
+      });
+    }, 1500);
+
+    const lineInterval = setInterval(() => {
+      setTerminalLineIndex(prev => (prev + 1) % 5);
+    }, 2000);
+
+    return () => {
+      clearInterval(tempInterval);
+      clearInterval(lineInterval);
+    };
+  }, []);
+
   // Function to trigger the Dynamic Island notification capsule
   const triggerDynamicIsland = (text) => {
     setIslandText(text);
     setIslandActive(true);
   };
+
+  const handleNfcScan = () => {
+    if (nfcScanning) return;
+    setNfcScanning(true);
+    playSpatialClick({ clientX: window.innerWidth / 2 });
+    triggerDynamicIsland("◈ NFC: SCANNING SYSTEM INTEGRITY...");
+    
+    setTimeout(() => {
+      setNfcScanning(false);
+      setNfcScanned(true);
+      playSpatialClick({ clientX: window.innerWidth / 2 + 80 });
+      triggerDynamicIsland("◈ NFC: DATA SCAN DECRYPTED SUCCESSFULLY!");
+    }, 1800);
+  };
+
+  const handleBiometricScan = (e) => {
+    if (biometricScanning) return;
+    setBiometricScanning(true);
+    setBiometricVerified(false);
+    playFuturisticSound('biometric_scan', e);
+    triggerDynamicIsland("◈ SYSTEM: SCANNING BIOMETRIC CORRELATIONS...");
+    
+    setTimeout(() => {
+      setBiometricScanning(false);
+      setBiometricVerified(true);
+      playFuturisticSound('biometric_success', e);
+      triggerDynamicIsland("◈ SYSTEM: BIOMETRICS IDENTIFIED. MUHAMMAD RAHMAT HIDAYAT ACCREDITED.");
+    }, 1400);
+  };
+
+  const handleBarcodeScan = (e) => {
+    if (barcodeScanning) return;
+    setBarcodeScanning(true);
+    setBarcodeScanned(false);
+    playFuturisticSound('barcode_beep', e);
+    triggerDynamicIsland("◈ SYSTEM: BARCODE SCAN TRIGGERED...");
+    
+    setTimeout(() => {
+      setBarcodeScanning(false);
+      setBarcodeScanned(true);
+      playFuturisticSound('biometric_success', e);
+      triggerDynamicIsland("◈ DECODED: S.KOM, BNSP SYSTEMS ANALYST · VALIDATED.");
+    }, 800);
+  };
+
+  const handleStatClick = (statKey, e) => {
+    setStatClicks(prev => {
+      const nextClicks = { ...prev, [statKey]: prev[statKey] + 1 };
+      
+      let message = "";
+      if (statKey === 'ipk') {
+        if (nextClicks.ipk >= 3) {
+          playFuturisticSound('overclock', e);
+          message = "◈ OVERCLOCK: CUM LAUDE MAX RANGE EXCEEDED! GPA: 4.00 SUPERCHARGED!";
+        } else {
+          playFuturisticSound('biometric_success', e);
+          message = `◈ DATA: IPK 3.65 (Cum Laude Graduate / Systems Analyst Specialist)`;
+        }
+      } else if (statKey === 'certs') {
+        if (nextClicks.certs >= 3) {
+          playFuturisticSound('overclock', e);
+          message = "◈ OVERCLOCK: ALL CERTIFICATIONS ACTIVE & DYNAMICALLY CACHED!";
+        } else {
+          playFuturisticSound('biometric_success', e);
+          message = "◈ CERTS: BNSP Systems Analyst | IBM AI Certified | S.Kom";
+        }
+      } else if (statKey === 'since') {
+        if (nextClicks.since >= 3) {
+          playFuturisticSound('overclock', e);
+          message = "◈ OVERCLOCK: EXPERIENTIAL TIMELINE COLLAPSED! FUTURE EXPANDING.";
+        } else {
+          playFuturisticSound('biometric_success', e);
+          message = "◈ TIMELINE: Professional active since 2021 (4+ Production Years)";
+        }
+      }
+      
+      triggerDynamicIsland(message);
+      return nextClicks;
+    });
+  };
+
+  const handleSkillOverclock = (skillKey, e) => {
+    playFuturisticSound('overclock', e);
+    setOverclockedSkills(prev => ({
+      ...prev,
+      [skillKey]: true
+    }));
+    
+    const skillNames = {
+      prompt: "PROMPT ENGINEERING",
+      systems: "SYSTEMS ANALYSIS",
+      art: "ART DIRECTION",
+      perf: "WEB PERFORMANCE"
+    };
+    
+    triggerDynamicIsland(`◈ OVERCLOCK: ${skillNames[skillKey]} RUNNING AT 150% EFFICIENCY!`);
+    
+    setTimeout(() => {
+      setOverclockedSkills(prev => ({
+        ...prev,
+        [skillKey]: false
+      }));
+    }, 4000);
+  };
+
+  const handleTerminalClick = (e) => {
+    playFuturisticSound('reboot', e);
+    const colors = ['emerald', 'blue', 'amber'];
+    const nextColor = colors[(colors.indexOf(terminalColor) + 1) % colors.length];
+    setTerminalColor(nextColor);
+    
+    const colorNames = {
+      emerald: "EMERALD RETRO (GREEN)",
+      blue: "CYBER MATRIX (BLUE)",
+      amber: "INDUSTRIAL BEACON (AMBER)"
+    };
+    
+    triggerDynamicIsland(`◈ TERMINAL: SYSTEM REBOOT COMPLETE. COLOR SCHEME: ${colorNames[nextColor]}`);
+  };
+
+  // Card 3D Tilt & Glare playability engine (animation-principles)
+  const [cardTilt, setCardTilt] = useState({ 
+    transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)', 
+    glare: 'transparent',
+    transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)'
+  });
+
+  const handleCardMouseMove = (e) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const xc = rect.width / 2;
+    const yc = rect.height / 2;
+    const dx = x - xc;
+    const dy = y - yc;
+    // Rotate max 10 degrees for rich 3D card feel
+    const rx = -(dy / yc) * 10;
+    const ry = (dx / xc) * 10;
+    
+    setCardTilt({
+      transform: `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.015)`,
+      glare: `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.18) 0%, transparent 60%)`,
+      transition: 'none'
+    });
+    setCardCoords({ x, y, active: true });
+  };
+
+  const handleCardMouseLeave = () => {
+    setCardTilt({
+      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)',
+      glare: 'transparent',
+      transition: 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)'
+    });
+    setCardCoords(prev => ({ ...prev, active: false }));
+  };
+
   useEffect(() => {
     if (islandActive) {
       const timer = setTimeout(() => setIslandActive(false), 3000);
@@ -545,6 +742,7 @@ export default function App() {
   const cursorTextRef = useRef(null);
   const xcodeContentRef = useRef(null);
   const heroTitleRef = useRef(null);
+  const cardRef = useRef(null);
 
   // Spatial Audio Node state
   const audioCtxRef = useRef(null);
@@ -603,6 +801,85 @@ export default function App() {
 
       osc.start();
       osc.stop(ctx.currentTime + dur);
+    } catch (err) {
+      // Fail silently to prevent interrupting UI
+    }
+  };
+
+  const playFuturisticSound = (type, e) => {
+    try {
+      if (soundScheme === 'mute') return;
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const ctx = audioCtxRef.current;
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
+
+      const playOsc = (freq, typeOsc, startTime, duration, startVol, endVol) => {
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        osc.type = typeOsc;
+        osc.frequency.setValueAtTime(freq, startTime);
+        gainNode.gain.setValueAtTime(startVol, startTime);
+        gainNode.gain.exponentialRampToValueAtTime(endVol, startTime + duration);
+        osc.connect(gainNode);
+        
+        if (e && typeof e.clientX === 'number' && ctx.createStereoPanner) {
+          const panner = ctx.createStereoPanner();
+          const panValue = (e.clientX / window.innerWidth) * 2 - 1;
+          panner.pan.setValueAtTime(Math.max(-1, Math.min(1, panValue)), startTime);
+          gainNode.connect(panner);
+          panner.connect(ctx.destination);
+        } else {
+          gainNode.connect(ctx.destination);
+        }
+        
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+      };
+
+      const now = ctx.currentTime;
+      if (type === 'biometric_scan') {
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(110, now);
+        osc.frequency.linearRampToValueAtTime(880, now + 0.8);
+        gainNode.gain.setValueAtTime(0.04, now);
+        gainNode.gain.linearRampToValueAtTime(0.001, now + 0.8);
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.8);
+      } else if (type === 'biometric_success') {
+        playOsc(987.77, 'sine', now, 0.12, 0.05, 0.001);
+        playOsc(1318.51, 'sine', now + 0.08, 0.18, 0.05, 0.001);
+      } else if (type === 'barcode_beep') {
+        playOsc(2500, 'sine', now, 0.06, 0.08, 0.001);
+      } else if (type === 'overclock') {
+        playOsc(523.25, 'triangle', now, 0.1, 0.04, 0.001);
+        playOsc(659.25, 'triangle', now + 0.05, 0.1, 0.04, 0.001);
+        playOsc(783.99, 'triangle', now + 0.1, 0.1, 0.04, 0.001);
+        playOsc(1046.50, 'sine', now + 0.15, 0.2, 0.05, 0.001);
+      } else if (type === 'reboot') {
+        playOsc(330, 'sine', now, 0.1, 0.05, 0.001);
+        playOsc(440, 'sine', now + 0.05, 0.1, 0.05, 0.001);
+        playOsc(660, 'sine', now + 0.1, 0.15, 0.05, 0.001);
+      } else if (type === 'error') {
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(130, now);
+        osc.frequency.setValueAtTime(110, now + 0.1);
+        gainNode.gain.setValueAtTime(0.06, now);
+        gainNode.gain.linearRampToValueAtTime(0.001, now + 0.25);
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      }
     } catch (err) {
       // Fail silently to prevent interrupting UI
     }
@@ -1790,94 +2067,397 @@ export default function App() {
 
             <div className="max-w-5xl w-full mx-auto z-10 flex flex-col md:flex-row gap-6 items-stretch select-none">
               
-              {/* ── PREMIUM ID CARD / HERO BENTO (Left 3/5) ── */}
+              {/* ── PREMIUM INTERACTIVE ID CARD / HERO BENTO (Left 3/5) ── */}
               <div 
-                className="w-full md:w-3/5 glass-bento squircle-card p-0 flex flex-col justify-between cursor-grab active:cursor-grabbing transition-shadow duration-300 overflow-hidden"
+                ref={cardRef}
+                className="w-full md:w-3/5 relative min-h-[385px] transition-shadow duration-300 select-none group"
                 style={{
                   transform: `translate(${bento1Offset.x}px, ${bento1Offset.y}px)`,
                   zIndex: draggingBento === 1 ? 50 : 10,
                   touchAction: 'none',
-                  boxShadow: draggingBento === 1 ? '0 30px 60px rgba(0,0,0,0.15)' : '0 2px 24px rgba(0,0,0,0.06)'
+                  perspective: '1200px'
                 }}
                 onMouseDown={(e) => handleDragStart(e, 1)}
                 onTouchStart={(e) => handleDragStart(e, 1)}
+                onMouseMove={handleCardMouseMove}
+                onMouseLeave={handleCardMouseLeave}
+                onDoubleClick={(e) => { e.stopPropagation(); playSpatialClick(e); setCardFlipped(!cardFlipped); }}
               >
-                {/* ── ID CARD TOP HEADER ── */}
-                <div className="relative flex-none bg-gradient-to-r from-[#0052CC] via-[#0066FF] to-[#2979FF] px-5 pt-5 pb-14 overflow-hidden">
-                  {/* Blueprint grid lines */}
-                  <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(255,255,255,0.4) 18px, rgba(255,255,255,0.4) 19px), repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(255,255,255,0.4) 18px, rgba(255,255,255,0.4) 19px)'}} />
-                  {/* Holographic shimmer strip */}
-                  <div className="absolute top-0 right-0 w-32 h-full opacity-20" style={{background: 'linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%)', animation: 'shimmer 3s ease-in-out infinite'}} />
-                  <div className="relative flex justify-between items-start">
-                    <div>
-                      <span className="font-mono text-[7px] font-black tracking-[0.25em] text-blue-200 uppercase block">CREATIVE ID CARD</span>
-                      <span className="font-mono text-[8px] font-bold text-white/70 tracking-widest">MRD-PORTFOLIO-2026</span>
+                {/* Rotator panel */}
+                <div 
+                  className="w-full h-full relative transition-transform duration-700"
+                  style={{
+                    transformStyle: 'preserve-3d',
+                    transform: `${cardTilt.transform} rotateY(${cardFlipped ? 180 : 0}deg)`,
+                    transition: cardTilt.transition || 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                >
+                  {/* Glare effect overlay */}
+                  <div className="absolute inset-0 pointer-events-none z-30 transition-opacity duration-300" style={{ background: cardTilt.glare }} />
+
+                  {/* ────────────────── FRONT FACE ────────────────── */}
+                  <div 
+                    className="w-full h-full bg-[#FAFAFA] border-2 border-black/10 rounded-3xl p-0 flex flex-col justify-between overflow-hidden relative shadow-[0_2px_24px_rgba(0,0,0,0.06)]"
+                    style={{ backfaceVisibility: 'hidden', zIndex: cardFlipped ? 0 : 2 }}
+                  >
+                    {/* Glowing Interactive Technical Crosshair */}
+                    {cardCoords.active && (
+                      <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden rounded-3xl">
+                        <div className="absolute left-0 right-0 border-t border-dashed border-[#0052cc]/15" style={{ top: `${cardCoords.y}px` }} />
+                        <div className="absolute top-0 bottom-0 border-l border-dashed border-[#0052cc]/15" style={{ left: `${cardCoords.x}px` }} />
+                        <div 
+                          className="absolute bg-gray-900/90 text-white font-mono text-[5px] md:text-[6px] tracking-widest px-1.5 py-0.5 rounded border border-gray-800 pointer-events-none select-none z-30 shadow"
+                          style={{ left: `${cardCoords.x + 8}px`, top: `${cardCoords.y + 8}px` }}
+                        >
+                          [X:{Math.round(cardCoords.x)} Y:{Math.round(cardCoords.y)}]
+                        </div>
+                      </div>
+                    )}
+
+                    {/* ID CARD TOP HEADER */}
+                    <div className="relative flex-none bg-gradient-to-r from-[#0052CC] via-[#0066FF] to-[#2979FF] px-5 pt-5 pb-14 overflow-hidden">
+                      {/* Blueprint grid lines */}
+                      <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(255,255,255,0.4) 18px, rgba(255,255,255,0.4) 19px), repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(255,255,255,0.4) 18px, rgba(255,255,255,0.4) 19px)'}} />
+                      {/* Holographic shimmer strip */}
+                      <div className="absolute top-0 right-0 w-32 h-full opacity-20" style={{background: 'linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%)', animation: 'shimmer 3s ease-in-out infinite'}} />
+                      <div className="relative flex justify-between items-start">
+                        <div>
+                          <span className="font-mono text-[7px] font-black tracking-[0.25em] text-blue-200 uppercase block">CREATIVE ID CARD</span>
+                          <span className="font-mono text-[8px] font-bold text-white/70 tracking-widest">MRD-PORTFOLIO-2026</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-[7px] font-black text-blue-200 tracking-widest uppercase">{t.heroSub}</span>
+                          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]"/>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-[7px] font-black text-blue-200 tracking-widest uppercase">{t.heroSub}</span>
-                      <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]"/>
+
+                    {/* ID CARD PHOTO + DETAILS */}
+                    <div className="relative px-5 pb-5 flex-1 flex flex-col justify-between mt-3">
+                      {/* Photo — overlaps header */}
+                      <div 
+                        className={`absolute -top-14 left-5 w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border-[3px] transition-all duration-300 ${biometricVerified ? 'border-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.6)]' : 'border-white shadow-[0_8px_24px_rgba(0,82,204,0.35)]'} bg-gray-100 cursor-none z-20`}
+                        onClick={(e) => { e.stopPropagation(); handleBiometricScan(e); }}
+                        onMouseEnter={() => handleCursorHover(true, biometricVerified ? 'SYSTEM ACCREDITED ◈' : 'BIOMETRIC SCAN ◈')}
+                        onMouseLeave={() => handleCursorHover(false)}
+                      >
+                        <img 
+                          src="/mrd-photo.jpg" 
+                          alt="Muhammad Rahmat Hidayat"
+                          className="w-full h-full object-cover object-top"
+                          draggable={false}
+                        />
+                        {/* High-tech biometric scan scanner HUD */}
+                        {biometricScanning && (
+                          <div className="absolute inset-0 bg-blue-500/20 backdrop-blur-[0.5px] flex flex-col items-center justify-center pointer-events-none z-10 animate-[pulse_0.8s_infinite]">
+                            <div className="w-12 h-12 border-2 border-dashed border-emerald-400 rounded-full animate-spin" />
+                            <div className="absolute w-2 h-2 bg-emerald-400 rounded-full animate-ping" />
+                          </div>
+                        )}
+                        
+                        {/* Biometric laser scan sweep line */}
+                        <div className="absolute inset-0 pointer-events-none z-10" style={{background: biometricScanning ? 'linear-gradient(to bottom, transparent 0%, rgba(52,211,153,0.6) 50%, transparent 100%)' : 'linear-gradient(to bottom, transparent 0%, rgba(0,102,255,0.15) 50%, transparent 100%)', animation: biometricScanning ? 'scanLine 0.8s ease-in-out infinite' : 'scanLine 2.5s ease-in-out infinite'}} />
+                        
+                        {/* Verified Accredit Badge */}
+                        {biometricVerified && (
+                          <div className="absolute top-1 right-1 bg-emerald-500 text-white rounded-full p-0.5 z-20 flex items-center justify-center animate-bounce shadow">
+                            <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Technical Blueprint live compass decal */}
+                      <div className="absolute top-1 right-20 text-[6px] font-mono text-gray-400 select-none hidden md:flex items-center gap-1 opacity-70">
+                        <span>NODE_SYNC ◈</span>
+                        <div className="w-1.5 h-1.5 border border-dashed border-gray-400 rounded-full animate-spin" />
+                      </div>
+
+                      {/* Live Cybernetic System Ticker Terminal HUD */}
+                      <div 
+                        className={`absolute -top-12 left-28 md:left-32 right-16 h-12 md:h-14 bg-slate-950 border rounded-xl px-2.5 py-1.5 flex items-center justify-between shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)] overflow-hidden cursor-none z-20 transition-all ${
+                          terminalColor === 'emerald' ? 'text-emerald-400 border-emerald-950/60 shadow-[0_0_10px_rgba(16,185,129,0.15)]' :
+                          terminalColor === 'blue' ? 'text-cyan-400 border-cyan-950/60 shadow-[0_0_10px_rgba(34,211,238,0.15)]' :
+                          'text-amber-400 border-amber-950/60 shadow-[0_0_10px_rgba(245,158,11,0.15)]'
+                        }`}
+                        onClick={(e) => { e.stopPropagation(); handleTerminalClick(e); }}
+                        onMouseEnter={() => handleCursorHover(true, 'SYSTEM HUD ◈')}
+                        onMouseLeave={() => handleCursorHover(false)}
+                      >
+                        <div className="flex-1 font-mono text-[5px] md:text-[7px] leading-[1.3] text-left truncate">
+                          <span className="text-[5px] md:text-[6px] text-white/50 tracking-wider block font-black mb-0.5 select-none">[ACCELERATED TELEMETRY]</span>
+                          {terminalLineIndex === 0 && <span>◈ SYS.LOC: JKT_ID_SRV</span>}
+                          {terminalLineIndex === 1 && <span>◈ CORE.TEMP: {liveTemp}°C (OK)</span>}
+                          {terminalLineIndex === 2 && <span>◈ AI.PROD: DETERMINISTIC</span>}
+                          {terminalLineIndex === 3 && <span>◈ SLOP.DET: 0.00% (STABLE)</span>}
+                          {terminalLineIndex === 4 && <span>◈ PORT.LATENCY: 1.2ms</span>}
+                        </div>
+                        {/* Interactive pulsing visual sine wave graphic */}
+                        <div className="flex items-center gap-0.5 h-6 pl-2 border-l border-white/10 flex-none opacity-80">
+                          {[1,2,3,2,1,2,3,4,3,2,1].map((h, idx) => (
+                            <div 
+                              key={idx} 
+                              className={`w-[1.2px] md:w-[1.8px] rounded-[1px] animate-[pulse_1s_ease-in-out_infinite] transition-colors ${
+                                terminalColor === 'emerald' ? 'bg-emerald-400' :
+                                terminalColor === 'blue' ? 'bg-cyan-400' :
+                                'bg-amber-400'
+                              }`}
+                              style={{ 
+                                height: `${h * 4}px`, 
+                                animationDelay: `${idx * 0.08}s` 
+                              }} 
+                            />
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Chip + NFC watermark */}
+                      <div className="absolute -top-12 right-5 flex flex-col items-end gap-1">
+                        <button 
+                          className="w-8 h-6 rounded-sm bg-gradient-to-br from-yellow-300 via-yellow-400 to-amber-500 shadow-sm border border-yellow-200/50 cursor-none active:scale-95 transition-transform" 
+                          style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px), repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0,0,0,0.08) 5px, rgba(0,0,0,0.08) 6px)'}}
+                          onClick={(e) => { e.stopPropagation(); playSpatialClick(e); setCardFlipped(true); }}
+                          onMouseEnter={() => handleCursorHover(true, 'FLIP CHIP')}
+                          onMouseLeave={() => handleCursorHover(false)}
+                        />
+                        <span className="font-mono text-[6px] text-blue-400 tracking-wider animate-pulse select-none">TAP CHIP TO FLIP ⟲</span>
+                      </div>
+
+                      {/* Name + Title block — offset by photo height */}
+                      <div className="mt-10 md:mt-12">
+                        <h1 ref={heroTitleRef} className="font-header text-2xl md:text-4xl leading-[0.9] tracking-tighter uppercase text-gray-900">
+                          <span className="text-reveal-wrap"><span className="text-reveal-line">MUHAMMAD</span></span>
+                          <span className="text-reveal-wrap"><span className="text-reveal-line"><span className="text-blue-600">RAHMAT</span> HIDAYAT.</span></span>
+                        </h1>
+                        <div className="flex items-center gap-2 mt-2">
+                          <span className="font-mono text-[9px] text-gray-500 tracking-widest uppercase">S.KOM · BNSP SYSTEMS ANALYST</span>
+                        </div>
+                      </div>
+
+                      {/* DATA FIELDS row */}
+                      <div className="grid grid-cols-3 gap-2 mt-4 z-20">
+                        <div 
+                          className={`bg-gray-100 border rounded-xl p-2.5 cursor-none transition-all duration-300 hover:scale-105 active:scale-95 ${statClicks.ipk >= 3 ? 'border-orange-500 bg-orange-50/50 shadow-[0_0_10px_rgba(249,115,22,0.2)]' : 'border-gray-200 hover:border-[#0052cc]/30 hover:bg-[#0052cc]/5'}`}
+                          onClick={(e) => { e.stopPropagation(); handleStatClick('ipk', e); }}
+                          onMouseEnter={() => handleCursorHover(true, statClicks.ipk >= 3 ? 'OVERCLOCKED IPK!' : 'QUERY IPK ◈')}
+                          onMouseLeave={() => handleCursorHover(false)}
+                        >
+                          <span className="font-mono text-[7px] text-gray-400 uppercase tracking-widest block mb-0.5 select-none">IPK</span>
+                          <span className={`font-mono text-xs md:text-sm font-black transition-colors ${statClicks.ipk >= 3 ? 'text-orange-600 animate-pulse' : 'text-gray-900'}`}>{statClicks.ipk >= 3 ? '4.00★' : '3.65'}</span>
+                        </div>
+                        
+                        <div 
+                          className={`border rounded-xl p-2.5 cursor-none transition-all duration-300 hover:scale-105 active:scale-95 ${statClicks.certs >= 3 ? 'border-orange-500 bg-orange-50/50 shadow-[0_0_10px_rgba(249,115,22,0.2)]' : 'bg-blue-50 border-blue-200/80 hover:border-[#0052cc]'}`}
+                          onClick={(e) => { e.stopPropagation(); handleStatClick('certs', e); }}
+                          onMouseEnter={() => handleCursorHover(true, statClicks.certs >= 3 ? 'OVERCLOCKED CERTS!' : 'QUERY CERTS ◈')}
+                          onMouseLeave={() => handleCursorHover(false)}
+                        >
+                          <span className="font-mono text-[7px] text-blue-400 uppercase tracking-widest block mb-0.5 select-none">CERTS</span>
+                          <span className={`font-mono text-xs md:text-sm font-black transition-colors ${statClicks.certs >= 3 ? 'text-orange-600 animate-pulse' : 'text-blue-700'}`}>{statClicks.certs >= 3 ? '∞ MAX' : '×3'}</span>
+                        </div>
+
+                        <div 
+                          className={`bg-gray-100 border rounded-xl p-2.5 cursor-none transition-all duration-300 hover:scale-105 active:scale-95 ${statClicks.since >= 3 ? 'border-orange-500 bg-orange-50/50 shadow-[0_0_10px_rgba(249,115,22,0.2)]' : 'border-gray-200 hover:border-[#0052cc]/30 hover:bg-[#0052cc]/5'}`}
+                          onClick={(e) => { e.stopPropagation(); handleStatClick('since', e); }}
+                          onMouseEnter={() => handleCursorHover(true, statClicks.since >= 3 ? 'TIMELINE EXPANDED!' : 'QUERY SINCE ◈')}
+                          onMouseLeave={() => handleCursorHover(false)}
+                        >
+                          <span className="font-mono text-[7px] text-gray-400 uppercase tracking-widest block mb-0.5 select-none">SINCE</span>
+                          <span className={`font-mono text-xs md:text-sm font-black transition-colors ${statClicks.since >= 3 ? 'text-orange-600 animate-pulse' : 'text-gray-900'}`}>{statClicks.since >= 3 ? '2021★' : '2021'}</span>
+                        </div>
+                      </div>
+
+                      {/* Barcode + status badges row */}
+                      <div className="flex items-end justify-between mt-4 gap-3 z-20">
+                        {/* Fake barcode */}
+                        <div 
+                          className="flex items-end gap-[2.5px] h-8 opacity-60 hover:opacity-100 transition-all cursor-none relative py-1"
+                          onClick={(e) => { e.stopPropagation(); handleBarcodeScan(e); }}
+                          onMouseEnter={() => handleCursorHover(true, 'SCAN BARCODE ◈')}
+                          onMouseLeave={() => handleCursorHover(false)}
+                        >
+                          {[3,6,2,8,4,7,2,5,9,3,6,4,8,2,7,5,3,9,6,4,2,8,5,7].map((h, i) => (
+                            <div key={i} className={`rounded-[1px] transition-colors duration-200 ${barcodeScanning ? 'bg-red-500' : 'bg-gray-800'}`} style={{width:'2.5px', height:`${h * 3}px`}} />
+                          ))}
+                          {/* Red laser scanning overlay strip */}
+                          {barcodeScanning && (
+                            <div className="absolute inset-x-0 top-1/2 h-[2px] bg-red-600 animate-pulse shadow-[0_0_8px_#ef4444] pointer-events-none" />
+                          )}
+                        </div>
+                        <div className="flex flex-wrap gap-1.5 justify-end">
+                          <span className="py-1 px-2.5 rounded-full bg-gray-900 text-white font-header text-[8px] tracking-widest shadow-[2px_2px_0px_#ffcc00]">{t.heroRole}</span>
+                          <span className="py-1 px-2.5 rounded-full border border-black bg-white text-black font-display font-bold text-[8px] tracking-widest shadow-[2px_2px_0px_#0066ff]">{t.heroCert}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* ── ID CARD PHOTO + DETAILS ── */}
-                <div className="relative px-5 pb-5">
-                  {/* Photo — overlaps header */}
-                  <div className="absolute -top-10 left-5 w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border-[3px] border-white shadow-[0_8px_24px_rgba(0,82,204,0.35)] bg-gray-100">
-                    <img 
-                      src="/mrd-photo.jpg" 
-                      alt="Muhammad Rahmat Hidayat"
-                      className="w-full h-full object-cover object-top"
-                      draggable={false}
-                    />
-                    {/* Biometric scan line animation */}
-                    <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, transparent 0%, rgba(0,102,255,0.15) 50%, transparent 100%)', animation: 'scanLine 2.5s ease-in-out infinite'}} />
-                  </div>
+                  {/* ────────────────── BACK FACE ────────────────── */}
+                  <div 
+                    className="absolute inset-0 w-full h-full bg-slate-950 border-2 border-slate-800 rounded-3xl p-5 flex flex-col justify-between text-white overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+                    style={{ 
+                      backfaceVisibility: 'hidden', 
+                      transform: 'rotateY(180deg)',
+                      zIndex: cardFlipped ? 2 : 0,
+                      backgroundImage: 'radial-gradient(circle at 50% 30%, #1e293b 0%, #090d16 100%)'
+                    }}
+                  >
+                    {/* Glowing Interactive Technical Crosshair */}
+                    {cardCoords.active && (
+                      <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden rounded-3xl">
+                        <div className="absolute left-0 right-0 border-t border-dashed border-[#60a5fa]/10" style={{ top: `${cardCoords.y}px` }} />
+                        <div className="absolute top-0 bottom-0 border-l border-dashed border-[#60a5fa]/10" style={{ left: `${cardCoords.x}px` }} />
+                        <div 
+                          className="absolute bg-gray-900/90 text-white font-mono text-[5px] md:text-[6px] tracking-widest px-1.5 py-0.5 rounded border border-gray-800 pointer-events-none select-none z-30 shadow"
+                          style={{ left: `${cardCoords.x + 8}px`, top: `${cardCoords.y + 8}px` }}
+                        >
+                          [X:{Math.round(cardCoords.x)} Y:{Math.round(cardCoords.y)}]
+                        </div>
+                      </div>
+                    )}
 
-                  {/* Chip + NFC watermark */}
-                  <div className="absolute -top-8 right-5 flex flex-col items-end gap-1">
-                    <div className="w-8 h-6 rounded-sm bg-gradient-to-br from-yellow-300 via-yellow-400 to-amber-500 shadow-sm border border-yellow-200/50" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px), repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0,0,0,0.08) 5px, rgba(0,0,0,0.08) 6px)'}} />
-                    <span className="font-mono text-[7px] text-blue-300 tracking-wider">NFC ◈</span>
-                  </div>
+                    {/* Circuit lines decorative background */}
+                    <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(96,165,250,0.15) 15px, rgba(96,165,250,0.15) 16px), repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(96,165,250,0.15) 15px, rgba(96,165,250,0.15) 16px)'}} />
+                    
+                    {/* Top Header */}
+                    <div className="flex justify-between items-start border-b border-white/10 pb-3 z-10 flex-none">
+                      <div>
+                        <span className="font-mono text-[7px] font-black tracking-[0.25em] text-blue-400 block">SYSTEMS ANALYST SECURITY</span>
+                        <span className="font-mono text-[8px] text-gray-400 tracking-widest">ENCRYPTED ARCHIVE v2.06</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 bg-blue-950/80 px-2 py-0.5 rounded border border-blue-900/40 font-mono text-[7px] text-blue-300 font-bold">
+                        SECURE KEY ◈
+                      </div>
+                    </div>
 
-                  {/* Name + Title block — offset by photo height */}
-                  <div className="mt-14 md:mt-16">
-                    <h1 ref={heroTitleRef} className="font-header text-2xl md:text-4xl leading-[0.9] tracking-tighter uppercase text-gray-900">
-                      <span className="text-reveal-wrap"><span className="text-reveal-line">MUHAMMAD</span></span>
-                      <span className="text-reveal-wrap"><span className="text-reveal-line"><span className="text-blue-600">RAHMAT</span> HIDAYAT.</span></span>
-                    </h1>
-                    <div className="flex items-center gap-2 mt-2">
-                      <span className="font-mono text-[9px] text-gray-500 tracking-widest uppercase">S.KOM · BNSP SYSTEMS ANALYST</span>
-                    </div>
-                  </div>
+                    {/* Middle Area: Radar Skill Matrix on left, QR & NFC Scanner on right */}
+                    <div className="grid grid-cols-2 gap-4 my-2 z-10 flex-1 min-h-0 items-center">
+                      {/* Skill Progress Matrix */}
+                      <div className="flex flex-col gap-2 font-mono text-left">
+                        <span className="text-[7px] font-bold text-gray-400 uppercase tracking-wider block mb-1">SYSTEMS ENGINE OVERLAYS (TAP TO BOOST)</span>
+                        <div className="flex flex-col gap-2">
+                          {/* Prompt Eng */}
+                          <div 
+                            className="group/skill cursor-none transition-transform hover:scale-[1.02]"
+                            onClick={(e) => { e.stopPropagation(); handleSkillOverclock('prompt', e); }}
+                            onMouseEnter={() => handleCursorHover(true, 'BOOST PROMPT ◈')}
+                            onMouseLeave={() => handleCursorHover(false)}
+                          >
+                            <div className="flex justify-between text-[7px] text-gray-300 mb-0.5 select-none">
+                              <span className="group-hover/skill:text-blue-400 transition-colors">PROMPT ENGINEERING</span>
+                              <span className={`transition-colors ${overclockedSkills.prompt ? 'text-amber-400 font-bold' : 'text-blue-400'}`}>{overclockedSkills.prompt ? '150% ⚡' : '96%'}</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800 shadow-inner">
+                              <div className={`h-full rounded-full transition-all duration-500 ${overclockedSkills.prompt ? 'bg-gradient-to-r from-amber-400 to-orange-500 animate-pulse shadow-[0_0_8px_#f59e0b]' : 'bg-blue-500'}`} style={{ width: overclockedSkills.prompt ? '100%' : '96%' }}></div>
+                            </div>
+                          </div>
+                          
+                          {/* Systems Analysis */}
+                          <div 
+                            className="group/skill cursor-none transition-transform hover:scale-[1.02]"
+                            onClick={(e) => { e.stopPropagation(); handleSkillOverclock('systems', e); }}
+                            onMouseEnter={() => handleCursorHover(true, 'BOOST SYSTEMS ◈')}
+                            onMouseLeave={() => handleCursorHover(false)}
+                          >
+                            <div className="flex justify-between text-[7px] text-gray-300 mb-0.5 select-none">
+                              <span className="group-hover/skill:text-blue-400 transition-colors">SYSTEMS ANALYSIS</span>
+                              <span className={`transition-colors ${overclockedSkills.systems ? 'text-amber-400 font-bold' : 'text-blue-400'}`}>{overclockedSkills.systems ? '150% ⚡' : '98%'}</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800 shadow-inner">
+                              <div className={`h-full rounded-full transition-all duration-500 ${overclockedSkills.systems ? 'bg-gradient-to-r from-amber-400 to-orange-500 animate-pulse shadow-[0_0_8px_#f59e0b]' : 'bg-blue-500'}`} style={{ width: overclockedSkills.systems ? '100%' : '98%' }}></div>
+                            </div>
+                          </div>
 
-                  {/* ── DATA FIELDS row ── */}
-                  <div className="grid grid-cols-3 gap-2 mt-4">
-                    <div className="bg-gray-50 border border-gray-200/80 rounded-xl p-2.5">
-                      <span className="font-mono text-[7px] text-gray-400 uppercase tracking-widest block mb-0.5">IPK</span>
-                      <span className="font-mono text-sm font-black text-gray-900">3.65</span>
-                    </div>
-                    <div className="bg-blue-50 border border-blue-200/80 rounded-xl p-2.5">
-                      <span className="font-mono text-[7px] text-blue-400 uppercase tracking-widest block mb-0.5">CERTS</span>
-                      <span className="font-mono text-sm font-black text-blue-700">×3</span>
-                    </div>
-                    <div className="bg-gray-50 border border-gray-200/80 rounded-xl p-2.5">
-                      <span className="font-mono text-[7px] text-gray-400 uppercase tracking-widest block mb-0.5">SINCE</span>
-                      <span className="font-mono text-sm font-black text-gray-900">2021</span>
-                    </div>
-                  </div>
+                          {/* Art Direction */}
+                          <div 
+                            className="group/skill cursor-none transition-transform hover:scale-[1.02]"
+                            onClick={(e) => { e.stopPropagation(); handleSkillOverclock('art', e); }}
+                            onMouseEnter={() => handleCursorHover(true, 'BOOST ART ◈')}
+                            onMouseLeave={() => handleCursorHover(false)}
+                          >
+                            <div className="flex justify-between text-[7px] text-gray-300 mb-0.5 select-none">
+                              <span className="group-hover/skill:text-blue-400 transition-colors">ART DIRECTION</span>
+                              <span className={`transition-colors ${overclockedSkills.art ? 'text-amber-400 font-bold' : 'text-blue-400'}`}>{overclockedSkills.art ? '150% ⚡' : '92%'}</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800 shadow-inner">
+                              <div className={`h-full rounded-full transition-all duration-500 ${overclockedSkills.art ? 'bg-gradient-to-r from-amber-400 to-orange-500 animate-pulse shadow-[0_0_8px_#f59e0b]' : 'bg-blue-500'}`} style={{ width: overclockedSkills.art ? '100%' : '92%' }}></div>
+                            </div>
+                          </div>
 
-                  {/* ── Barcode + status badges row ── */}
-                  <div className="flex items-end justify-between mt-4 gap-3">
-                    {/* Fake barcode */}
-                    <div className="flex items-end gap-[2px] h-8 opacity-60">
-                      {[3,6,2,8,4,7,2,5,9,3,6,4,8,2,7,5,3,9,6,4,2,8,5,7].map((h, i) => (
-                        <div key={i} className="bg-gray-800 rounded-[1px]" style={{width:'2px', height:`${h * 3}px`}} />
-                      ))}
+                          {/* Web Performance */}
+                          <div 
+                            className="group/skill cursor-none transition-transform hover:scale-[1.02]"
+                            onClick={(e) => { e.stopPropagation(); handleSkillOverclock('perf', e); }}
+                            onMouseEnter={() => handleCursorHover(true, 'BOOST PERF ◈')}
+                            onMouseLeave={() => handleCursorHover(false)}
+                          >
+                            <div className="flex justify-between text-[7px] text-gray-300 mb-0.5 select-none">
+                              <span className="group-hover/skill:text-blue-400 transition-colors">WEB PERFORMANCE</span>
+                              <span className={`transition-colors ${overclockedSkills.perf ? 'text-amber-400 font-bold' : 'text-blue-400'}`}>{overclockedSkills.perf ? '150% ⚡' : '99%'}</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800 shadow-inner">
+                              <div className={`h-full rounded-full transition-all duration-500 ${overclockedSkills.perf ? 'bg-gradient-to-r from-amber-400 to-orange-500 animate-pulse shadow-[0_0_8px_#f59e0b]' : 'bg-blue-500'}`} style={{ width: overclockedSkills.perf ? '100%' : '99%' }}></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* NFC chip scanner (Tap to scan) */}
+                      <div className="flex flex-col items-center justify-center bg-slate-900/60 rounded-2xl border border-slate-800 p-3 h-full relative group">
+                        {/* NFC Golden Pattern */}
+                        <button 
+                          className="w-12 h-10 rounded-lg bg-gradient-to-br from-amber-400 via-yellow-400 to-amber-600 border border-yellow-200/40 relative flex items-center justify-center cursor-none transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_#f59e0b50] active:scale-95 flex-none"
+                          onClick={(e) => { e.stopPropagation(); handleNfcScan(); }}
+                          onMouseEnter={() => handleCursorHover(true, 'SCAN NFC')}
+                          onMouseLeave={() => handleCursorHover(false)}
+                        >
+                          <span className="text-slate-900 font-mono text-[9px] font-black animate-pulse">◈</span>
+                        </button>
+                        <span className="font-mono text-[7px] text-gray-400 mt-2 text-center select-none uppercase tracking-widest">{nfcScanning ? 'TRANSMITTING...' : 'TAP CHIP TO SCAN'}</span>
+                        
+                        {/* Hidden key display */}
+                        {nfcScanned && (
+                          <div className="absolute inset-0 bg-slate-950 rounded-2xl border border-blue-500/50 flex flex-col items-center justify-center p-2 text-center animate-fade-in z-20">
+                            <span className="font-mono text-[6px] text-emerald-400 font-extrabold animate-pulse uppercase tracking-wider block mb-1">◈ NFC DATA DECRYPTED ◈</span>
+                            <span className="font-mono text-[7px] text-white font-bold tracking-tight block">PASSKEY UNLOCKED:</span>
+                            <span className="font-mono text-[6px] text-gray-400 bg-slate-900 border border-slate-800 px-1 py-0.5 rounded mt-1 font-extrabold select-all">DETERMINISTIC_ZERO_SLOP_2026</span>
+                            <button 
+                              className="mt-1.5 cursor-none text-[6px] text-blue-400 font-bold hover:underline"
+                              onClick={(e) => { e.stopPropagation(); setNfcScanned(false); }}
+                            >
+                              [CLOSE SCAN]
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex flex-wrap gap-1.5 justify-end">
-                      <span className="py-1 px-2.5 rounded-full bg-gray-900 text-white font-header text-[8px] tracking-widest shadow-[2px_2px_0px_#ffcc00]">{t.heroRole}</span>
-                      <span className="py-1 px-2.5 rounded-full border border-black bg-white text-black font-display font-bold text-[8px] tracking-widest shadow-[2px_2px_0px_#0066ff]">{t.heroCert}</span>
+
+                    {/* Bottom Bar: QR Code, handwritten signature, and Flip indicator */}
+                    <div className="flex items-end justify-between border-t border-white/10 pt-3 z-10 flex-none">
+                      <div className="flex items-center gap-3">
+                        {/* QR Code SVG */}
+                        <div className="w-10 h-10 bg-white p-1 rounded border border-gray-800 flex items-center justify-center">
+                          <svg className="w-full h-full fill-current text-slate-900" viewBox="0 0 29 29">
+                            <path d="M0 0h9v9H0zm1 1v7h7V1zm13 0h3v1h-3zm4 0h1v1h-1zm2 0h3v4h-3zm4 0h1v1h-1zm-2 1h1v1h-1zm3 0h1v1h-1zm0 2h1v1h-1zm-6-2h1v1h-1zm-1 2h1v1h-1zm-3-1h1v1h-1zm1 1h2v1H9zm1 1h1v1h-1zm-1 1h1v1H9zm1 2h3v1h-3zm-10 4h9v9H0zm1 1v7h7V13zm13-1h3v1h-3zm4 0h1v1h-1zm-4 2h1v1h-1zm1 1h2v1h-2zm-1 2h1v1h-1zm4-1h3v4h-3zm4 0h1v1h-1zm-2 1h1v1h-1zm3 0h1v1h-1zm0 2h1v1h-1zm-8-3h1v1h-1zm-1 2h1v1h-1zm-1-1h1v1h-1zm-1 2h1v1h-1zm-2-2h1v1H9zm1 1h1v1h-1zm-1 1h1v1H9zm6 1h2v1h-2z" />
+                          </svg>
+                        </div>
+                        <div className="text-left">
+                          {/* Elegant Handwriting Signature */}
+                          <span className="font-serif italic text-xs tracking-wide text-gray-300 block select-none" style={{ fontFamily: 'Georgia, serif' }}>Rahmat Hidayat</span>
+                          <span className="font-mono text-[6px] text-gray-400 block tracking-widest uppercase">Verified Signature</span>
+                        </div>
+                      </div>
+
+                      {/* Interactive Flip Trigger */}
+                      <button 
+                        className="cursor-none py-1.5 px-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-header text-[8px] tracking-widest shadow-[2px_2px_0px_#000] border border-blue-500 active:scale-95 transition-all select-none"
+                        onClick={(e) => { e.stopPropagation(); playSpatialClick(e); setCardFlipped(false); }}
+                        onMouseEnter={() => handleCursorHover(true, 'FLIP FRONT')}
+                        onMouseLeave={() => handleCursorHover(false)}
+                      >
+                        TAP TO FLIP ⟲
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -1979,8 +2559,8 @@ export default function App() {
                         onMouseLeave={() => handleCursorHover(false)}
                         onClick={playSpatialClick}
                       >
-                        <svg className="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24">
-                          <path d="M18.561 3.281c-2.789 0-4.95 2.008-5.672 4.75-.417-2.156-1.503-4.328-3.394-5.836l-1.445 1.742c1.722 1.258 2.636 3.12 2.922 4.969-.972.766-2.222 1.281-3.664 1.281-2.473 0-4.316-1.859-4.316-4.32s1.843-4.32 4.316-4.32c1.786 0 3.328 1.055 3.973 2.637l1.984-.711C12.18 1.004 9.941 0 7.309 0 3.254 0 0 3.254 0 7.309s3.254 7.309 7.309 7.309c1.609 0 3.125-.434 4.391-1.223.516 2.051 1.703 4.148 3.516 5.566l1.242-1.637c-1.531-1.125-2.5-2.781-2.883-4.496.906-1.531 2.215-3.309 3.664-3.309 2.039 0 3.328 1.547 3.328 3.547v6.621h2.441v-6.621c0-3.309-2.078-5.789-5.117-5.789z"/>
+                        <svg className="w-4 h-4 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M24.75 17.542c-1.469 0-2.849-0.62-4.099-1.635l0.302-1.432 0.010-0.057c0.276-1.521 1.13-4.078 3.786-4.078 1.99 0 3.604 1.615 3.604 3.604 0 1.984-1.615 3.599-3.604 3.599zM24.75 6.693c-3.385 0-6.016 2.198-7.083 5.818-1.625-2.443-2.865-5.38-3.583-7.854h-3.646v9.484c-0.005 1.875-1.521 3.391-3.396 3.396-1.875-0.005-3.391-1.526-3.396-3.396v-9.484h-3.646v9.484c0 3.885 3.161 7.068 7.042 7.068 3.885 0 7.042-3.182 7.042-7.068v-1.589c0.708 1.474 1.578 2.974 2.635 4.297l-2.234 10.495h3.729l1.62-7.615c1.417 0.906 3.047 1.479 4.917 1.479 4 0 7.25-3.271 7.25-7.266 0-4-3.25-7.25-7.25-7.25z"/>
                         </svg>
                       </a>
 
@@ -1994,8 +2574,8 @@ export default function App() {
                         onMouseLeave={() => handleCursorHover(false)}
                         onClick={playSpatialClick}
                       >
-                        <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                          <path d="M17.07 0c-2.756 0-4.57 1.688-5.185 3.385l-.23.63H9.428V1.312H6.843v2.703H4.408v2.585h2.435V17.07c0 2.756 1.688 4.57 3.385 5.185l.63.23c.52.128 1.09.18 1.654.18.57 0 1.137-.052 1.654-.18l.63-.23c1.696-.615 3.385-2.43 3.385-5.185v-7.854h2.585V6.602h-2.585V4.018c0-1.077.585-1.435 1.435-1.435h1.15V0h-2.18zm-4.312 17.07c0 1.077-.585 1.435-1.435 1.435h-1.15v2.585h2.18c2.756 0 4.57-1.688 5.185-3.385l.23-.63h2.227v-2.585H17.72V6.602h-2.585v7.883c0 1.077-.585 1.435-1.435 1.435h-1.15v2.585c.563 0 1.134-.052 1.654-.18l.554-.2z" />
+                        <svg className="w-4 h-4 fill-current" viewBox="-2.5 -2 24 24" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin">
+                          <path d='M16.25 16.25v-10h-10v-.625c0-1.034.841-1.875 1.875-1.875H10V0H8.125A5.632 5.632 0 0 0 2.5 5.625v.625H0V10h2.5v6.25H0V20h8.75v-3.75h-2.5V10h6.285v6.25H10V20h8.75v-3.75h-2.5z'/><circle cx='14.375' cy='1.875' r='1.875'/>
                         </svg>
                       </a>
                     </div>
