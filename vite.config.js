@@ -49,12 +49,28 @@ export default defineConfig({
               return;
             }
 
-            const folderPath = path.resolve(__dirname, '..', folderName);
+            const folderPath = path.resolve(__dirname, 'public', folderName);
 
             if (fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory()) {
               try {
-                const files = fs.readdirSync(folderPath)
-                  .filter(f => /\.(png|jpe?g|webp)$/i.test(f))
+                const allFiles = fs.readdirSync(folderPath)
+                  .filter(f => /\.(png|jpe?g|webp)$/i.test(f));
+
+                // Prefer .webp version when available, deduplicate by basename
+                const byBase = new Map();
+                allFiles.forEach(f => {
+                  const base = f.replace(/\.(png|jpe?g|webp)$/i, '');
+                  const ext = f.split('.').pop().toLowerCase();
+                  const existing = byBase.get(base);
+                  // webp wins over jpeg/jpg wins over png
+                  const rank = { webp: 3, jpg: 2, jpeg: 2, png: 1 };
+                  if (!existing || (rank[ext] || 0) > (rank[existing.split('.').pop().toLowerCase()] || 0)) {
+                    byBase.set(base, f);
+                  }
+                });
+
+                const files = Array.from(byBase.values())
+                  .sort()
                   .map(f => `/${folderName}/${f}`);
 
                 const payload = JSON.stringify({ folder: folderName, images: files });
@@ -84,7 +100,7 @@ export default defineConfig({
             decodedUrl.startsWith('/ai photoshoot');
 
           if (isCampaignFolder) {
-            const filePath = path.join(__dirname, '..', decodedUrl);
+            const filePath = path.join(__dirname, 'public', decodedUrl);
 
             if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
               const ext = path.extname(filePath).toLowerCase();

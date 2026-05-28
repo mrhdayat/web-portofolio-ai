@@ -207,6 +207,9 @@ const translations = {
   }
 };
 
+// Auto-prefer WebP for bento card thumbnails (falls back gracefully if not converted yet)
+const webp = (src) => src.replace(/\.(jpe?g|png)$/i, '.webp');
+
 const campaignsList = [
   {
     id: 1,
@@ -2008,7 +2011,7 @@ export default function App() {
                     className={`bento-item-stagger squircle-card ${campaign.gridSpan} relative overflow-hidden group cursor-none`}
                     onMouseEnter={() => { handleCursorHover(true, 'EXPLORE'); setHoveredCard(cardId); }}
                     onMouseLeave={() => { handleCursorHover(false); setHoveredCard(null); }}
-                    onClick={() => openBentoGallery(campaign.folder, title, desc, campaign.defaultImg, concept)}
+                    onClick={() => openBentoGallery(campaign.folder, title, desc, webp(campaign.defaultImg), concept)}
                     style={{
                       opacity: hoveredCard && hoveredCard !== cardId ? 0.4 : 1,
                       filter: hoveredCard && hoveredCard !== cardId ? 'blur(2px)' : 'none',
@@ -2016,7 +2019,7 @@ export default function App() {
                     }}
                   >
                     <img 
-                      src={campaign.defaultImg} 
+                      src={webp(campaign.defaultImg)} 
                       alt={title} 
                       loading="lazy"
                       decoding="async"
