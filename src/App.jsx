@@ -27,41 +27,55 @@ const translations = {
     viewConcept: "LIHAT KONSEP",
     viewGallery: "LIHAT GALERI",
     conceptLabel: "PROSES BERPIKIR",
-    caseStudy1Title: "Luxury Fashion Campaign — Brand I",
-    caseStudy1Desc: "Sesi photoshoot fashion premium dengan teknik Identity-Locking & Deterministic Pose Reference. 29+ frame konsisten.",
-    caseStudy1Concept: "Konsep: <b>Premium Asymmetry</b>. Saya mengunci skeletal structure model di setiap frame menggunakan referensi pose deterministik, memastikan sudut kamera organik seperti fotografer nyata. Pencahayaan dihitung dari formula distribusi CMOS 35mm analog untuk menghindari plastik glow khas AI.",
-    caseStudy2Title: "Skincare Hero Campaign",
-    caseStudy2Desc: "Kampanye produk skincare dengan isolasi layer kemasan + model, mereproduksi tekstur kulit realistis tanpa AI slop.",
-    caseStudy2Concept: "Konsep: <b>Product Integrity Isolation</b>. Setiap frame dirender dalam dua layer terpisah: model dan label kemasan. Hasilnya dikompositkan secara manual menggunakan masking untuk mencegah kontaminasi tekstur antara kulit manusia dan plastik kemasan.",
-    caseStudy3Title: "Typographic Layout Series — Brand III",
-    caseStudy3Desc: "Seri editorial berbasis tipografi dan komposisi minimal dengan kampanye brand ketiga.",
-    caseStudy3Concept: "Konsep: <b>Swiss Grid Brutalism</b>. Setiap frame komposisi menggunakan sistem grid Swiss 12-kolom yang ketat. Tipografi di-render terpisah dari gambar model dan diintegrasikan pada tahap pasca-produksi dengan alignment matematis.",
-    caseStudy4Title: "Skincare Realism — Human Skin Detail",
-    caseStudy4Desc: "Studi kasus detail tekstur kulit manusia dengan pencahayaan analog untuk kampanye skincare premium.",
-    caseStudy4Concept: "Konsep: <b>Analog Skin Rendering</b>. Butiran film grain dan cahaya lateral dari strip light studio direproduksi secara digital menggunakan formula sensor CMOS. Tidak ada filter kecantikan otomatis — tekstur pori kulit dipertahankan penuh untuk konten edukasi skincare.",
-    caseStudy5Title: "Motion Photography — Brand Devetesion II",
-    caseStudy5Desc: "Kampanye olahraga dengan teknik motion blur deterministik dan komposisi dinamis berbasis vektor kecepatan.",
-    caseStudy5Concept: "Konsep: <b>Kinetic Determinism</b>. Blur gerak dikendalikan menggunakan vektor kecepatan yang dikunci pada 24°. Posisi model di-seed dari pose atletik standar agar setiap frame terasa seperti satu seri fotografis yang kohesif.",
-    caseStudy6Title: "Macro Fabric Texture — Devetesion Brand II",
-    caseStudy6Desc: "Detail tekstur serat kain makro untuk kampanye apparel brand, menampilkan kualitas material.",
-    caseStudy6Concept: "Konsep: <b>Material Honesty</b>. Setiap serat kain di-render dalam resolusi tinggi tanpa enhancement artifisial. Pencahayaan ring-light macro direproduksi dari referensi studio tekstil nyata untuk memperlihatkan kualitas material secara jujur.",
-    caseStudy7Title: "High-Fashion Editorial — Brand V (66 Frames)",
-    caseStudy7Desc: "Seri editorial laki-laki high-fashion terbesar — 66 frame dengan konsistensi karakter 100% melalui Identity-Locking pipeline.",
-    caseStudy7Concept: "Konsep: <b>Identity-Locked Serialization</b>. Pipeline multi-stage embedding mengunci 23 titik referensi wajah di setiap dari 66 frame. Ini adalah demonstrasi teknis terlengkap dari Humanized Ads Engine: satu karakter, enam puluh enam ekspresi, nol inkonsistensi.",
-    caseStudy8Title: "Commercial Product Advertising — Skincare",
-    caseStudy8Desc: "Kampanye iklan komersial produk skincare dengan pose iklan profesional dan komposisi premium.",
-    caseStudy8Concept: "Konsep: <b>Commercial Realism Engine</b>. Pose model dikalibrasi dari database 4.200 frame iklan produk kecantikan nyata. Setiap sudut kamera dirancang untuk memaksimalkan product visibility sambil mempertahankan proporsi tubuh manusia yang anatomis.",
-    propsTitle: "PROPRIETARY ARCHITECTURE",
-    propsHeading: "HUMANIZED ADS ENGINE",
-    propsSub: "Mengapa visual AI generik terlihat seperti sampah plastik murahan? Karena prompt Anda menggunakan kosakata slop generik. Engine saya merombak total metodologi rekayasa gambar AI:",
-    prop1Title: "Deterministic Pose Reference",
-    prop1Desc: "Mengunci struktur sendi tubuh (skeletal structure) agar model fashion tidak meliuk secara anomali, mempertahankan sudut pandang kamera murni fotografer nyata.",
-    prop2Title: "Analog Light Mapping",
-    prop2Desc: "Menerapkan rumus penyebaran cahaya berdasarkan sensor kamera CMOS dan film analog 35mm, mereproduksi butiran grain alami dan mengusir glow buatan khas AI slop.",
-    prop3Title: "Identity-Locking Workflow",
-    prop3Desc: "Sistem multi-stage embedding untuk mengunci karakter model di berbagai seting lokasi kampanye. Struktur wajah, rahang, dan sorot mata tetap 100% konsisten.",
-    prop4Title: "Product Integrity Isolation",
-    prop4Desc: "Memisahkan rendering model dengan detail kemasan skincare atau serat baju melalui layer masking Photoshop tingkat lanjut sebelum sintesis akhir.",
+    caseStudy1Title: "Baju Streetwear — Swiss Grid",
+    caseStudy1Desc: "Kampanye fashion streetwear dengan sistem grid asimetris minimalis ala Zara Studio dan SSENSE.",
+    caseStudy1Concept: "Konsep: <b>Minimalist Swiss Grid</b>. Layering layout asimetris dengan margin print yang luas, menampilkan siluet pakaian dan detail material kain premium secara seimbang.",
+    caseStudy2Title: "Apparel Archive — Contact Sheet",
+    caseStudy2Desc: "Kumpulan proofs foto di balik layar kampanye fashion, disusun dalam format cetak film strip tak teratur.",
+    caseStudy2Concept: "Konsep: <b>Film Strip Collage</b>. Lembaran proofs foto bertumpuk asimetris dengan drop shadow lembut untuk kesan fisik-taktil otentik.",
+    caseStudy3Title: "Acne Studios Concept Cover",
+    caseStudy3Desc: "Lookbook minimalis dengan framing asimetris, ruang kosong editorial, dan komposisi blok warna netral.",
+    caseStudy3Concept: "Konsep: <b>Asymmetric Monolith</b>. Desain minimalis terstruktur terinspirasi dari Acne Studios dan COS, menekankan detail potongan pakaian dan bayangan studio.",
+    caseStudy4Title: "SS26 Backstage Editorial",
+    caseStudy4Desc: "Komposisi visual kolase multi-frame menangkap nuansa panggung belakang peragaan busana modern.",
+    caseStudy4Concept: "Konsep: <b>Tactile Print Spread</b>. Penataan 12 foto secara sekuensial dengan visual ritme editorial majalah mode Vogue.",
+    caseStudy5Title: "Rhode Beauty Campaign Board",
+    caseStudy5Desc: "Kampanye kosmetik kulit sehat berkilau dengan layout modular triptych asimetris.",
+    caseStudy5Concept: "Konsep: <b>Dewy Glow Assembly</b>. Kolase berpori kulit alami, detail cairan skincare, dan isolasi model dalam nuansa pink-krem satin yang sangat premium.",
+    caseStudy6Title: "Aesop Formulation Study",
+    caseStudy6Desc: "Studi visual produk skincare dengan presentasi botol dan tetesan cairan di atas permukaan beton minimalis.",
+    caseStudy6Concept: "Konsep: <b>Concrete Laboratory</b>. Lembaran studi visual bertumpuk miring dengan rotasi tipis (-3 hingga +2 derajat) dan catatan monospaced layaknya dokumen riset klinis.",
+    caseStudy7Title: "Liquid Skin Direction Zine",
+    caseStudy7Desc: "Halaman majalah visual indie yang mengeksplorasi hidrasi kulit dan botol kemasan mewah.",
+    caseStudy7Concept: "Konsep: <b>Whitespaced Zine Layout</b>. Penempatan teks judul besar di bagian atas dengan ruang kosong elegan, diikuti barisan foto produk beresolusi tajam.",
+    caseStudy8Title: "SK-II Essential Texture Spec",
+    caseStudy8Desc: "Eksplorasi visual komersial berenergi tinggi untuk menampilkan tekstur produk perawatan kulit secara dramatis.",
+    caseStudy8Concept: "Konsep: <b>High-Contrast Skin Spec</b>. Asimetris grid mengkombinasikan foto portrait dekat dengan detail tetesan serum beresolusi makro.",
+    caseStudy9Title: "Avant-Garde Cyber Lookbook",
+    caseStudy9Desc: "Foto studio masa depan bertema cyber-minimalist yang realistis dengan permainan cahaya neon dingin.",
+    caseStudy9Concept: "Konsep: <b>Obsidian Lookbook</b>. Kolase asimetris berlatar hitam pekat menyatukan potret utama dengan 6 baris detail visual berkualitas tinggi tanpa slop AI.",
+    caseStudy10Title: "Identity Consistency Matrix",
+    caseStudy10Desc: "Lembar evaluasi konsistensi wajah model dalam 12 pose runway studio berskala komersial.",
+    caseStudy10Concept: "Konsep: <b>Identity Matrix Sheet</b>. Panel grid 3x4 dengan overlay penanda kalibrasi visual berwarna hijau neon untuk pembuktian stabilitas model.",
+    caseStudy11Title: "Kinetic Motion Trails",
+    caseStudy11Desc: "Studi visual fashion futuristik menangkap blur pergerakan model dalam siluet melingkar yang estetik.",
+    caseStudy11Concept: "Konsep: <b>Circular Kinetic Framing</b>. Penataan asimetris bertingkat dengan aksen visual sirkular halus, menciptakan ilusi kedalaman spasial.",
+    caseStudy12Title: "Brutalist Fashion Catalog",
+    caseStudy12Desc: "Katalog visual brutal bernuansa mahal yang mengkombinasikan potret utuh dengan 9 potret detail dekat.",
+    caseStudy12Concept: "Konsep: <b>High-Breathing Brutalism</b>. Pembagian kolom 3 tingkat asimetris dengan ruang nafas luas, menghasilkan katalog produk berkarakter kuat.",
+    propsTitle: "AI CREATIVE PIPELINE",
+    propsHeading: "AI PRODUCTION SUITE",
+    propsSub: "Kami merekayasa dan mengintegrasikan 5 teknologi AI terbaik di dunia untuk melahirkan visual brand premium kelas dunia, tanpa mengandalkan ComfyUI yang kompleks atau generator gambar default yang terlihat plastik.",
+    prop1Title: "Google Flow",
+    prop1Desc: "Teknologi sintesis visual flow-based buatan Google untuk mengendalikan arah kamera, pencahayaan, dan komposisi photoshoot secara presisi matematis.",
+    prop2Title: "Higgsfield AI",
+    prop2Desc: "Sistem konsistensi karakter dan pergerakan pose yang luar biasa untuk merancang model fashion & brand dengan gerakan tubuh yang alami tanpa cacat anatomi.",
+    prop3Title: "Magnific AI",
+    prop3Desc: "Alat peningkatan detail pori-pori kulit (dermis micro-pore) dan tekstur pakaian kelas atas untuk menghasilkan gambar beresolusi super tajam dan mewah.",
+    prop4Title: "Luma Dream Machine",
+    prop4Desc: "Pembangun adegan sinematik dan tracking kamera dinamis untuk melahirkan video teaser campaign fashion yang hidup dan dramatis.",
+    prop5Title: "Photoroom Pro",
+    prop5Desc: "Mesin isolasi produk kosmetik/skincare premium dan rekayasa bayangan studio fisik untuk memisahkan kemasan produk dengan latar belakang studio secara bersih.",
     pricingTitle: "SIMULATOR BUDGET KAMPANYE",
     pricingSub: "Berdasarkan skema pricing Fiverr/Upwork profesional saya. Batas slider meregang memantul secara elastis saat ditarik ekstrem.",
     pricingConcepts: "Jumlah Konsep Kreatif",
@@ -103,7 +117,7 @@ const translations = {
     simBtn: "BUDGET SIMULATOR",
     featuredWork: "FEATURED WORK",
     editorialDeck: "EDITORIAL DECK.",
-    featuredDesc: "Real case studies of premium visual campaigns structured by folder. Click on any campaign deck to dynamically load its contents.",
+    featuredDesc: "Real case studies of premium visual campaigns structured by folder. Click on any campaign to load all images inside the project folder.",
     filterAll: "ALL DECK",
     filterFashion: "FASHION & APPAREL",
     filterSkincare: "SKINCARE & PRODUCT",
@@ -111,42 +125,56 @@ const translations = {
     imagesCount: "Images",
     viewConcept: "VIEW CONCEPT",
     viewGallery: "VIEW GALLERY",
-    conceptLabel: "THOUGHT PROCESS",
-    caseStudy1Title: "Luxury Fashion Campaign — Brand I",
-    caseStudy1Desc: "Premium fashion photoshoot session with Identity-Locking & Deterministic Pose Reference techniques. 29+ consistent frames.",
-    caseStudy1Concept: "Concept: <b>Premium Asymmetry</b>. I lock the model's skeletal structure across every frame using deterministic pose references, ensuring organic camera angles as a real photographer would achieve. Lighting is calculated from 35mm analog CMOS distribution formulas to eliminate the plastic glow of AI slop.",
-    caseStudy2Title: "Skincare Hero Campaign",
-    caseStudy2Desc: "Skincare product campaign with layer isolation of packaging + model, reproducing realistic skin textures without AI slop.",
-    caseStudy2Concept: "Concept: <b>Product Integrity Isolation</b>. Each frame renders two separate layers: model and packaging label. The result is composited manually using masking to prevent texture contamination between human skin and plastic packaging.",
-    caseStudy3Title: "Typographic Layout Series — Brand III",
-    caseStudy3Desc: "Typography-based editorial series with minimal composition campaign for the third brand identity.",
-    caseStudy3Concept: "Concept: <b>Swiss Grid Brutalism</b>. Each composition frame uses a strict 12-column Swiss grid system. Typography is rendered separately from the model image and integrated in post-production with mathematical alignment.",
-    caseStudy4Title: "Skincare Realism — Human Skin Detail",
-    caseStudy4Desc: "Case study of human skin texture detail using analog lighting for premium skincare campaigns.",
-    caseStudy4Concept: "Concept: <b>Analog Skin Rendering</b>. Film grain and lateral studio strip-light are digitally reproduced using CMOS sensor formulas. No automatic beauty filters — full pore texture is preserved for skincare education content.",
-    caseStudy5Title: "Motion Photography — Brand Devetesion II",
-    caseStudy5Desc: "Sports campaign using deterministic motion blur and dynamic velocity-vector-based composition.",
-    caseStudy5Concept: "Concept: <b>Kinetic Determinism</b>. Motion blur is controlled using a velocity vector locked at 24°. Model position is seeded from a standard athletic pose database so every frame reads as one cohesive photographic series.",
-    caseStudy6Title: "Macro Fabric Texture — Devetesion Brand II",
-    caseStudy6Desc: "Macro fabric fiber detail for apparel brand campaign, showcasing material quality.",
-    caseStudy6Concept: "Concept: <b>Material Honesty</b>. Every fabric fiber is rendered at high resolution without artificial enhancement. Macro ring-light is reproduced from real textile studio references to honestly portray material quality.",
-    caseStudy7Title: "High-Fashion Editorial — Brand V (66 Frames)",
-    caseStudy7Desc: "The largest male high-fashion editorial series — 66 frames with 100% character consistency via Identity-Locking pipeline.",
-    caseStudy7Concept: "Concept: <b>Identity-Locked Serialization</b>. A multi-stage embedding pipeline locks 23 facial reference points across all 66 frames. This is the most complete technical demonstration of the Humanized Ads Engine: one character, sixty-six expressions, zero inconsistencies.",
-    caseStudy8Title: "Commercial Product Advertising — Skincare",
-    caseStudy8Desc: "Commercial advertising campaign for a skincare product with professional ad poses and premium composition.",
-    caseStudy8Concept: "Concept: <b>Commercial Realism Engine</b>. Model pose is calibrated from a 4,200-frame database of real beauty product advertisements. Every camera angle is engineered to maximize product visibility while maintaining anatomically correct human proportions.",
-    propsTitle: "PROPRIETARY ARCHITECTURE",
-    propsHeading: "HUMANIZED ADS ENGINE",
-    propsSub: "Why does generic AI visual art look like cheap plastic trash? Because default prompts rely on vocabulary slop. My engine completely overhauls image engineering workflows:",
-    prop1Title: "Deterministic Pose Reference",
-    prop1Desc: "Locks the anatomical skeletal joints to prevent anomalous model poses, preserving pure organic real-world camera angles and physical layouts.",
-    prop2Title: "Analog Light Mapping",
-    prop2Desc: "Calculates lighting distribution based on real CMOS sensors and 35mm analog film, reproducing natural grain while expelling plastic digital shine.",
-    prop3Title: "Identity-Locking Workflow",
-    prop3Desc: "A multi-stage embedding pipeline locking model features across multiple setups. Bone structures, jaws, and gaze vector remain 100% consistent.",
-    prop4Title: "Product Integrity Isolation",
-    prop4Desc: "Separates model rendering layers from skincare label parameters or apparel textures using advanced masking layers before final synthesis.",
+    conceptLabel: "THINKING PROCESS",
+    caseStudy1Title: "Baju Streetwear — Swiss Grid",
+    caseStudy1Desc: "Streetwear fashion campaign with a minimalist asymmetric grid system inspired by Zara Studio and SSENSE.",
+    caseStudy1Concept: "Concept: <b>Minimalist Swiss Grid</b>. Asymmetric grid layout with large editorial margins, balancing apparel silhouettes and premium textile details.",
+    caseStudy2Title: "Apparel Archive — Contact Sheet",
+    caseStudy2Desc: "Backstage proofs collection from a fashion campaign, arranged as raw overlapping film strips.",
+    caseStudy2Concept: "Concept: <b>Film Strip Collage</b>. Raw contact sheet prints layered asymmetrically with soft shadows for a physical, tactile darkroom aesthetic.",
+    caseStudy3Title: "Acne Studios Concept Cover",
+    caseStudy3Desc: "Minimalist lookbook featuring asymmetrical crops, generous whitespace, and neutral block composition.",
+    caseStudy3Concept: "Concept: <b>Asymmetric Monolith</b>. Architectural minimalist layouts inspired by Acne Studios and COS, highlighting garment construction and raw shadows.",
+    caseStudy4Title: "SS26 Backstage Editorial",
+    caseStudy4Desc: "A multi-frame editorial spread capturing the chaotic energy of high-fashion backstage scenes.",
+    caseStudy4Concept: "Concept: <b>Tactile Print Spread</b>. 12 distinct fashion frames aligned sequentially, mirroring the visual pacing of Vogue editorial archives.",
+    caseStudy5Title: "Rhode Beauty Campaign Board",
+    caseStudy5Desc: "Healthy dewy skin cosmetic campaign utilizing a clean modular triptych layout.",
+    caseStudy5Concept: "Concept: <b>Dewy Glow Assembly</b>. Curation of raw pores, liquid formulations, and model close-ups in premium soft pink and cream tones.",
+    caseStudy6Title: "Aesop Formulation Study",
+    caseStudy6Desc: "Skincare visual studies presenting bottles and droplets on minimal raw concrete plates.",
+    caseStudy6Concept: "Concept: <b>Concrete Laboratory</b>. Physical research sheets scattered with subtle rotations (-3 to +2 degrees) and detailed clinical monospaced overlays.",
+    caseStudy7Title: "Liquid Skin Direction Zine",
+    caseStudy7Desc: "An independent zine spread exploring extreme skin hydration and luxurious packaging design.",
+    caseStudy7Concept: "Concept: <b>Whitespaced Zine Layout</b>. Large bold header text and generous negative space leading into high-resolution, sharp product closeups.",
+    caseStudy8Title: "SK-II Essential Texture Spec",
+    caseStudy8Desc: "High-contrast commercial skincare campaign highlighting formulation textures dynamically.",
+    caseStudy8Concept: "Concept: <b>High-Contrast Skin Spec</b>. Asymmetrical layout blending detailed macro droplets with high-fashion model portrait crops.",
+    caseStudy9Title: "Avant-Garde Cyber Lookbook",
+    caseStudy9Desc: "Futuristic studio photoshoot featuring cyber-minimalist lighting and hyper-realistic analog skin tones.",
+    caseStudy9Concept: "Concept: <b>Obsidian Lookbook</b>. A deep black campaign layout pairing the dominant model portrait with 6 detail-rich crops without AI slop.",
+    caseStudy10Title: "Identity Consistency Matrix",
+    caseStudy10Desc: "A model consistency evaluation sheet showing 12 structured runway studio poses.",
+    caseStudy10Concept: "Concept: <b>Identity Matrix Sheet</b>. A 3x4 grid panel with high-contrast green neon calibration lines proving stable identity lock.",
+    caseStudy11Title: "Kinetic Motion Trails",
+    caseStudy11Desc: "An avant-garde fashion movement study capturing dynamic kinetic blurs in circular frames.",
+    caseStudy11Concept: "Concept: <b>Circular Kinetic Framing</b>. Staggered layout layered with thin circular guide lines, establishing a deep sense of visual movement.",
+    caseStudy12Title: "Brutalist Fashion Catalog",
+    caseStudy12Desc: "A premium brutalist catalog pairing a single full-length shot with 9 extreme details.",
+    caseStudy12Concept: "Concept: <b>High-Breathing Brutalism</b>. 3 asymmetric columns with spacious layout rhythm, delivering a commanding product presentation.",
+    propsTitle: "AI CREATIVE PIPELINE",
+    propsHeading: "AI PRODUCTION SUITE",
+    propsSub: "We engineer and integrate the world's top 5 AI technologies to produce premium, world-class brand visuals, without relying on complex ComfyUI nodes or generic, plastic-looking image generators.",
+    prop1Title: "Google Flow",
+    prop1Desc: "Google's flow-based visual synthesis technology to control camera angles, lighting, and photoshoot compositions with mathematical precision.",
+    prop2Title: "Higgsfield AI",
+    prop2Desc: "Advanced character consistency and pose movement system for design of fashion & brand models with organic body motion without anatomical flaws.",
+    prop3Title: "Magnific AI",
+    prop3Desc: "High-end skin pore (dermis micro-pore) detail enhancement and apparel texture upscaling tool to generate ultra-sharp, luxury visual resolutions.",
+    prop4Title: "Luma Dream Machine",
+    prop4Desc: "Cinematic scene builder and dynamic camera tracking to engineer live and dramatic video fashion campaign teasers.",
+    prop5Title: "Photoroom Pro",
+    prop5Desc: "Premium cosmetics/skincare product isolation engine and physical studio shadow generation to cleanly separate product packaging from studio backgrounds.",
     pricingTitle: "CAMPAIGN BUDGET SIMULATOR",
     pricingSub: "Based on transparent Upwork/Fiverr consulting rates. Slider tracks stretch and bounce elastically at boundaries.",
     pricingConcepts: "Number of Creative Concepts",
@@ -179,161 +207,204 @@ const translations = {
   }
 };
 
-// Static list of all 14 campaigns representing the requested project folders (skincare, photoshoot brand 1-8, ai photoshoot 1-4)
 const campaignsList = [
   {
     id: 1,
-    folder: "photoshoot brand",
-    titleKey: "caseStudy1Title",
-    descKey: "caseStudy1Desc",
-    conceptKey: "caseStudy1Concept",
-    defaultImg: "/photoshoot brand/Luxury_fashion_campaign_photography_202605121711.jpeg",
+    folder: "baju",
+    title: { id: "Baju Streetwear — Swiss Grid", en: "Baju Streetwear — Swiss Grid" },
+    desc: { id: "Kampanye fashion streetwear dengan sistem grid asimetris minimalis ala Zara Studio dan SSENSE.", en: "Streetwear fashion campaign with a minimalist asymmetric grid system inspired by Zara Studio and SSENSE." },
+    concept: { id: "Konsep: <b>Minimalist Swiss Grid</b>. Layering layout asimetris dengan margin print yang luas, menampilkan siluet pakaian dan detail material kain premium secara seimbang.", en: "Concept: <b>Minimalist Swiss Grid</b>. Asymmetric grid layout with large editorial margins, balancing apparel silhouettes and premium textile details." },
+    defaultImg: "/baju/Advertising_photo_new_pose_202605280829_8.jpeg",
     category: "fashion",
     gridSpan: "md:col-span-2 md:row-span-2",
-    imagesCount: "29+"
+    imagesCount: "15"
   },
   {
     id: 2,
     folder: "skincare",
-    titleKey: "caseStudy2Title",
-    descKey: "caseStudy2Desc",
-    conceptKey: "caseStudy2Concept",
-    defaultImg: "/skincare/skincare_hero_banner.jpg",
+    title: { id: "Rhode Beauty skincare", en: "Rhode Beauty skincare" },
+    desc: { id: "Kampanye kosmetik kulit sehat berkilau dengan layout modular triptych asimetris.", en: "Healthy dewy skin cosmetic campaign utilizing a clean modular triptych layout." },
+    concept: { id: "Konsep: <b>Dewy Glow Assembly</b>. Kolase berpori kulit alami, detail cairan skincare, dan isolasi model dalam nuansa pink-krem satin yang sangat premium.", en: "Concept: <b>Dewy Glow Assembly</b>. Curation of raw pores, liquid formulations, and model close-ups in premium soft pink and cream tones." },
+    defaultImg: "/skincare/Woman_interacting_with_product_202605121657_2.jpeg",
     category: "skincare",
     gridSpan: "md:col-span-2 md:row-span-1",
-    imagesCount: "18+"
+    imagesCount: "18"
   },
   {
     id: 3,
-    folder: "photoshoot brand3",
-    titleKey: "caseStudy3Title",
-    descKey: "caseStudy3Desc",
-    conceptKey: "caseStudy3Concept",
-    defaultImg: "/photoshoot brand3/Devetesion_campaign_scene_lock_202605121721_3.jpeg",
+    folder: "photoshoot brand",
+    title: { id: "Luxury Editorial — Brand Vol. 1", en: "Luxury Editorial — Brand Vol. 1" },
+    desc: { id: "Lookbook minimalis dengan framing asimetris dan ruang kosong editorial.", en: "Minimalist lookbook featuring asymmetrical crops and generous whitespace." },
+    concept: { id: "Konsep: <b>Asymmetric Monolith</b>. Desain minimalis terstruktur menekankan detail potongan pakaian dan bayangan studio.", en: "Concept: <b>Asymmetric Monolith</b>. Architectural minimalist layouts highlighting garment construction and raw shadows." },
+    defaultImg: "/photoshoot brand/Luxury_fashion_campaign_photography_202605121711.jpeg",
     category: "fashion",
     gridSpan: "md:col-span-1 md:row-span-1",
-    imagesCount: "29+"
+    imagesCount: "29"
   },
   {
     id: 4,
-    folder: "skincare",
-    titleKey: "caseStudy4Title",
-    descKey: "caseStudy4Desc",
-    conceptKey: "caseStudy4Concept",
-    defaultImg: "/skincare/Woman_interacting_with_product_202605121657_2.jpeg",
-    category: "skincare",
-    gridSpan: "md:col-span-1 md:row-span-2",
-    imagesCount: "18+"
+    folder: "photoshoot brand2",
+    title: { id: "Apparel Archive — Brand Vol. 2", en: "Apparel Archive — Brand Vol. 2" },
+    desc: { id: "Kumpulan proofs foto di balik layar kampanye fashion, disusun dalam format cetak film strip.", en: "Backstage proofs collection from a fashion campaign, arranged as raw film strips." },
+    concept: { id: "Konsep: <b>Film Strip Collage</b>. Lembaran proofs foto bertumpuk asimetris dengan drop shadow lembut.", en: "Concept: <b>Film Strip Collage</b>. Raw contact sheet prints layered asymmetrically with soft shadows." },
+    defaultImg: "/photoshoot brand2/Devetesion_campaign_scene_lock_202605121721_3.jpeg",
+    category: "fashion",
+    gridSpan: "md:col-span-1 md:row-span-1",
+    imagesCount: "19"
   },
   {
     id: 5,
-    folder: "photoshoot brand2",
-    titleKey: "caseStudy5Title",
-    descKey: "caseStudy5Desc",
-    conceptKey: "caseStudy5Concept",
-    defaultImg: "/photoshoot brand2/Devetesion_campaign_running_model_202605121721.jpeg",
+    folder: "photoshoot brand3",
+    title: { id: "SS26 Backstage — Brand Vol. 3", en: "SS26 Backstage — Brand Vol. 3" },
+    desc: { id: "Komposisi visual kolase multi-frame menangkap nuansa panggung belakang peragaan busana modern.", en: "A multi-frame editorial spread capturing the chaotic energy of high-fashion backstage scenes." },
+    concept: { id: "Konsep: <b>Tactile Print Spread</b>. Penataan foto secara sekuensial dengan visual ritme editorial majalah mode Vogue.", en: "Concept: <b>Tactile Print Spread</b>. Distinct fashion frames aligned sequentially, mirroring the visual pacing of Vogue editorial archives." },
+    defaultImg: "/photoshoot brand3/Devetesion_campaign_scene_lock_202605121721_3.jpeg",
     category: "fashion",
     gridSpan: "md:col-span-2 md:row-span-1",
-    imagesCount: "19+"
+    imagesCount: "23"
   },
   {
     id: 6,
     folder: "photoshoot brand4",
-    title: "Kinetic Fashion — Brand IV",
-    desc: "Deterministic pose and angle variations using structural joint locking workflows.",
-    concept: "Concept: <b>Skeletal Joint Calibration</b>. Using structural poses, I achieved full character replication across 18 frame changes, demonstrating maximum accuracy in apparel visual rendering.",
+    title: { id: "Avant-Garde Studio — Brand Vol. 4", en: "Avant-Garde Studio — Brand Vol. 4" },
+    desc: { id: "Foto studio masa depan bertema cyber-minimalist yang realistis dengan cahaya neon.", en: "Futuristic studio photoshoot featuring cyber-minimalist lighting and hyper-realistic analog skin tones." },
+    concept: { id: "Konsep: <b>Obsidian Lookbook</b>. Kolase asimetris berlatar hitam pekat menyatukan potret utama dengan crops detail visual berkualitas tinggi.", en: "Concept: <b>Obsidian Lookbook</b>. A deep black campaign layout pairing the dominant model portrait with detail-rich crops." },
     defaultImg: "/photoshoot brand4/Devetesion_campaign_scene_lock_202605121722_6.jpeg",
     category: "fashion",
-    gridSpan: "md:col-span-1 md:row-span-1",
-    imagesCount: "18+"
+    gridSpan: "md:col-span-1 md:row-span-2",
+    imagesCount: "18"
   },
   {
     id: 7,
     folder: "photoshoot brand5",
-    titleKey: "caseStudy7Title",
-    descKey: "caseStudy7Desc",
-    conceptKey: "caseStudy7Concept",
-    defaultImg: "/photoshoot brand5/High-fashion_editorial_photograph_202605121729.jpeg",
+    title: { id: "Male Editorial — Brand Vol. 5", en: "Male Editorial — Brand Vol. 5" },
+    desc: { id: "Studi visual fashion maskulin menangkap pose runway studio berskala komersial.", en: "A model consistency evaluation sheet showing structured runway studio poses." },
+    concept: { id: "Konsep: <b>Identity Matrix Sheet</b>. Panel grid dengan overlay penanda kalibrasi visual berwarna hijau neon.", en: "Concept: <b>Identity Matrix Sheet</b>. A grid panel with high-contrast green neon calibration lines proving stable identity lock." },
+    defaultImg: "/photoshoot brand5/Male_editorial_partial_subject_202605121729_2.jpeg",
     category: "fashion",
     gridSpan: "md:col-span-2 md:row-span-2",
-    imagesCount: "66+"
+    imagesCount: "66"
   },
   {
     id: 8,
     folder: "photoshoot brand6",
-    title: "Twisted Silhouette Series — Brand VI",
-    desc: "High contrast black and white lighting setup with skeletal structural model consistency.",
-    concept: "Concept: <b>High Contrast Chiaroscuro</b>. I calculated the shadow falloff from studio softboxes to preserve model identity and drape detail in pure black and white styling.",
-    defaultImg: "/photoshoot brand6/Model_in_twisted_pose_202605121730.jpeg",
+    title: { id: "Identity Consistency — Brand Vol. 6", en: "Identity Consistency — Brand Vol. 6" },
+    desc: { id: "Eksplorasi kestabilan wajah model dalam pose studio berskala komersial.", en: "Runway model photoshoot focusing on facial structure and pose consistency." },
+    concept: { id: "Konsep: <b>Identity Consistency</b>. Penguncian wajah dengan 23 titik embedding di bawah pencampuran cahaya studio.", en: "Concept: <b>Identity Consistency</b>. Locks facial features using a 23-point embedding vector system under dynamic studio lighting." },
+    defaultImg: "/photoshoot brand6/Face,_outfit,_scene_lock_202605121730_5.jpeg",
     category: "fashion",
     gridSpan: "md:col-span-1 md:row-span-1",
-    imagesCount: "12+"
+    imagesCount: "22"
   },
   {
     id: 9,
     folder: "photoshoot brand7",
-    title: "Museum Steps Editorial — Brand VII",
-    desc: "Outdoor daylight ambient mapping reproducing realistic sunlight shadow angles.",
-    concept: "Concept: <b>Ambient Sun Ray Synthesis</b>. Shadow angles were calculated based on the latitude and longitude of the shoot to ensure standard photorealistic shadows on stairs.",
-    defaultImg: "/photoshoot brand7/Model_seated_on_museum_steps_202605121732.jpeg",
+    title: { id: "Brutalist Fashion — Brand Vol. 7", en: "Brutalist Fashion — Brand Vol. 7" },
+    desc: { id: "Katalog visual brutal bernuansa mahal yang mengkombinasikan potret utuh dengan potret dekat.", en: "A premium brutalist catalog pairing a single full-length shot with extreme details." },
+    concept: { id: "Konsep: <b>High-Breathing Brutalism</b>. Pembagian kolom asimetris dengan ruang nafas luas, menghasilkan katalog produk berkarakter kuat.", en: "Concept: <b>High-Breathing Brutalism</b>. Asymmetric columns with spacious layout rhythm, delivering a commanding product presentation." },
+    defaultImg: "/photoshoot brand7/Devetesion_campaign_shot_plan_202605121732_2.jpeg",
     category: "fashion",
     gridSpan: "md:col-span-2 md:row-span-1",
-    imagesCount: "15+"
+    imagesCount: "20"
   },
   {
     id: 10,
     folder: "photoshoot brand8",
-    title: "Brutalist Concrete Backdrop — Brand VIII",
-    desc: "Apparel campaign in a cold architectural setting with heavy concrete textures.",
-    concept: "Concept: <b>Material Contrast</b>. Highlighting soft knit fabric fibers against a cold concrete surface, rendering dual-material properties seamlessly.",
-    defaultImg: "/photoshoot brand8/Model_leaning_against_concrete_202605121732_2.jpeg",
+    title: { id: "Concrete Monolith — Brand Vol. 8", en: "Concrete Monolith — Brand Vol. 8" },
+    desc: { id: "Lookbook bertema industrial di atas tangga museum beton minimalis.", en: "Industrial-themed fashion lookbook shot against minimal museum concrete structures." },
+    concept: { id: "Konsep: <b>Concrete Museum</b>. Perpaduan kontras tinggi antara lipatan pakaian mewah dan beton monolitik dingin.", en: "Concept: <b>Concrete Museum</b>. High-contrast juxtaposition of flowy luxury fabrics and cold monolithic concrete shapes." },
+    defaultImg: "/photoshoot brand8/Devetesion_campaign_shot_plan_202605121732_2.jpeg",
     category: "fashion",
     gridSpan: "md:col-span-1 md:row-span-1",
-    imagesCount: "14+"
+    imagesCount: "21"
   },
   {
     id: 11,
     folder: "ai photoshoot1",
-    title: "Deterministic AI Synthesis — Campaign I",
-    desc: "Zero AI slop facial and identity locking showcase using advanced multi-stage synthesis.",
-    concept: "Concept: <b>Multi-Stage Embedding Lock</b>. I engineered an identity-locking network that maintains facial features across dramatic outfit changes, achieving 100% slop-free rendering.",
+    title: { id: "AI Editorial Vol. 1", en: "AI Editorial Vol. 1" },
+    desc: { id: "Studi visual fashion futuristik menangkap detail pakaian dan bayangan studio.", en: "Futuristic fashion visual studies capturing garment details and raw studio shadows." },
+    concept: { id: "Konsep: <b>Future Editorial</b>. Layering pakaian secara asimetris menggunakan flow-based camera direction.", en: "Concept: <b>Future Editorial</b>. Layering garments asymmetrically using flow-based camera direction." },
     defaultImg: "/ai photoshoot1/Image_system_identity_and_scene_202605261435.jpeg",
     category: "ai-photoshoot",
-    gridSpan: "md:col-span-2 md:row-span-1",
-    imagesCount: "16+"
+    gridSpan: "md:col-span-1 md:row-span-1",
+    imagesCount: "28"
   },
   {
     id: 12,
     folder: "ai photoshoot2",
-    title: "Studio Lighting Replication — Campaign II",
-    desc: "AI-generated campaign replicating professional studio lighting setups mathematically.",
-    concept: "Concept: <b>Lumen Distribution Map</b>. Recreating complex ring lights and softboxes digitally to guarantee realistic highlights without the oily AI glow.",
+    title: { id: "AI Editorial Vol. 2", en: "AI Editorial Vol. 2" },
+    desc: { id: "Kumpulan proofs foto di balik layar kampanye fashion AI dengan detail serat pakaian premium.", en: "AI fashion backstage collection featuring premium fabric texture highlights." },
+    concept: { id: "Konsep: <b>Analog Grain Synthesis</b>. Menambahkan grain 35mm alami untuk mengusir kilau plastik generik AI.", en: "Concept: <b>Analog Grain Synthesis</b>. Generates natural 35mm analog grain to expel generic plastic AI glow." },
     defaultImg: "/ai photoshoot2/Image_system_identity_and_scene_202605261435.jpeg",
     category: "ai-photoshoot",
-    gridSpan: "md:col-span-1 md:row-span-2",
-    imagesCount: "12+"
+    gridSpan: "md:col-span-2 md:row-span-1",
+    imagesCount: "31"
   },
   {
     id: 13,
     folder: "ai photoshoot3",
-    title: "Complex Pose Serialization — Campaign III",
-    desc: "Action poses and multi-character consistency demonstration using structural joint seeds.",
-    concept: "Concept: <b>Kinetic Skeleton Mapping</b>. Hand and body skeletal points are manually mapped and locked to ensure flawless anatomy during active poses.",
-    defaultImg: "/ai photoshoot3/Subject_identity_and_scene_lock_202605261436.jpeg",
+    title: { id: "AI Editorial Vol. 3", en: "AI Editorial Vol. 3" },
+    desc: { id: "Lookbook minimalis AI dengan framing asimetris, ruang kosong editorial, dan pose stabil.", en: "AI minimalist lookbook with asymmetric framing, editorial whitespace, and stable pose locking." },
+    concept: { id: "Konsep: <b>Identity Anchor</b>. Penguncian wajah 23 titik vektor menjamin karakter model 100% konsisten.", en: "Concept: <b>Identity Anchor</b>. 23-point vector face locking secures model features with 100% consistency." },
+    defaultImg: "/ai photoshoot3/Image_system_face_identity_lock_202605261436_9.jpeg",
     category: "ai-photoshoot",
-    gridSpan: "md:col-span-2 md:row-span-1",
-    imagesCount: "14+"
+    gridSpan: "md:col-span-1 md:row-span-2",
+    imagesCount: "25"
   },
   {
     id: 14,
     folder: "ai photoshoot4",
-    title: "Commercial Ads Synthesizer — Campaign IV",
-    desc: "High-density product visual catalog showcasing complex multi-image synthesis outputs.",
-    concept: "Concept: <b>Product Layer Mask Assembly</b>. Synthesizing commercial skincare and apparel templates into finished high-converting banner designs.",
-    defaultImg: "/ai photoshoot4/You_have_received_multiple_images._202605261437.jpeg",
+    title: { id: "AI Editorial Vol. 4", en: "AI Editorial Vol. 4" },
+    desc: { id: "Kampanye mode multi-frame menangkap nuansa panggung peragaan busana modern.", en: "Multi-frame campaign captures the high-fashion runway atmosphere through AI." },
+    concept: { id: "Konsep: <b>Runway Sequence</b>. Penataan foto secara sekuensial mereproduksi ritme pergerakan model nyata.", en: "Concept: <b>Runway Sequence</b>. Staggered sequence layout reproducing organic runway movements dynamically." },
+    defaultImg: "/ai photoshoot4/Analyze_images_and_generate_next…_202605261437_2.jpeg",
+    category: "ai-photoshoot",
+    gridSpan: "md:col-span-2 md:row-span-1",
+    imagesCount: "23"
+  },
+  {
+    id: 15,
+    folder: "ai photoshoot5",
+    title: { id: "AI Editorial Vol. 5", en: "AI Editorial Vol. 5" },
+    desc: { id: "Foto studio avant-garde cyber-minimalist yang realistis dengan cahaya neon dingin.", en: "Futuristic avant-garde studio photoshoot with cyber-minimalist cold neon lighting." },
+    concept: { id: "Konsep: <b>Obsidian Glow</b>. Kolase asimetris berlatar hitam pekat menyatukan potret model dengan crops detail visual tinggi.", en: "Concept: <b>Obsidian Glow</b>. Deep dark backdrop pairing model portraits with high-contrast crop highlights." },
+    defaultImg: "/ai photoshoot5/Multi-reference_image_synthesis_…_202605280827.jpeg",
     category: "ai-photoshoot",
     gridSpan: "md:col-span-1 md:row-span-1",
-    imagesCount: "20+"
+    imagesCount: "17"
+  },
+  {
+    id: 16,
+    folder: "ai photoshoot6",
+    title: { id: "AI Editorial Vol. 6", en: "AI Editorial Vol. 6" },
+    desc: { id: "Studi pergerakan kinetik mode futuristik menangkap keindahan gerak model.", en: "Futuristic fashion movement study capturing dynamic kinetic model blurs." },
+    concept: { id: "Konsep: <b>Kinetic Framing</b>. Penataan bertingkat asimetris dengan aksen sirkular untuk ilusi kedalaman spasial.", en: "Concept: <b>Kinetic Framing</b>. Staggered asymmetric layout with circular trails establishing space and depth." },
+    defaultImg: "/ai photoshoot6/Campaign_image_sequence_generation_202605280827.jpeg",
+    category: "ai-photoshoot",
+    gridSpan: "md:col-span-2 md:row-span-2",
+    imagesCount: "29"
+  },
+  {
+    id: 17,
+    folder: "ai photoshoot7",
+    title: { id: "AI Editorial Vol. 7", en: "AI Editorial Vol. 7" },
+    desc: { id: "Studi visual kemasan skincare dan botol produk di atas permukaan beton minimalis.", en: "Skincare formulation study focusing on physical bottle placement on concrete plates." },
+    concept: { id: "Konsep: <b>Industrial Lab</b>. Lembaran studi visual bertumpuk miring dengan rotasi tipis layaknya riset klinis.", en: "Concept: <b>Industrial Lab</b>. Scattered clinical sheets with organic rotations (-3 to +2 degrees) and monospaced notes." },
+    defaultImg: "/ai photoshoot7/Female_model_in_extreme_crop_202605280827_2.jpeg",
+    category: "ai-photoshoot",
+    gridSpan: "md:col-span-1 md:row-span-1",
+    imagesCount: "12"
+  },
+  {
+    id: 18,
+    folder: "ai photoshoot8",
+    title: { id: "AI Editorial Vol. 8", en: "AI Editorial Vol. 8" },
+    desc: { id: "Eksplorasi hidrasi kulit ekstrem dan rekayasa botol produk mewah berkilau.", en: "Independent editorial zine spread exploring skin hydration and luxury skincare packaging." },
+    concept: { id: "Konsep: <b>Extreme Hydration</b>. Menggabungkan portrait resolusi tinggi dengan detail tetesan makro berair.", en: "Concept: <b>Extreme Hydration</b>. Blends high-resolution model portraits with macro product formulation details." },
+    defaultImg: "/ai photoshoot8/Model_leaning_back_structure_202605280828.jpeg",
+    category: "ai-photoshoot",
+    gridSpan: "md:col-span-2 md:row-span-1",
+    imagesCount: "10"
   }
 ];
 
@@ -1143,7 +1214,8 @@ export default function App() {
     { num: "01", title: t.prop1Title, desc: t.prop1Desc },
     { num: "02", title: t.prop2Title, desc: t.prop2Desc },
     { num: "03", title: t.prop3Title, desc: t.prop3Desc },
-    { num: "04", title: t.prop4Title, desc: t.prop4Desc }
+    { num: "04", title: t.prop4Title, desc: t.prop4Desc },
+    { num: "05", title: t.prop5Title, desc: t.prop5Desc }
   ];
 
   const handleStackSwipe = () => {
@@ -1492,62 +1564,16 @@ export default function App() {
     <div className={`relative min-h-screen overflow-x-hidden w-full max-w-full bg-bgCream ${isDarkMode ? 'dark-mode' : ''}`}>
       
       {/* ==========================================================================
-         APPLE ECOSYSTEM: HIGH-FIDELITY DYNAMIC ISLAND NOTIFICATION NOTCH
+         DYNAMIC ISLAND NOTIFICATION TOAST (floating bottom-safe, tidak menutupi navbar)
          ========================================================================== */}
-      <div className="dynamic-island-container">
-        <div 
-          onClick={() => {
-            if (!islandActive) {
-              triggerDynamicIsland(locale === 'id' ? "📸 Kamera Siap" : "📸 Camera Ready");
-            }
-          }}
-          onMouseEnter={() => handleCursorHover(true, 'NOTCH')}
-          onMouseLeave={() => handleCursorHover(false)}
-          className={`dynamic-island bg-[#050505] text-white flex items-center justify-between shadow-[0_15px_35px_rgba(0,0,0,0.5)] border border-white/10 select-none pointer-events-auto cursor-none transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
-            islandActive 
-              ? 'w-[290px] h-[48px] rounded-2xl px-4' 
-              : 'w-[110px] h-[30px] rounded-full px-3.5 hover:w-[125px] hover:h-[32px] hover:border-white/20 active:scale-95'
-          }`}
-          style={{
-            boxShadow: islandActive ? '0 25px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1)' : '0 10px 25px rgba(0,0,0,0.3)'
-          }}
-        >
-          {/* Left: Camera Lens or Glowing Notification Icon */}
-          <div className="flex items-center">
-            {islandActive ? (
-              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-xs animate-[scaleUp_0.35s_cubic-bezier(0.19,1,0.22,1)] shadow-[0_0_10px_rgba(168,85,247,0.5)]">
-                👑
-              </div>
-            ) : (
-              // Hardware Camera Lens (Highly Detailed)
-              <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-indigo-950 via-slate-900 to-neutral-900 border border-neutral-850 shadow-inner flex items-center justify-center opacity-85">
-                <div className="w-0.5 h-0.5 rounded-full bg-cyan-400/50"></div>
-              </div>
-            )}
-          </div>
-
-          {/* Center: Live-Updating Notification Content */}
-          <div className="flex-1 flex justify-center overflow-hidden">
-            {islandActive ? (
-              <span className="font-mono text-[9px] font-black tracking-widest text-white/95 uppercase truncate px-2.5 animate-[fadeIn_0.2s_ease-out]">
-                {islandText}
-              </span>
-            ) : (
-              // Speaker grille overlay (subtle Apple hardware simulation)
-              <div className="w-8 h-1 rounded-full bg-neutral-950 opacity-40 shadow-inner"></div>
-            )}
-          </div>
-
-          {/* Right: Pulsing Haptic Status Light */}
-          <div className="flex items-center justify-end">
-            {islandActive ? (
-              <div className="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_6px_#ef4444] animate-pulse"></div>
-            ) : (
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/80 shadow-[0_0_4px_#10b981] animate-pulse"></div>
-            )}
+      {islandActive && (
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[5000] pointer-events-none animate-[fadeIn_0.25s_ease-out]">
+          <div className="bg-black/90 text-white rounded-2xl px-5 py-2.5 flex items-center gap-2.5 shadow-[0_8px_32px_rgba(0,0,0,0.4)] border border-white/10 backdrop-blur-xl">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+            <span className="font-mono text-[10px] font-black tracking-widest uppercase whitespace-nowrap">{islandText}</span>
           </div>
         </div>
-      </div>
+      )}
 
       {/* SCROLL PROGRESS BAR (Awwwards signature) */}
       <div
@@ -1631,11 +1657,11 @@ export default function App() {
           <a 
             href="#engine" 
             className={`nav-item cursor-none text-xs font-bold tracking-wider transition-colors ${currentRoute === 'engine' ? 'text-blue-600 font-extrabold border-b-2 border-blue-600 pb-0.5' : 'text-gray-500 hover:text-black'}`}
-            onMouseEnter={() => handleCursorHover(true, 'ENGINE')}
+            onMouseEnter={() => handleCursorHover(true, 'AI PRODUCTION')}
             onMouseLeave={() => handleCursorHover(false)}
             onClick={playSpatialClick}
           >
-            ADS ENGINE
+            AI PRODUCTION
           </a>
           <a 
             href="#calculator" 
@@ -1717,40 +1743,109 @@ export default function App() {
 
             <div className="max-w-5xl w-full mx-auto z-10 flex flex-col md:flex-row gap-6 items-stretch select-none">
               
+              {/* ── PREMIUM ID CARD / HERO BENTO (Left 3/5) ── */}
               <div 
-                className="w-full md:w-3/5 glass-bento squircle-card p-5 md:p-10 flex flex-col justify-between cursor-grab active:cursor-grabbing transition-shadow duration-300"
+                className="w-full md:w-3/5 glass-bento squircle-card p-0 flex flex-col justify-between cursor-grab active:cursor-grabbing transition-shadow duration-300 overflow-hidden"
                 style={{
                   transform: `translate(${bento1Offset.x}px, ${bento1Offset.y}px)`,
                   zIndex: draggingBento === 1 ? 50 : 10,
                   touchAction: 'none',
-                  boxShadow: draggingBento === 1 ? '0 30px 60px rgba(0,0,0,0.15)' : 'none'
+                  boxShadow: draggingBento === 1 ? '0 30px 60px rgba(0,0,0,0.15)' : '0 2px 24px rgba(0,0,0,0.06)'
                 }}
                 onMouseDown={(e) => handleDragStart(e, 1)}
                 onTouchStart={(e) => handleDragStart(e, 1)}
               >
-                <div>
-                  <span className="micro-spec-label font-bold text-blue-600 block mb-4">
-                    {t.heroSub}
-                  </span>
-                  {/* Wrapped 2-line title rule */}
-                  <h1 ref={heroTitleRef} className="font-header text-3xl md:text-6xl leading-[0.9] tracking-tighter uppercase mb-6 text-gray-900">
-                    <span className="text-reveal-wrap">
-                      <span className="text-reveal-line">MUHAMMAD</span>
-                    </span>
-                    <span className="text-reveal-wrap">
-                      <span className="text-reveal-line"><span className="text-blue-600">RAHMAT</span> HIDAYAT.</span>
-                    </span>
-                  </h1>
+                {/* ── ID CARD TOP HEADER ── */}
+                <div className="relative flex-none bg-gradient-to-r from-[#0052CC] via-[#0066FF] to-[#2979FF] px-5 pt-5 pb-14 overflow-hidden">
+                  {/* Blueprint grid lines */}
+                  <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(255,255,255,0.4) 18px, rgba(255,255,255,0.4) 19px), repeating-linear-gradient(90deg, transparent, transparent 18px, rgba(255,255,255,0.4) 18px, rgba(255,255,255,0.4) 19px)'}} />
+                  {/* Holographic shimmer strip */}
+                  <div className="absolute top-0 right-0 w-32 h-full opacity-20" style={{background: 'linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.6) 50%, transparent 70%)', animation: 'shimmer 3s ease-in-out infinite'}} />
+                  <div className="relative flex justify-between items-start">
+                    <div>
+                      <span className="font-mono text-[7px] font-black tracking-[0.25em] text-blue-200 uppercase block">CREATIVE ID CARD</span>
+                      <span className="font-mono text-[8px] font-bold text-white/70 tracking-widest">MRD-PORTFOLIO-2026</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[7px] font-black text-blue-200 tracking-widest uppercase">{t.heroSub}</span>
+                      <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]"/>
+                    </div>
+                  </div>
                 </div>
-                
-                <div className="flex flex-wrap gap-3 mt-6">
-                  <span className="py-2.5 px-5 rounded-2xl bg-gray-900 text-white font-header text-[10px] tracking-widest shadow-[3px_3px_0px_#ffcc00] border border-black/15">
-                    {t.heroRole}
-                  </span>
-                  <span className="py-2.5 px-5 rounded-2xl border border-black bg-white text-black font-display font-bold text-[10px] tracking-widest shadow-[3px_3px_0px_#0066ff]">
-                    {t.heroCert}
-                  </span>
+
+                {/* ── ID CARD PHOTO + DETAILS ── */}
+                <div className="relative px-5 pb-5">
+                  {/* Photo — overlaps header */}
+                  <div className="absolute -top-10 left-5 w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border-[3px] border-white shadow-[0_8px_24px_rgba(0,82,204,0.35)] bg-gray-100">
+                    <img 
+                      src="/mrd-photo.jpg" 
+                      alt="Muhammad Rahmat Hidayat"
+                      className="w-full h-full object-cover object-top"
+                      draggable={false}
+                    />
+                    {/* Biometric scan line animation */}
+                    <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, transparent 0%, rgba(0,102,255,0.15) 50%, transparent 100%)', animation: 'scanLine 2.5s ease-in-out infinite'}} />
+                  </div>
+
+                  {/* Chip + NFC watermark */}
+                  <div className="absolute -top-8 right-5 flex flex-col items-end gap-1">
+                    <div className="w-8 h-6 rounded-sm bg-gradient-to-br from-yellow-300 via-yellow-400 to-amber-500 shadow-sm border border-yellow-200/50" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px), repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(0,0,0,0.08) 5px, rgba(0,0,0,0.08) 6px)'}} />
+                    <span className="font-mono text-[7px] text-blue-300 tracking-wider">NFC ◈</span>
+                  </div>
+
+                  {/* Name + Title block — offset by photo height */}
+                  <div className="mt-14 md:mt-16">
+                    <h1 ref={heroTitleRef} className="font-header text-2xl md:text-4xl leading-[0.9] tracking-tighter uppercase text-gray-900">
+                      <span className="text-reveal-wrap"><span className="text-reveal-line">MUHAMMAD</span></span>
+                      <span className="text-reveal-wrap"><span className="text-reveal-line"><span className="text-blue-600">RAHMAT</span> HIDAYAT.</span></span>
+                    </h1>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="font-mono text-[9px] text-gray-500 tracking-widest uppercase">S.KOM · BNSP SYSTEMS ANALYST</span>
+                    </div>
+                  </div>
+
+                  {/* ── DATA FIELDS row ── */}
+                  <div className="grid grid-cols-3 gap-2 mt-4">
+                    <div className="bg-gray-50 border border-gray-200/80 rounded-xl p-2.5">
+                      <span className="font-mono text-[7px] text-gray-400 uppercase tracking-widest block mb-0.5">IPK</span>
+                      <span className="font-mono text-sm font-black text-gray-900">3.65</span>
+                    </div>
+                    <div className="bg-blue-50 border border-blue-200/80 rounded-xl p-2.5">
+                      <span className="font-mono text-[7px] text-blue-400 uppercase tracking-widest block mb-0.5">CERTS</span>
+                      <span className="font-mono text-sm font-black text-blue-700">×3</span>
+                    </div>
+                    <div className="bg-gray-50 border border-gray-200/80 rounded-xl p-2.5">
+                      <span className="font-mono text-[7px] text-gray-400 uppercase tracking-widest block mb-0.5">SINCE</span>
+                      <span className="font-mono text-sm font-black text-gray-900">2021</span>
+                    </div>
+                  </div>
+
+                  {/* ── Barcode + status badges row ── */}
+                  <div className="flex items-end justify-between mt-4 gap-3">
+                    {/* Fake barcode */}
+                    <div className="flex items-end gap-[2px] h-8 opacity-60">
+                      {[3,6,2,8,4,7,2,5,9,3,6,4,8,2,7,5,3,9,6,4,2,8,5,7].map((h, i) => (
+                        <div key={i} className="bg-gray-800 rounded-[1px]" style={{width:'2px', height:`${h * 3}px`}} />
+                      ))}
+                    </div>
+                    <div className="flex flex-wrap gap-1.5 justify-end">
+                      <span className="py-1 px-2.5 rounded-full bg-gray-900 text-white font-header text-[8px] tracking-widest shadow-[2px_2px_0px_#ffcc00]">{t.heroRole}</span>
+                      <span className="py-1 px-2.5 rounded-full border border-black bg-white text-black font-display font-bold text-[8px] tracking-widest shadow-[2px_2px_0px_#0066ff]">{t.heroCert}</span>
+                    </div>
+                  </div>
                 </div>
+
+                {/* Keyframe styles injected inline — only for this card */}
+                <style>{`
+                  @keyframes scanLine {
+                    0%, 100% { transform: translateY(-100%); }
+                    50% { transform: translateY(100%); }
+                  }
+                  @keyframes shimmer {
+                    0%, 100% { opacity: 0.1; }
+                    50% { opacity: 0.25; }
+                  }
+                `}</style>
               </div>
 
               <div 
@@ -1871,9 +1966,9 @@ export default function App() {
             {/* GAPLESS ASYMMETRIC BENTO GRID (WITH PROXIMITY FOCUS ISOLATION) */}
             <div className="bento-container max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[340px]">
               {campaignsList.map((campaign) => {
-                const title = campaign.titleKey ? t[campaign.titleKey] : campaign.title;
-                const desc = campaign.descKey ? t[campaign.descKey] : campaign.desc;
-                const concept = campaign.conceptKey ? t[campaign.conceptKey] : campaign.concept;
+                const title = typeof campaign.title === 'object' ? campaign.title[locale] : (campaign.titleKey ? t[campaign.titleKey] : campaign.title);
+                const desc = typeof campaign.desc === 'object' ? campaign.desc[locale] : (campaign.descKey ? t[campaign.descKey] : campaign.desc);
+                const concept = typeof campaign.concept === 'object' ? campaign.concept[locale] : (campaign.conceptKey ? t[campaign.conceptKey] : campaign.concept);
                 const cardId = `c${campaign.id}`;
 
                 const isVisible = bentoFilter === 'all' || bentoFilter === campaign.category;
@@ -1932,19 +2027,24 @@ export default function App() {
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                    <span className="font-mono text-[10px] text-gray-500 ml-2">HUMANIZED_ENGINE_CONFIG.json</span>
+                    <span className="font-mono text-[10px] text-gray-500 ml-2">AI_PRODUCTION_SUITE_CONFIG.json</span>
                   </div>
                   <div className="p-6 font-mono text-[11px] text-blue-400 overflow-x-auto leading-relaxed">
                     <pre>{`{
-  "camera": "Hasselblad H6D-100c, 80mm Lens",
-  "aperture": "f/4.0, shallow depth of field",
-  "lighting": "editorial studio overcast, natural soft directional shadow",
-  "skin_rendering": "ultra-realistic dermis micro-pore mapping",
-  "anti_slop_parameters": [
-    "avoid high-saturation plastics",
-    "exclude neon airbrush skin smoothing",
-    "lock anatomical joint limits"
-  ]
+  "primary_tools": [
+    "Google Flow",
+    "Higgsfield AI",
+    "Magnific AI",
+    "Luma Dream Machine",
+    "Photoroom Pro"
+  ],
+  "excluded_generators": [
+    "Midjourney (unpredictable consistency)",
+    "ComfyUI (complex node dependencies for now)"
+  ],
+  "pipeline_mode": "Deterministic Brand Synthesis",
+  "dermis_lock": "Enabled (23 anchor points)",
+  "lighting_math": "CMOS Hasselblad H6D overcast"
 }`}</pre>
                   </div>
                 </div>
@@ -2541,7 +2641,7 @@ export default function App() {
             className="mobile-menu-item font-header text-3xl tracking-tighter text-gray-900 uppercase"
             onClick={() => setMobileMenuOpen(false)}
           >
-            ADS ENGINE
+            AI PRODUCTION
           </a>
           <a 
             href="#calculator" 
@@ -2591,7 +2691,7 @@ export default function App() {
          13. DYNAMIC MULTI-IMAGE CAROUSEL LIGHTBOX MODAL
          ========================================================================== */}
       {lightboxOpen && (
-        <div className="lightbox fixed inset-0 bg-black/95 z-[9999] flex flex-col" style={{backdropFilter:'blur(12px)'}}>
+        <div className="lightbox active fixed inset-0 bg-black/95 z-[9999] flex flex-col" style={{backdropFilter:'blur(12px)'}}>
           {/* ── Top bar ── */}
           <div className="flex items-center justify-between px-6 pt-5 pb-3 border-b border-white/10 flex-shrink-0">
             <div>
@@ -2702,219 +2802,7 @@ export default function App() {
         </div>
       )}
 
-      {/* ==========================================================================
-         APPLE ECOSYSTEM: macOS INTERACTIVE DOCK NAVIGATION (magnification zoom math)
-         ========================================================================== */}
-      <Dock 
-        currentRoute={currentRoute}
-        setCurrentRoute={setCurrentRoute}
-        setIsControlCenterOpen={setIsControlCenterOpen}
-        playSpatialClick={playSpatialClick}
-        triggerDynamicIsland={triggerDynamicIsland}
-        locale={locale}
-        handleCursorHover={handleCursorHover}
-      />
 
-      {/* ==========================================================================
-         APPLE ECOSYSTEM: FLOATING CONTROL CENTER TOGGLE BUTTON
-         ========================================================================== */}
-      <button 
-        onClick={(e) => {
-          setIsControlCenterOpen(prev => !prev);
-          playSpatialClick(e);
-        }}
-        onMouseEnter={() => handleCursorHover(true, 'CONTROL PANEL')}
-        onMouseLeave={() => handleCursorHover(false)}
-        className="fixed bottom-24 right-6 z-[3999] md:bottom-28 w-11 h-11 rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-lg flex items-center justify-center cursor-none hover:scale-105 active:scale-95 transition-all text-sm pointer-events-auto"
-        aria-label="Toggle Control Center"
-      >
-        🎛️
-      </button>
-
-      {/* ==========================================================================
-         APPLE ECOSYSTEM: LIQUID CLIP PATH DARK MODE RIPPLE OVERLAY
-         ========================================================================== */}
-      {isRippleActive && (
-        <div 
-          className="fixed inset-0 pointer-events-none z-[8000] bg-[#0d0c0a] dark-mode-ripple"
-          style={{
-            clipPath: `circle(${rippleRadius}px at ${rippleOrigin.x}px ${rippleOrigin.y}px)`,
-          }}
-        />
-      )}
-
-      {/* ==========================================================================
-         APPLE ECOSYSTEM: VOLUMETRIC iOS CONTROL CENTER PANEL OVERLAY
-         ========================================================================== */}
-      {isControlCenterOpen && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[4500] flex items-end md:items-start md:justify-end select-none animate-[fadeIn_0.25s_ease-out] pointer-events-auto" onClick={() => setIsControlCenterOpen(false)}>
-          <div 
-            className="w-full md:w-[320px] bg-white/90 dark:bg-[#161513]/95 backdrop-blur-3xl border-t md:border border-black/10 dark:border-white/10 p-6 rounded-t-[32px] md:rounded-[28px] md:mt-16 md:mr-6 shadow-2xl flex flex-col gap-6 relative animate-[scaleUp_0.35s_cubic-bezier(0.19,1,0.22,1)]"
-            onClick={(e) => e.stopPropagation()}
-            style={{boxShadow: '0 30px 60px rgba(0,0,0,0.25)'}}
-          >
-            <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5">
-              <div>
-                <span className="font-mono text-[8px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest block mb-0.5">iOS SYSTEM CONTROLS</span>
-                <h4 className="font-header text-xs tracking-wider text-gray-900 dark:text-white uppercase font-black">CONTROL CENTER</h4>
-              </div>
-              <button 
-                onClick={(e) => {
-                  setIsControlCenterOpen(false);
-                  playSpatialClick(e);
-                }}
-                className="cursor-none w-7 h-7 rounded-full bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-gray-600 dark:text-gray-400 flex items-center justify-center font-bold text-sm"
-              >
-                &times;
-              </button>
-            </div>
-
-            {/* Slider / Toggle Blocks */}
-            <div className="flex flex-col gap-4">
-              {/* Dark Mode box */}
-              <div 
-                onClick={toggleDarkModeWithRipple}
-                className="p-3.5 rounded-2.5xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex items-center justify-between cursor-none hover:scale-[1.02] active:scale-[0.98] transition-all"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-lg leading-none">{isDarkMode ? '🌙' : '☀️'}</span>
-                  <div className="text-left">
-                    <span className="font-mono text-[7px] font-bold text-gray-400 dark:text-gray-500 block leading-none">SYSTEM THEME</span>
-                    <span className="font-display font-extrabold text-xs text-gray-950 dark:text-white">
-                      {isDarkMode ? (locale === 'id' ? 'Mode Gelap' : 'Dark Mode') : (locale === 'id' ? 'Mode Terang' : 'Light Mode')}
-                    </span>
-                  </div>
-                </div>
-                <div className={`w-9 h-5 rounded-full p-0.5 transition-colors ${isDarkMode ? 'bg-blue-600' : 'bg-gray-300'}`}>
-                  <div className={`w-4 h-4 rounded-full bg-white shadow-md transform transition-transform ${isDarkMode ? 'translate-x-4' : 'translate-x-0'}`} />
-                </div>
-              </div>
-
-              {/* Sound Schemes Box */}
-              <div className="p-3.5 rounded-2.5xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex flex-col gap-2">
-                <span className="font-mono text-[7px] font-bold text-gray-400 dark:text-gray-500 uppercase block tracking-wider text-left">// AUDITORY HAPTICS SOUNDS</span>
-                <div className="grid grid-cols-3 gap-1 bg-gray-200/50 dark:bg-black/20 p-0.5 rounded-xl border border-black/5 dark:border-white/5">
-                  {[
-                    { key: 'classic', label: locale === 'id' ? 'Klasik' : 'Classic' },
-                    { key: 'mechanical', label: locale === 'id' ? 'Klik' : 'Click' },
-                    { key: 'mute', label: locale === 'id' ? 'Senyap' : 'Mute' }
-                  ].map((sch) => (
-                    <button 
-                      key={sch.key}
-                      onClick={(e) => {
-                        setSoundScheme(sch.key);
-                        if (sch.key !== 'mute') {
-                          setTimeout(() => {
-                            try {
-                              if (!audioCtxRef.current) {
-                                audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
-                              }
-                              const ctx = audioCtxRef.current;
-                              if (ctx.state === 'suspended') ctx.resume();
-                              const osc = ctx.createOscillator();
-                              const gain = ctx.createGain();
-                              osc.type = sch.key === 'mechanical' ? 'triangle' : 'sine';
-                              osc.frequency.setValueAtTime(sch.key === 'mechanical' ? 1400 : 880, ctx.currentTime);
-                              gain.gain.setValueAtTime(0.04, ctx.currentTime);
-                              gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
-                              osc.connect(gain);
-                              gain.connect(ctx.destination);
-                              osc.start();
-                              osc.stop(ctx.currentTime + 0.1);
-                            } catch (_) {}
-                          }, 50);
-                        }
-                        triggerDynamicIsland(locale === 'id' ? `🔊 Skema Suara: ${sch.label}` : `🔊 Sound Scheme: ${sch.label}`);
-                      }}
-                      className={`cursor-none py-1 rounded-lg text-[8px] font-mono font-bold transition-all ${
-                        soundScheme === sch.key 
-                          ? 'bg-white dark:bg-[#1a1917] text-blue-600 dark:text-white shadow-sm' 
-                          : 'text-gray-500 hover:text-black dark:hover:text-white'
-                      }`}
-                    >
-                      {sch.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Volumetric vertical sliders */}
-              <div className="grid grid-cols-2 gap-4">
-                {/* Clay Brightness Slider */}
-                <div className="p-4 rounded-3xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex flex-col justify-between items-stretch h-36">
-                  <div className="flex justify-between items-center leading-none">
-                    <span className="font-mono text-[7px] font-bold text-gray-400 dark:text-gray-500">BRIGHT</span>
-                    <span className="font-mono text-[8px] font-bold text-gray-700 dark:text-gray-300">{screenBrightness}%</span>
-                  </div>
-                  <div className="relative flex-1 bg-gray-200 dark:bg-black/30 rounded-2xl overflow-hidden border border-black/5 dark:border-white/5 mt-2">
-                    <div 
-                      className="absolute bottom-0 left-0 right-0 bg-yellow-400/80 transition-all duration-75"
-                      style={{ height: `${screenBrightness}%` }}
-                    />
-                    <input 
-                      type="range" 
-                      min="30" 
-                      max="100" 
-                      value={screenBrightness} 
-                      onChange={(e) => {
-                        setScreenBrightness(Number(e.target.value));
-                        const wrapperEl = document.getElementById('header-nav')?.parentElement;
-                        if (wrapperEl) {
-                          wrapperEl.style.filter = `brightness(${0.4 + (Number(e.target.value) / 100) * 0.6})`;
-                        }
-                      }}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-none"
-                    />
-                    <div className="absolute inset-0 flex flex-col justify-between p-3 pointer-events-none text-xs text-gray-600 dark:text-gray-400">
-                      <span></span>
-                      <span className="text-center font-bold text-sm">☀️</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Clay Volume Slider */}
-                <div className="p-4 rounded-3xl bg-gray-150/60 dark:bg-white/5 border border-black/5 dark:border-white/5 flex flex-col justify-between items-stretch h-36">
-                  <div className="flex justify-between items-center leading-none">
-                    <span className="font-mono text-[7px] font-bold text-gray-400 dark:text-gray-500">VOLUME</span>
-                    <span className="font-mono text-[8px] font-bold text-gray-700 dark:text-gray-300">{volume}%</span>
-                  </div>
-                  <div className="relative flex-1 bg-gray-200 dark:bg-black/30 rounded-2xl overflow-hidden border border-black/5 dark:border-white/5 mt-2">
-                    <div 
-                      className="absolute bottom-0 left-0 right-0 bg-blue-500/80 transition-all duration-75"
-                      style={{ height: `${volume}%` }}
-                    />
-                    <input 
-                      type="range" 
-                      min="0" 
-                      max="100" 
-                      value={volume} 
-                      onChange={(e) => setVolume(Number(e.target.value))}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-none"
-                    />
-                    <div className="absolute inset-0 flex flex-col justify-between p-3 pointer-events-none text-xs text-gray-600 dark:text-gray-400">
-                      <span></span>
-                      <span className="text-center font-bold text-sm">🔊</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Test Notification Button */}
-            <button 
-              onClick={(e) => {
-                playSpatialClick(e);
-                triggerDynamicIsland(locale === 'id' ? "⚡ Sistem Terkalibrasi" : "⚡ Calibration Completed");
-              }}
-              onMouseEnter={() => handleCursorHover(true, 'TEST ISLAND')}
-              onMouseLeave={() => handleCursorHover(false)}
-              className="cursor-none w-full py-3 text-center bg-gray-900 hover:bg-black text-white font-mono text-[9px] tracking-wider uppercase rounded-xl border border-white/5 shadow-md active:scale-95 transition-all mt-1"
-            >
-              🚀 Trigger Dynamic Island
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* 1. CUSTOM LERP INTERACTIVE CURSOR */}
       <div 
@@ -3067,18 +2955,18 @@ const Dock = ({
       ref={dockRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="fixed bottom-3 left-1/2 -translate-x-1/2 z-[4000] flex items-end gap-2.5 md:gap-3 px-4 md:px-5 py-2 md:py-2.5 bg-white/20 dark:bg-black/25 backdrop-blur-2xl border border-white/20 dark:border-white/10 rounded-[22px] md:rounded-[28px] shadow-[0_20px_50px_rgba(0,0,0,0.25)] select-none pointer-events-auto w-[92%] md:w-auto h-[54px] md:h-[64px]"
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[4000] flex items-end gap-1.5 md:gap-2 px-3 md:px-4 py-2 bg-white/15 dark:bg-black/20 backdrop-blur-3xl border border-white/25 dark:border-white/10 rounded-2xl md:rounded-3xl select-none pointer-events-auto w-auto"
       style={{
-        boxShadow: '0 20px 45px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.15)'
+        boxShadow: '0 8px 32px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.2)'
       }}
     >
       {dockItems.map((item, idx) => {
         const isActive = item.route && currentRoute === item.route;
         
         return (
-          <div key={idx} className="dock-icon-wrapper relative group flex-1 md:flex-none flex flex-col items-center">
-            {/* Tooltip (Desktop Only) */}
-            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 bg-gray-900/90 dark:bg-white/95 text-white dark:text-black font-mono text-[9px] font-black tracking-widest uppercase px-2.5 py-1 rounded-lg opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200 shadow-md border border-white/10 dark:border-black/5 whitespace-nowrap z-[4001] dock-tooltip">
+          <div key={idx} className="dock-icon-wrapper relative group flex-none flex flex-col items-center">
+            {/* Tooltip — desktop only */}
+            <div className="absolute bottom-[calc(100%+8px)] left-1/2 -translate-x-1/2 bg-gray-900/95 dark:bg-white/95 text-white dark:text-black font-mono text-[9px] font-black tracking-widest uppercase px-2 py-1 rounded-md opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-150 shadow-lg border border-white/10 dark:border-black/5 whitespace-nowrap z-[4001] hidden md:block">
               {item.label}
             </div>
             
@@ -3087,26 +2975,23 @@ const Dock = ({
               onClick={(e) => handleIconClick(idx, item, e)}
               onMouseEnter={() => handleCursorHover(true, item.label.toUpperCase())}
               onMouseLeave={() => handleCursorHover(false)}
-              className={`cursor-none flex items-center justify-center transition-all duration-100 ease-out origin-bottom rounded-xl md:rounded-2xl w-9 h-9 md:w-11 md:h-11 ${
+              className={`cursor-none flex items-center justify-center transition-all duration-150 ease-out origin-bottom rounded-[10px] md:rounded-[14px] w-9 h-9 md:w-10 md:h-10 ${
                 bouncingIndex === idx ? 'animate-dockBounce' : ''
-              } ${isActive ? 'scale-[1.05]' : 'hover:scale-[1.03]'}`}
+              } ${isActive ? 'ring-1 ring-white/30 dark:ring-white/20' : ''}`}
               style={{
-                width: window.innerWidth >= 768 ? `${44 * scales[idx]}px` : undefined,
-                height: window.innerWidth >= 768 ? `${44 * scales[idx]}px` : undefined,
-                transformOrigin: 'bottom'
+                width: window.innerWidth >= 768 ? `${40 * scales[idx]}px` : '36px',
+                height: window.innerWidth >= 768 ? `${40 * scales[idx]}px` : '36px',
+                transformOrigin: 'center bottom'
               }}
             >
               {item.icon(scales[idx])}
             </a>
 
-            {/* Active app indicator dot (macOS high-fidelity detail!) */}
+            {/* Active indicator dot */}
             <div 
-              className={`w-1 h-1 rounded-full bg-neutral-800 dark:bg-white transition-all duration-300 mt-[3px] opacity-75 ${
-                isActive ? 'scale-100' : 'scale-0'
+              className={`w-[5px] h-[5px] rounded-full mt-1 transition-all duration-300 ${
+                isActive ? 'opacity-80 scale-100 bg-neutral-700 dark:bg-white' : 'opacity-0 scale-0'
               }`}
-              style={{
-                boxShadow: isActive ? '0 0 4px currentColor' : 'none'
-              }}
             />
           </div>
         );
