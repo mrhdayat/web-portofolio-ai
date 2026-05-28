@@ -44,7 +44,23 @@ Desktop.ini
 # Python virtual environment
 venv/
 
-# Diagnostic scripts
+# Diagnostic & test scripts
 detect_overflows.py
+e2e_test.py
+scratch/
+
+# E2E test results
+public/e2e-test-results/
+
+# Proof / debug images
+src/proof_*.png
+src/proof_*.jpg
+
+# Random stray files
+aifaceswap-*.jpeg
+aifaceswap-*.jpg
+
+# Python virtual environment
+venv/
 
 
