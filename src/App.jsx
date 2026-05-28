@@ -769,6 +769,12 @@ export default function App() {
         setEasterCoins(coins);
         setTimeout(() => { setEasterActive(false); setEasterCoins([]); }, 4000);
       }
+      // Lightbox keyboard navigation
+      if (lightboxOpen) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); handleLightboxNav(1); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); handleLightboxNav(-1); }
+        else if (e.key === 'Escape') { e.preventDefault(); setLightboxOpen(false); }
+      }
     };
     window.addEventListener('keydown', onKey);
 
@@ -776,7 +782,7 @@ export default function App() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('keydown', onKey);
     };
-  }, []);
+  }, [lightboxOpen, lightboxImages, activeImageIndex]);
 
   // Section entrance observer - reactive to page route changes
   useEffect(() => {
@@ -1539,6 +1545,20 @@ export default function App() {
     setActiveImageIndex((prev) => (prev + direction + count) % count);
   };
 
+  // Preload adjacent images for instant navigation feel
+  useEffect(() => {
+    if (!lightboxOpen || lightboxImages.length <= 1) return;
+    const count = lightboxImages.length;
+    const preloadIdxs = [
+      (activeImageIndex + 1) % count,
+      (activeImageIndex - 1 + count) % count,
+    ];
+    preloadIdxs.forEach(idx => {
+      const img = new Image();
+      img.src = lightboxImages[idx];
+    });
+  }, [activeImageIndex, lightboxImages, lightboxOpen]);
+
   // Touch Swipe handlers for mobile lightbox
   const handleTouchStart = (e) => {
     setTouchStart(e.targetTouches[0].clientX);
@@ -1991,6 +2011,8 @@ export default function App() {
                     <img 
                       src={campaign.defaultImg} 
                       alt={title} 
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-5 md:p-8 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-350">
@@ -2719,62 +2741,74 @@ export default function App() {
 
           {/* ── Gallery tab ── */}
           {lightboxTab === 'gallery' && (
-            <div className="lightbox-frame-panel flex-1 flex flex-col min-h-0">
-              <div 
-                className="relative flex-1 flex items-center justify-center min-h-0 py-4"
-                style={{paddingLeft: '60px', paddingRight: '60px'}}
+            <div className="lightbox-frame-panel flex-1 flex flex-col min-h-0 overflow-hidden">
+
+              {/* ── Main image area: 3-column grid so arrows are NEVER covered ── */}
+              <div
+                className="flex-1 grid min-h-0"
+                style={{ gridTemplateColumns: '56px 1fr 56px' }}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
-                {/* LEFT ARROW — always visible, always centered */}
-                <button 
-                  className="cursor-none flex-shrink-0 absolute left-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full border border-white/25 bg-black/50 hover:bg-white/25 text-white text-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:border-white/60 shadow-lg"
-                  style={{zIndex: 20}}
+                {/* LEFT ARROW — own column, always visible */}
+                <button
+                  className="cursor-none self-center justify-self-center w-11 h-11 rounded-full border border-white/30 bg-white/10 hover:bg-white/25 hover:border-white/70 text-white text-xl flex items-center justify-center transition-all duration-150 active:scale-90 select-none shadow-md"
+                  style={{ zIndex: 10 }}
                   onClick={() => handleLightboxNav(-1)}
                   aria-label="Previous image"
                 >
-                  &#8592;
+                  ←
                 </button>
 
-                <img 
-                  key={lightboxImages[activeImageIndex]}
-                  src={lightboxImages[activeImageIndex]} 
-                  alt="Gallery View" 
-                  className="max-h-full max-w-full object-contain rounded-2xl shadow-2xl"
-                  style={{transition:'opacity 0.25s ease', display:'block'}}
-                />
+                {/* IMAGE — center column, constrained */}
+                <div className="relative flex items-center justify-center min-h-0 py-3 overflow-hidden">
+                  <img
+                    key={lightboxImages[activeImageIndex]}
+                    src={lightboxImages[activeImageIndex]}
+                    alt="Gallery View"
+                    loading="eager"
+                    decoding="async"
+                    className="max-h-full max-w-full object-contain rounded-2xl shadow-2xl"
+                    style={{ transition: 'opacity 0.2s ease', display: 'block' }}
+                  />
+                  {/* Counter badge */}
+                  <span className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 text-blue-300 bg-blue-950/70 border border-blue-800/40 py-1 px-3 rounded-full text-[10px] font-mono">
+                    {activeImageIndex + 1} / {lightboxImages.length}
+                  </span>
+                </div>
 
-                {/* RIGHT ARROW — always visible, always centered */}
-                <button 
-                  className="cursor-none flex-shrink-0 absolute right-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full border border-white/25 bg-black/50 hover:bg-white/25 text-white text-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:border-white/60 shadow-lg"
-                  style={{zIndex: 20}}
+                {/* RIGHT ARROW — own column, always visible */}
+                <button
+                  className="cursor-none self-center justify-self-center w-11 h-11 rounded-full border border-white/30 bg-white/10 hover:bg-white/25 hover:border-white/70 text-white text-xl flex items-center justify-center transition-all duration-150 active:scale-90 select-none shadow-md"
+                  style={{ zIndex: 10 }}
                   onClick={() => handleLightboxNav(1)}
                   aria-label="Next image"
                 >
-                  &#8594;
+                  →
                 </button>
-
-                {/* Counter badge */}
-                <span className="absolute bottom-4 left-1/2 -translate-x-1/2 micro-spec-label text-blue-400 bg-blue-900/60 border border-blue-800/40 py-1 px-4 rounded-full text-[10px] pointer-events-none" style={{zIndex:21}}>
-                  {activeImageIndex + 1} / {lightboxImages.length}
-                </span>
               </div>
 
-              {/* ── Thumbnail filmstrip ── */}
-              <div className="flex-shrink-0 px-4 pb-4 overflow-x-auto">
-                <div className="flex gap-2 justify-start" style={{minWidth:'max-content'}}>
+              {/* ── Thumbnail filmstrip — lazy loaded ── */}
+              <div className="flex-shrink-0 px-3 pb-3 overflow-x-auto" style={{scrollbarWidth:'thin', scrollbarColor:'#334155 transparent'}}>
+                <div className="flex gap-1.5" style={{ minWidth: 'max-content' }}>
                   {lightboxImages.map((src, idx) => (
                     <button
                       key={idx}
-                      className={`cursor-none flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all duration-200 ${
+                      className={`cursor-none flex-shrink-0 w-14 h-14 rounded-lg overflow-hidden border-2 transition-all duration-150 ${
                         idx === activeImageIndex
-                          ? 'border-blue-500 scale-105 shadow-[0_0_12px_#0066ff80]'
-                          : 'border-white/10 opacity-50 hover:opacity-80'
+                          ? 'border-blue-500 scale-105 shadow-[0_0_10px_#0066ff70]'
+                          : 'border-white/10 opacity-40 hover:opacity-70 hover:border-white/30'
                       }`}
                       onClick={() => setActiveImageIndex(idx)}
                     >
-                      <img src={src} alt={`thumb-${idx}`} className="w-full h-full object-cover" />
+                      <img
+                        src={src}
+                        alt={`thumb-${idx}`}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover"
+                      />
                     </button>
                   ))}
                 </div>
