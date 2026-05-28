@@ -2721,31 +2721,42 @@ export default function App() {
           {lightboxTab === 'gallery' && (
             <div className="lightbox-frame-panel flex-1 flex flex-col min-h-0">
               <div 
-                className="relative flex-1 flex items-center justify-center min-h-0 px-16 py-4"
+                className="relative flex-1 flex items-center justify-center min-h-0 py-4"
+                style={{paddingLeft: '60px', paddingRight: '60px'}}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
               >
+                {/* LEFT ARROW — always visible, always centered */}
                 <button 
-                  className="lightbox-arrow absolute left-4 w-11 h-11 rounded-full border border-white/20 bg-white/10 hover:bg-white/30 text-white font-header text-lg flex items-center justify-center cursor-none transition-colors z-10"
+                  className="cursor-none flex-shrink-0 absolute left-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full border border-white/25 bg-black/50 hover:bg-white/25 text-white text-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:border-white/60 shadow-lg"
+                  style={{zIndex: 20}}
                   onClick={() => handleLightboxNav(-1)}
-                >&larr;</button>
+                  aria-label="Previous image"
+                >
+                  &#8592;
+                </button>
 
                 <img 
                   key={lightboxImages[activeImageIndex]}
                   src={lightboxImages[activeImageIndex]} 
                   alt="Gallery View" 
                   className="max-h-full max-w-full object-contain rounded-2xl shadow-2xl"
-                  style={{transition:'opacity 0.25s ease'}}
+                  style={{transition:'opacity 0.25s ease', display:'block'}}
                 />
 
+                {/* RIGHT ARROW — always visible, always centered */}
                 <button 
-                  className="lightbox-arrow absolute right-4 w-11 h-11 rounded-full border border-white/20 bg-white/10 hover:bg-white/30 text-white font-header text-lg flex items-center justify-center cursor-none transition-colors z-10"
+                  className="cursor-none flex-shrink-0 absolute right-2 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full border border-white/25 bg-black/50 hover:bg-white/25 text-white text-xl flex items-center justify-center transition-all duration-200 hover:scale-110 hover:border-white/60 shadow-lg"
+                  style={{zIndex: 20}}
                   onClick={() => handleLightboxNav(1)}
-                >&rarr;</button>
+                  aria-label="Next image"
+                >
+                  &#8594;
+                </button>
 
                 {/* Counter badge */}
-                <span className="absolute bottom-6 left-1/2 -translate-x-1/2 micro-spec-label text-blue-400 bg-blue-900/60 border border-blue-800/40 py-1 px-4 rounded-full text-[10px]">
+                <span className="absolute bottom-4 left-1/2 -translate-x-1/2 micro-spec-label text-blue-400 bg-blue-900/60 border border-blue-800/40 py-1 px-4 rounded-full text-[10px] pointer-events-none" style={{zIndex:21}}>
                   {activeImageIndex + 1} / {lightboxImages.length}
                 </span>
               </div>
