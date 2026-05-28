@@ -769,12 +769,6 @@ export default function App() {
         setEasterCoins(coins);
         setTimeout(() => { setEasterActive(false); setEasterCoins([]); }, 4000);
       }
-      // Lightbox keyboard navigation
-      if (lightboxOpen) {
-        if (e.key === 'ArrowRight') { e.preventDefault(); handleLightboxNav(1); }
-        else if (e.key === 'ArrowLeft') { e.preventDefault(); handleLightboxNav(-1); }
-        else if (e.key === 'Escape') { e.preventDefault(); setLightboxOpen(false); }
-      }
     };
     window.addEventListener('keydown', onKey);
 
@@ -782,7 +776,7 @@ export default function App() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('keydown', onKey);
     };
-  }, [lightboxOpen, lightboxImages, activeImageIndex]);
+  }, []);
 
   // Section entrance observer - reactive to page route changes
   useEffect(() => {
@@ -1579,6 +1573,19 @@ export default function App() {
     setTouchStart(0);
     setTouchEnd(0);
   };
+
+  // Lightbox keyboard navigation — declared AFTER all lightbox state (no TDZ)
+  useEffect(() => {
+    const onLightboxKey = (e) => {
+      if (!lightboxOpen) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); handleLightboxNav(1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); handleLightboxNav(-1); }
+      else if (e.key === 'Escape') { e.preventDefault(); setLightboxOpen(false); }
+    };
+    window.addEventListener('keydown', onLightboxKey);
+    return () => window.removeEventListener('keydown', onLightboxKey);
+  }, [lightboxOpen, lightboxImages, activeImageIndex]);
+
 
   return (
     <div className={`relative min-h-screen overflow-x-hidden w-full max-w-full bg-bgCream ${isDarkMode ? 'dark-mode' : ''}`}>
